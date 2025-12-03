@@ -65,17 +65,21 @@ cd "C:\Path\To\Project\cs2price_prediction"
 Run:
 ```sh
 docker compose build
+sh```
 If the command doesn't work, try:
 ```sh
 docker-compose build
+sh```
 
 ##  3. Start the Project
 Run:
 ```sh
 docker compose up
+sh```
 Or run in the background:
 ```sh
 docker compose up -d
+sh```
 
 ## 4. Verify That Everything Works
 http://localhost:8087/swagger
@@ -84,3 +88,4 @@ http://localhost:8000/docs#/
 ## 5.Stopping the Containers
 ```sh
 docker compose down
+sh```
