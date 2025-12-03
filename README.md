@@ -25,7 +25,7 @@ The **CS2 Price Prediction API** is a backend service built with **ASP.NET Core*
 
 ---
 
-## 📦 Requirements
+##  Requirements
 
 ### Local Development Requirements
 
@@ -53,39 +53,55 @@ everything is set up automatically inside containers.
 
 ---
 
-##  1. Navigate to the Project Folder
+# Running the Project via Docker (Recommended)
 
-Open **PowerShell** or **Command Prompt** and go to the project directory:
+Using Docker allows you to run the project without installing .NET, PostgreSQL, or Python — everything is set up automatically inside containers.
+
+## 1. Navigate to the Project Folder
+
+Open PowerShell or Command Prompt and go to the project directory:
 
 ```sh
 cd "C:\Path\To\Project\cs2price_prediction"
-
+```
 
 ## 2. Build the Docker Containers
+
 Run:
+
 ```sh
 docker compose build
-sh```
+```
+
 If the command doesn't work, try:
+
 ```sh
 docker-compose build
-sh```
+```
 
-##  3. Start the Project
+## 3. Start the Project
+
 Run:
+
 ```sh
 docker compose up
-sh```
+```
+
 Or run in the background:
+
 ```sh
 docker compose up -d
-sh```
+```
 
 ## 4. Verify That Everything Works
-http://localhost:8087/swagger
+
+Open:
+
+http://localhost:8087/swagger  
 http://localhost:8000/docs#/
 
-## 5.Stopping the Containers
+## 5. Stopping the Containers
+
 ```sh
 docker compose down
-sh```
+```
