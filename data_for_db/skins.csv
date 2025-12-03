@@ -1,0 +1,53 @@
+apon_name,skin_name,pattern_style
+AK-47,Case Hardened,ch_gun
+Five-SeveN,Case Hardened,ch_gun
+MAC-10,Case Hardened,ch_gun
+
+Karambit,Case Hardened,ch_knife
+Butterfly Knife,Case Hardened,ch_knife
+M9 Bayonet,Case Hardened,ch_knife
+Bayonet,Case Hardened,ch_knife
+Flip Knife,Case Hardened,ch_knife
+Talon Knife,Case Hardened,ch_knife
+Skeleton Knife,Case Hardened,ch_knife
+
+AWP,Fade,fade_gun
+M4A1-S,Fade,fade_gun
+Glock-18,Fade,fade_gun
+
+Karambit,Fade,fade_knife
+Butterfly Knife,Fade,fade_knife
+M9 Bayonet,Fade,fade_knife
+Bayonet,Fade,fade_knife
+Flip Knife,Fade,fade_knife
+Talon Knife,Fade,fade_knife
+Skeleton Knife,Fade,fade_knife
+Nomad Knife,Fade,fade_knife
+Paracord Knife,Fade,fade_knife
+
+Karambit,Doppler,doppler_knife
+Butterfly Knife,Doppler,doppler_knife
+M9 Bayonet,Doppler,doppler_knife
+Bayonet,Doppler,doppler_knife
+Flip Knife,Doppler,doppler_knife
+Gut Knife,Doppler,doppler_knife
+Huntsman Knife,Doppler,doppler_knife
+Talon Knife,Doppler,doppler_knife
+Skeleton Knife,Doppler,doppler_knife
+Falchion Knife,Doppler,doppler_knife
+Bowie Knife,Doppler,doppler_knife
+Shadow Daggers,Doppler,doppler_knife
+Navaja Knife,Doppler,doppler_knife
+Stiletto Knife,Doppler,doppler_knife
+Ursus Knife,Doppler,doppler_knife
+Nomad Knife,Doppler,doppler_knife
+Survival Knife,Doppler,doppler_knife
+Paracord Knife,Doppler,doppler_knife
+
+AK-47,Ice Coaled,float_gun
+AK-47,Redline,float_gun
+AWP,Asiimov,float_gun
+Glock-18,Neo-Noir,float_gun
+M4A1-S,Printstream,float_gun
+
+
