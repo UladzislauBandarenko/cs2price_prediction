@@ -1,0 +1,21 @@
+[
+  "float",
+  "pattern",
+  "stattrak",
+  "fade_seed",
+  "fade_percentage",
+  "fade_rank",
+  "stickers_count",
+  "stickers_total_value",
+  "stickers_avg_value",
+  "stickers_max_value",
+  "slot0_price",
+  "slot1_price",
+  "slot2_price",
+  "slot3_price",
+  "weapon",
+  "skin",
+  "wear",
+  "fade_type",
+  "market_hash_name"
+]

@@ -1,0 +1,16 @@
+bin/
+obj/
+.vs/
+.git/
+.gitignore
+*.user
+*.suo
+
+Dockerfile
+docker-compose.yml
+
+cs2_ml_service/__pycache__/
+cs2_ml_service/.venv/
+cs2_ml_service/.pytest_cache/
+
+**/*.log

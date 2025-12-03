@@ -1,0 +1,95 @@
+version: "3.9"
+
+services:
+  # --------- PROD API (как было) ---------
+  api:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    container_name: cs2-api
+    env_file:
+      - .env
+    environment:
+      # URL ML-сервиса
+      ML_SERVICE_URL: ${ML_SERVICE_URL}
+
+      # Строка подключения для AppDbContext
+      ConnectionStrings__DefaultConnection: "Host=db;Port=${POSTGRES_PORT_CONTAINER};Database=${POSTGRES_DB};Username=${POSTGRES_USER};Password=${POSTGRES_PASSWORD}"
+
+      # ASP.NET Core
+      ASPNETCORE_ENVIRONMENT: ${ASPNETCORE_ENVIRONMENT}
+      ASPNETCORE_URLS: "http://0.0.0.0:${API_PORT_CONTAINER}"
+    depends_on:
+      - db
+      - ml-service
+    ports:
+      - "${API_PORT_HOST}:${API_PORT_CONTAINER}"  # напр. 8087:8080
+    volumes:
+      - ./data_for_db:/app/data_for_db:ro
+    networks:
+      - cs2-net
+
+  # --------- DEV API с hot reload ---------
+  api-dev:
+    image: mcr.microsoft.com/dotnet/sdk:8.0
+    container_name: cs2-api-dev
+    working_dir: /src
+    volumes:
+      # монтируем ВСЮ папку проекта внутрь
+      - ./:/src
+    command: >
+      sh -c "dotnet restore && dotnet watch run --urls http://0.0.0.0:${API_PORT_CONTAINER}"
+    env_file:
+      - .env
+    environment:
+      ASPNETCORE_ENVIRONMENT: Development
+      # строка подключения к Postgres в docker-сети
+      ConnectionStrings__DefaultConnection: "Host=db;Port=${POSTGRES_PORT_CONTAINER};Database=${POSTGRES_DB};Username=${POSTGRES_USER};Password=${POSTGRES_PASSWORD}"
+      ML_SERVICE_URL: ${ML_SERVICE_URL}
+    depends_on:
+      - db
+      - ml-service
+    ports:
+      - "${API_PORT_HOST}:${API_PORT_CONTAINER}"  # тот же порт, что у api (нельзя запускать оба сразу)
+    networks:
+      - cs2-net
+
+  # --------- ML-сервис ---------
+  ml-service:
+    build:
+      context: .
+      dockerfile: cs2_ml_service/Dockerfile
+    container_name: cs2-ml
+    env_file:
+      - .env
+    expose:
+      - "${ML_PORT_CONTAINER}"
+    ports:
+      - "${ML_PORT_HOST}:${ML_PORT_CONTAINER}"
+    networks:
+      - cs2-net
+
+  # --------- Postgres ---------
+  db:
+    image: postgres:16-alpine
+    container_name: cs2-postgres
+    restart: always
+    env_file:
+      - .env
+    environment:
+      POSTGRES_DB: ${POSTGRES_DB}
+      POSTGRES_USER: ${POSTGRES_USER}
+      POSTGRES_PASSWORD: ${POSTGRES_PASSWORD}
+    ports:
+      - "${POSTGRES_PORT_HOST}:${POSTGRES_PORT_CONTAINER}"  # 5435:5432
+    volumes:
+      - db-data:/var/lib/postgresql/data
+    networks:
+      - cs2-net
+
+volumes:
+  db-data:
+
+networks:
+  cs2-net:
+    driver: bridge
