@@ -1,0 +1,6 @@
+@cs2price_prediction_HostAddress = http://localhost:5059
+
+GET {{cs2price_prediction_HostAddress}}/weatherforecast/
+Accept: application/json
+
+###
