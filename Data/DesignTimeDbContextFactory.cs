@@ -1,5 +1,7 @@
-﻿using Microsoft.EntityFrameworkCore;
+﻿using System.IO;
+using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Design;
+using Microsoft.Extensions.Configuration;
 
 namespace cs2price_prediction.Data
 {
@@ -7,13 +9,23 @@ namespace cs2price_prediction.Data
     {
         public AppDbContext CreateDbContext(string[] args)
         {
-            var optionsBuilder = new DbContextOptionsBuilder<AppDbContext>();
+            // Строим конфигурацию так же, как делает ASP.NET при запуске
+            var basePath = Directory.GetCurrentDirectory();
 
-            // Строка подключения ДЛЯ dotnet ef (с хоста)
-            // Подключаемся к контейнеру Postgres на порту 5435
+            var config = new ConfigurationBuilder()
+                .SetBasePath(basePath)
+                .AddJsonFile("appsettings.json", optional: true)
+                .AddJsonFile("appsettings.Development.json", optional: true)
+                .AddEnvironmentVariables()
+                .Build();
+
+            // Берём строку подключения для админа
             var connectionString =
-                "Host=localhost;Port=5435;Database=cs2db;Username=cs2_user;Password=cs2_password";
+                config.GetConnectionString("AdminConnection") ??
+                config["ConnectionStrings:AdminConnection"] ??
+                "Host=localhost;Port=5435;Database=cs2db;Username=cs2_admin;Password=cs2_admin_password";
 
+            var optionsBuilder = new DbContextOptionsBuilder<AppDbContext>();
             optionsBuilder.UseNpgsql(connectionString);
 
             return new AppDbContext(optionsBuilder.Options);

@@ -1,7 +1,7 @@
 version: "3.9"
 
 services:
-  # --------- PROD API (как было) ---------
+  # --------- PROD API ---------
   api:
     build:
       context: .
@@ -13,8 +13,11 @@ services:
       # URL ML-сервиса
       ML_SERVICE_URL: ${ML_SERVICE_URL}
 
-      # Строка подключения для AppDbContext
-      ConnectionStrings__DefaultConnection: "Host=db;Port=${POSTGRES_PORT_CONTAINER};Database=${POSTGRES_DB};Username=${POSTGRES_USER};Password=${POSTGRES_PASSWORD}"
+      # READ-ONLY строка подключения для AppDbContext (cs2_user)
+      ConnectionStrings__DefaultConnection: "Host=db;Port=${POSTGRES_PORT_CONTAINER};Database=${POSTGRES_DB};Username=cs2_user;Password=cs2_password"
+
+      # ADMIN строка подключения для DbSeeder (cs2_admin)
+      ConnectionStrings__AdminConnection: "Host=db;Port=${POSTGRES_PORT_CONTAINER};Database=${POSTGRES_DB};Username=cs2_admin;Password=cs2_admin_password"
 
       # ASP.NET Core
       ASPNETCORE_ENVIRONMENT: ${ASPNETCORE_ENVIRONMENT}
@@ -25,6 +28,7 @@ services:
     ports:
       - "${API_PORT_HOST}:${API_PORT_CONTAINER}"  # напр. 8087:8080
     volumes:
+      # CSV для сидера
       - ./data_for_db:/app/data_for_db:ro
     networks:
       - cs2-net
@@ -35,7 +39,7 @@ services:
     container_name: cs2-api-dev
     working_dir: /src
     volumes:
-      # монтируем ВСЮ папку проекта внутрь
+      # монтируем весь проект
       - ./:/src
     command: >
       sh -c "dotnet restore && dotnet watch run --urls http://0.0.0.0:${API_PORT_CONTAINER}"
@@ -43,14 +47,19 @@ services:
       - .env
     environment:
       ASPNETCORE_ENVIRONMENT: Development
-      # строка подключения к Postgres в docker-сети
-      ConnectionStrings__DefaultConnection: "Host=db;Port=${POSTGRES_PORT_CONTAINER};Database=${POSTGRES_DB};Username=${POSTGRES_USER};Password=${POSTGRES_PASSWORD}"
+
+      # READ-ONLY строка подключения для AppDbContext (cs2_user)
+      ConnectionStrings__DefaultConnection: "Host=db;Port=${POSTGRES_PORT_CONTAINER};Database=${POSTGRES_DB};Username=cs2_user;Password=cs2_password"
+
+      # ADMIN строка подключения для DbSeeder (cs2_admin)
+      ConnectionStrings__AdminConnection: "Host=db;Port=${POSTGRES_PORT_CONTAINER};Database=${POSTGRES_DB};Username=cs2_admin;Password=cs2_admin_password"
+
       ML_SERVICE_URL: ${ML_SERVICE_URL}
     depends_on:
       - db
       - ml-service
     ports:
-      - "${API_PORT_HOST}:${API_PORT_CONTAINER}"  # тот же порт, что у api (нельзя запускать оба сразу)
+      - "${API_PORT_HOST}:${API_PORT_CONTAINER}"  # тот же порт, что у api (запускать по очереди)
     networks:
       - cs2-net
 
@@ -81,9 +90,11 @@ services:
       POSTGRES_USER: ${POSTGRES_USER}
       POSTGRES_PASSWORD: ${POSTGRES_PASSWORD}
     ports:
-      - "${POSTGRES_PORT_HOST}:${POSTGRES_PORT_CONTAINER}"  # 5435:5432
+      - "${POSTGRES_PORT_HOST}:${POSTGRES_PORT_CONTAINER}"  # напр. 5435:5432
     volumes:
       - db-data:/var/lib/postgresql/data
+      # init.sql создаёт cs2_user, cs2_admin, роли и права
+      - ./db/init.sql:/docker-entrypoint-initdb.d/init.sql:ro
     networks:
       - cs2-net
 
