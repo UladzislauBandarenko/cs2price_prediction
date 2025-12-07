@@ -17,7 +17,7 @@ namespace cs2price_prediction.Controllers
             _metaService = metaService;
         }
 
-        // 1) weapon_types: rifle / pistol / smg / sniper / knife / ...
+        // 1) Weapon types: rifle / pistol / smg / sniper / knife / ...
         //
         // GET /api/meta/weapon-types
         [HttpGet("weapon-types")]
@@ -26,7 +26,7 @@ namespace cs2price_prediction.Controllers
             return await _metaService.GetWeaponTypesAsync();
         }
 
-        // 2) weapons по конкретному типу оружия
+        // 2) Weapons for a specific weapon type
         //
         // GET /api/meta/weapon-types/{weaponTypeId}/weapons
         [HttpGet("weapon-types/{weaponTypeId:int}/weapons")]
@@ -35,7 +35,7 @@ namespace cs2price_prediction.Controllers
             return await _metaService.GetWeaponsForTypeAsync(weaponTypeId);
         }
 
-        // 3) все скины для конкретного оружия (без patternStyle в запросе)
+        // 3) All skins for a specific weapon (patternStyle is not passed in the request)
         //
         // GET /api/meta/weapons/{weaponId}/skins
         [HttpGet("weapons/{weaponId:int}/skins")]
@@ -44,7 +44,7 @@ namespace cs2price_prediction.Controllers
             return await _metaService.GetSkinsForWeaponAsync(weaponId);
         }
 
-        // 4) доступные wear (качества) для конкретного скина
+        // 4) Available wear tiers (conditions) for a specific skin
         //
         // GET /api/meta/skins/{skinId}/wear-tiers
         [HttpGet("skins/{skinId:int}/wear-tiers")]
@@ -53,7 +53,7 @@ namespace cs2price_prediction.Controllers
             return await _metaService.GetWearForSkinAsync(skinId);
         }
 
-        // 5) паттерны / фазы для скина
+        // 5) Pattern / phase options for a specific skin
         //
         // GET /api/meta/skins/{skinId}/patterns
         [HttpGet("skins/{skinId:int}/patterns")]
@@ -67,7 +67,7 @@ namespace cs2price_prediction.Controllers
             return Ok(patterns);
         }
 
-        // 7) поиск стикеров (для выбора до 4 шт.)
+        // 7) Sticker search (for selecting up to 4 stickers)
         //
         // GET /api/meta/stickers?q=...&limit=50
         [HttpGet("stickers")]

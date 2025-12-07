@@ -1,16 +1,32 @@
+# .NET / Visual Studio артефакты
 bin/
 obj/
 .vs/
+
+# git
 .git/
 .gitignore
+
+# локальные и пользовательские файлы
+.env
 *.user
 *.suo
 
+# docker-файлы (внутри образа не нужны)
 Dockerfile
 docker-compose.yml
 
+# Python-сервис: кеши и виртуалки
 cs2_ml_service/__pycache__/
 cs2_ml_service/.venv/
 cs2_ml_service/.pytest_cache/
 
+# Jupyter notebook Ч нужны в репо, Ќ≈ нужны в образе
+cs2_ml_service/notebook/
+
+# ћќƒ≈Ћ» CatBoost Ч храним в репо, Ќ≈ тащим в image
+cs2_ml_service/models/
+cs2_ml_service/**/*.cbm
+
+# логи
 **/*.log

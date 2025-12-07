@@ -2,5 +2,16 @@ __pycache__/
 *.pyc
 .venv/
 .pytest_cache/
+
+# git
 .git/
 .gitignore
+
+# секреты
+.env
+
+# логи
+**/*.log
+
+# опционально: тесты и прочие dev-файлы
+tests/

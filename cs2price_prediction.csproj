@@ -11,9 +11,13 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <Compile Remove="DTOs\Stickers\**" />
     <Compile Remove="Models\**" />
+    <Content Remove="DTOs\Stickers\**" />
     <Content Remove="Models\**" />
+    <EmbeddedResource Remove="DTOs\Stickers\**" />
     <EmbeddedResource Remove="Models\**" />
+    <None Remove="DTOs\Stickers\**" />
     <None Remove="Models\**" />
   </ItemGroup>
 
@@ -33,10 +37,6 @@
     </PackageReference>
     <PackageReference Include="Npgsql.EntityFrameworkCore.PostgreSQL" Version="8.0.0" />
     <PackageReference Include="Swashbuckle.AspNetCore" Version="6.5.0" />
-  </ItemGroup>
-
-  <ItemGroup>
-    <Folder Include="DTOs\Stickers\" />
   </ItemGroup>
 
 </Project>

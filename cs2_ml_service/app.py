@@ -1,7 +1,6 @@
 import os
 from typing import Dict
 
-import pandas as pd
 import uvicorn
 from catboost import CatBoostRegressor
 from fastapi import FastAPI, HTTPException
@@ -9,7 +8,10 @@ from pydantic import BaseModel
 
 # ==== Пути ====
 BASE_DIR = os.path.dirname(os.path.abspath(__file__))
-MODELS_DIR = os.path.join(BASE_DIR, "models")
+
+# Берём MODELS_DIR из ENV (для контейнера это /app/models),
+# а локально по умолчанию = <папка_этого_файла>/models
+MODELS_DIR = os.getenv("MODELS_DIR", os.path.join(BASE_DIR, "models"))
 
 print("BASE_DIR:", BASE_DIR)
 print("MODELS_DIR:", MODELS_DIR)
@@ -18,15 +20,8 @@ app = FastAPI(title="CS2 Pricing ML Service")
 
 models: Dict[str, CatBoostRegressor] = {}
 
+# ========= 1. Pydantic-схемы =========
 
-# ========= 1. Pydantic-схемы ПОД ГОТОВЫЕ ФИЧИ (то, что шлёт C#) =========
-
-# 1) CASE HARDENED KNIVES
-# feature_cols (НОВАЯ СХЕМА, БЕЗ market_hash_name):
-# ["float","pattern","stattrak",
-#  "backside_blue","backside_purple","backside_gold",
-#  "playside_blue","playside_purple","playside_gold",
-#  "weapon","skin","wear"]
 class CaseHardenedRequest(BaseModel):
     float: float
     pattern: int
@@ -44,24 +39,12 @@ class CaseHardenedRequest(BaseModel):
     wear: str
 
 
-# 2) CH_GUNS (без изменений)
-# num_features:
-# ["float","pattern","stattrak",
-#  "backside_blue","backside_purple","backside_gold",
-#  "playside_blue","playside_purple","playside_gold",
-#  "stickers_count","stickers_total_value","stickers_avg_value","stickers_max_value",
-#  "slot0_price","slot1_price","slot2_price","slot3_price",
-#  "blue_score","gold_score","blue_tier","gold_tier"]
-# cat_features:
-# ["weapon","skin","wear","pattern_style"]
 class ChGunsRequest(BaseModel):
-    # категориальные
     weapon: str
     skin: str
     wear: str
     pattern_style: str
 
-    # базовые числовые (base_num_features)
     float: float
     pattern: int
     stattrak: int
@@ -79,14 +62,10 @@ class ChGunsRequest(BaseModel):
     slot2_price: float
     slot3_price: float
 
-    # engineered_num_features
     blue_score: float
     blue_tier: int
 
 
-# 3) DOPPLER KNIVES (уже без pattern, как ты сделал)
-# feature_cols:
-# ["float","stattrak","weapon","skin","wear","phase"]
 class DopplerRequest(BaseModel):
     weapon: str
     skin: str
@@ -97,14 +76,6 @@ class DopplerRequest(BaseModel):
     stattrak: int
 
 
-# 4) FADE GUNS
-# НОВАЯ СХЕМА (БЕЗ market_hash_name):
-# all_features:
-# ["float","pattern","stattrak",
-#  "fade_percentage","fade_rank",
-#  "stickers_count","stickers_total_value","stickers_avg_value","stickers_max_value",
-#  "slot0_price","slot1_price","slot2_price","slot3_price",
-#  "weapon","skin","wear"]
 class FadeGunsRequest(BaseModel):
     float: float
     pattern: int
@@ -128,12 +99,6 @@ class FadeGunsRequest(BaseModel):
     wear: str
 
 
-# 5) FADE KNIVES
-# НОВАЯ СХЕМА (БЕЗ market_hash_name):
-# feature_cols:
-# ["float","pattern","stattrak",
-#  "fade_percentage","fade_rank",
-#  "weapon","skin","wear"]
 class FadeKnivesRequest(BaseModel):
     float: float
     pattern: int
@@ -147,13 +112,6 @@ class FadeKnivesRequest(BaseModel):
     wear: str
 
 
-# 6) FLOAT-SENSITIVE GUNS
-# НОВАЯ СХЕМА (БЕЗ market_hash_name):
-# all_features:
-# ["float","stattrak",
-#  "stickers_count","stickers_total_value","stickers_avg_value","stickers_max_value",
-#  "slot0_price","slot1_price","slot2_price","slot3_price",
-#  "weapon","skin","wear"]
 class FloatSensitiveGunsRequest(BaseModel):
     float: float
     stattrak: int
@@ -200,6 +158,11 @@ def load_all_models():
 
 # ========= 3. Endpoints =========
 
+@app.get("/health")
+def health():
+    return {"status": "ok", "models_loaded": list(models.keys())}
+
+
 @app.post("/predict/case-hardened")
 def predict_case_hardened(payload: CaseHardenedRequest):
     model = models.get("case_hardened")
@@ -222,10 +185,10 @@ def predict_case_hardened(payload: CaseHardenedRequest):
     ]
 
     row = payload.dict()
-    df = pd.DataFrame([[row[c] for c in feature_cols]], columns=feature_cols)
+    features = [row[c] for c in feature_cols]
 
     try:
-        price = float(model.predict(df)[0])
+        price = float(model.predict([features])[0])
     except Exception as e:
         raise HTTPException(status_code=500, detail=f"Prediction error: {e}")
 
@@ -269,10 +232,10 @@ def predict_ch_guns(payload: ChGunsRequest):
     feature_cols = base_num_features + engineered_num_features + cat_features
 
     row = payload.dict()
-    df = pd.DataFrame([[row[c] for c in feature_cols]], columns=feature_cols)
+    features = [row[c] for c in feature_cols]
 
     try:
-        price = float(model.predict(df)[0])
+        price = float(model.predict([features])[0])
     except Exception as e:
         raise HTTPException(status_code=500, detail=f"Prediction error: {e}")
 
@@ -305,10 +268,10 @@ def predict_doppler(payload: DopplerRequest):
     ]
 
     row = payload.dict()
-    df = pd.DataFrame([[row[c] for c in feature_cols]], columns=feature_cols)
+    features = [row[c] for c in feature_cols]
 
     try:
-        price = float(model.predict(df)[0])
+        price = float(model.predict([features])[0])
     except Exception as e:
         raise HTTPException(status_code=500, detail=f"Prediction error: {e}")
 
@@ -341,10 +304,10 @@ def predict_fade_guns(payload: FadeGunsRequest):
     ]
 
     row = payload.dict()
-    df = pd.DataFrame([[row[c] for c in feature_cols]], columns=feature_cols)
+    features = [row[c] for c in feature_cols]
 
     try:
-        price = float(model.predict(df)[0])
+        price = float(model.predict([features])[0])
     except Exception as e:
         raise HTTPException(status_code=500, detail=f"Prediction error: {e}")
 
@@ -376,10 +339,10 @@ def predict_fade_knives(payload: FadeKnivesRequest):
     ]
 
     row = payload.dict()
-    df = pd.DataFrame([[row[c] for c in feature_cols]], columns=feature_cols)
+    features = [row[c] for c in feature_cols]
 
     try:
-        price = float(model.predict(df)[0])
+        price = float(model.predict([features])[0])
     except Exception as e:
         raise HTTPException(status_code=500, detail=f"Prediction error: {e}")
 
@@ -409,10 +372,10 @@ def predict_float_sensitive_guns(payload: FloatSensitiveGunsRequest):
     ]
 
     row = payload.dict()
-    df = pd.DataFrame([[row[c] for c in feature_cols]], columns=feature_cols)
+    features = [row[c] for c in feature_cols]
 
     try:
-        price = float(model.predict(df)[0])
+        price = float(model.predict([features])[0])
     except Exception as e:
         raise HTTPException(status_code=500, detail=f"Prediction error: {e}")
 

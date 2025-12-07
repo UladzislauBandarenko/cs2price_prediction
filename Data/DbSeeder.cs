@@ -27,7 +27,7 @@ namespace cs2price_prediction.Data
 
         private string GetDataPath(string fileName)
         {
-            // ВСЕ csv лежат в cs2price_prediction/data_for_db/
+            // All CSV files are stored in cs2price_prediction/data_for_db/
             var path = Path.Combine(_env.ContentRootPath, "data_for_db", fileName);
             _logger.LogInformation("[DbSeeder] Resolving data file {File}: {Path}", fileName, path);
             return path;
@@ -432,7 +432,8 @@ namespace cs2price_prediction.Data
                 return;
             }
 
-            var path = GetDataPath("fade_gun_unique_patterns.csv"); // 👈 ВАЖНО: имя как в папке data_for_db
+            // IMPORTANT: file name must match the one in data_for_db
+            var path = GetDataPath("fade_gun_unique_patterns.csv");
             if (!File.Exists(path))
             {
                 _logger.LogWarning("[DbSeeder] fade_gun_unique_patterns.csv not found at {Path}", path);
@@ -453,8 +454,8 @@ namespace cs2price_prediction.Data
                 var parts = line.Split(',', StringSplitOptions.TrimEntries);
                 if (parts.Length < 5) continue;
 
-                var weaponName = parts[0];      // AWP
-                var skinName = parts[1];        // Fade
+                var weaponName = parts[0];      // e.g. AWP
+                var skinName = parts[1];        // e.g. Fade
 
                 if (!int.TryParse(parts[2], out var pattern))
                     continue;
@@ -499,7 +500,7 @@ namespace cs2price_prediction.Data
                 return;
             }
 
-            // ⚠️ ИСПОЛЬЗУЕМ fade_knives_unique_patterns.csv (knives!)
+            // Use fade_knives_unique_patterns.csv (for knives)
             var path = GetDataPath("fade_knives_unique_patterns.csv");
             if (!File.Exists(path))
             {
@@ -512,7 +513,7 @@ namespace cs2price_prediction.Data
             var culture = CultureInfo.InvariantCulture;
             var inserted = 0;
 
-            // Ожидаемый формат:
+            // Expected CSV format:
             // weapon_name,skin_name,pattern,fade_percentage,fade_rank
             foreach (var line in lines.Skip(1))
             {
@@ -654,7 +655,7 @@ namespace cs2price_prediction.Data
             _logger.LogInformation("[DbSeeder] doppler_skin_phases seeded: {Count}", inserted);
         }
 
-        // ---------- stickers + sticker_prices из stickers_dataset.csv ----------
+        // ---------- stickers + sticker_prices from stickers_dataset.csv ----------
 
         private async Task SeedStickersAndPricesFromDatasetAsync()
         {
@@ -674,7 +675,7 @@ namespace cs2price_prediction.Data
             var lines = await File.ReadAllLinesAsync(path);
             var culture = CultureInfo.InvariantCulture;
 
-            // Формат:
+            // Expected format:
             // sticker_id,name,reference_price
             // 114,Sticker | Sneaky Beaky Like,0.36
 
@@ -689,7 +690,7 @@ namespace cs2price_prediction.Data
                 var parts = line.Split(',', 3, StringSplitOptions.TrimEntries);
                 if (parts.Length < 3) continue;
 
-                // var externalId = parts[0]; // можем игнорить
+                // var externalId = parts[0]; // can be ignored
                 var name = parts[1];
 
                 if (!double.TryParse(parts[2], NumberStyles.Any, culture, out var price))

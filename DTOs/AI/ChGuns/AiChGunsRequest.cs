@@ -1,10 +1,9 @@
 ﻿using System.Text.Json.Serialization;
 
-namespace cs2price_prediction.DTOs.Ml
+namespace cs2price_prediction.DTOs.AI.ChGuns
 {
-    public class MlChGunsRequest
+    public class AiChGunsRequest
     {
-        // ---------- categorical ----------
         [JsonPropertyName("weapon")]
         public string Weapon { get; set; } = "";
 
@@ -32,17 +31,11 @@ namespace cs2price_prediction.DTOs.Ml
         [JsonPropertyName("playside_blue")]
         public double PlaysideBlue { get; set; }
 
-        [JsonPropertyName("stickers_count")]
-        public int StickersCount { get; set; }
+        [JsonPropertyName("blue_score")]
+        public double BlueScore { get; set; }
 
-        [JsonPropertyName("stickers_total_value")]
-        public double StickersTotalValue { get; set; }
-
-        [JsonPropertyName("stickers_avg_value")]
-        public double StickersAvgValue { get; set; }
-
-        [JsonPropertyName("stickers_max_value")]
-        public double StickersMaxValue { get; set; }
+        [JsonPropertyName("blue_tier")]
+        public double BlueTier { get; set; }
 
         [JsonPropertyName("slot0_price")]
         public double Slot0Price { get; set; }
@@ -56,10 +49,19 @@ namespace cs2price_prediction.DTOs.Ml
         [JsonPropertyName("slot3_price")]
         public double Slot3Price { get; set; }
 
-        [JsonPropertyName("blue_score")]
-        public double BlueScore { get; set; }
+        [JsonPropertyName("sticker_slot1_name")]
+        public string? StickerSlot1Name { get; set; }
 
-        [JsonPropertyName("blue_tier")]
-        public double BlueTier { get; set; }
+        [JsonPropertyName("sticker_slot2_name")]
+        public string? StickerSlot2Name { get; set; }
+
+        [JsonPropertyName("sticker_slot3_name")]
+        public string? StickerSlot3Name { get; set; }
+
+        [JsonPropertyName("sticker_slot4_name")]
+        public string? StickerSlot4Name { get; set; }
+
+        [JsonPropertyName("predicted_price")]
+        public double PredictedPrice { get; set; }
     }
 }

@@ -29,7 +29,7 @@ namespace cs2price_prediction.Services.Prediction
 
         public async Task<IActionResult> PredictAsync(PredictionRequestDto dto)
         {
-            // 1. Skin + Weapon + PatternStyle
+            // 1. Load Skin with Weapon and get PatternStyle
             var skin = await _db.Skins
                 .Include(s => s.Weapon)
                 .FirstOrDefaultAsync(s => s.Id == dto.SkinId);
@@ -54,14 +54,14 @@ namespace cs2price_prediction.Services.Prediction
             var skinName = skin.Name;
             var wearName = wear.Name;
 
-            // 2. HttpClient (один на весь запрос)
+            // 2. HttpClient (single instance per request)
             var client = _httpClientFactory.CreateClient("MlService");
 
-            // 3. Стикеры (считаем один раз)
+            // 3. Stickers (calculate features once)
             var stickerIds = dto.Stickers ?? new List<int>();
             var stickerFeatures = await _stickerService.CalculateFeaturesAsync(stickerIds);
 
-            // 4. Роутинг по pattern_style → к конкретному ML endpoint
+            // 4. Routing by pattern_style → specific ML endpoint
             return patternStyle switch
             {
                 "ch_knife" => await PredictCaseHardenedKnife(dto, weaponName, skinName, wearName, client),
@@ -316,7 +316,7 @@ namespace cs2price_prediction.Services.Prediction
         }
 
         // ---------------------------
-        // Общий маппинг ответа от ML
+        // Common mapping of ML service response
         // ---------------------------
         private async Task<IActionResult> MapMlResponse(HttpResponseMessage response)
         {
