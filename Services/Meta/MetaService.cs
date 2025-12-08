@@ -198,15 +198,24 @@ namespace cs2price_prediction.Services.Meta
                 .AsNoTracking()
                 .AsQueryable();
 
-            // If a search query is provided → apply ILIKE filter
-            if (!string.IsNullOrWhiteSpace(q))
-            {
-                query = query.Where(s => EF.Functions.ILike(s.Name, $"%{q}%"));
-            }
-
-            // Enforce reasonable limit to avoid heavy queries
+            // limits
             if (limit <= 0 || limit > 200)
                 limit = 50;
+
+            if (!string.IsNullOrWhiteSpace(q))
+            {
+                //  (PostgreSQL) 
+                if (_db.Database.ProviderName?.Contains("Npgsql", StringComparison.OrdinalIgnoreCase) == true)
+                {
+                    query = query.Where(s => EF.Functions.ILike(s.Name, $"%{q}%"));
+                }
+                else
+                {
+                    //  (InMemory) 
+                    var qLower = q.ToLower();
+                    query = query.Where(s => s.Name.ToLower().Contains(qLower));
+                }
+            }
 
             return await query
                 .OrderBy(s => s.Name)
@@ -217,5 +226,6 @@ namespace cs2price_prediction.Services.Meta
                 ))
                 .ToListAsync();
         }
+
     }
 }

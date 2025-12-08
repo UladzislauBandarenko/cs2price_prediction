@@ -7,6 +7,10 @@ appsettings.json
 appsettings.Development.json
 .env
 
+# Ignore coverage + test results (твой проект)
+cs2price_prediction.Tests/coverage-report/
+cs2price_prediction.Tests/TestResults/
+
 # Python cache
 __pycache__/
 *.pyc
