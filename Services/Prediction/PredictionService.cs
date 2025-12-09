@@ -64,12 +64,12 @@ namespace cs2price_prediction.Services.Prediction
             // 4. Routing by pattern_style → specific ML endpoint
             return patternStyle switch
             {
-                "ch_knife" => await PredictCaseHardenedKnife(dto, weaponName, skinName, wearName, client),
-                "ch_gun" => await PredictCaseHardenedGun(dto, weaponName, skinName, wearName, stickerFeatures, client),
-                "fade_gun" => await PredictFadeGun(dto, weaponName, skinName, wearName, stickerFeatures, client),
-                "fade_knife" => await PredictFadeKnife(dto, weaponName, skinName, wearName, client),
+                "ch_knife"      => await PredictCaseHardenedKnife(dto, weaponName, skinName, wearName, client),
+                "ch_gun"        => await PredictCaseHardenedGun(dto, weaponName, skinName, wearName, stickerFeatures, client),
+                "fade_gun"      => await PredictFadeGun(dto, weaponName, skinName, wearName, stickerFeatures, client),
+                "fade_knife"    => await PredictFadeKnife(dto, weaponName, skinName, wearName, client),
                 "doppler_knife" => await PredictDopplerKnife(dto, skin.Id, weaponName, skinName, wearName, client),
-                "float_gun" => await PredictFloatSensitiveGuns(dto, weaponName, skinName, wearName, stickerFeatures, client),
+                "float_gun"     => await PredictFloatSensitiveGuns(dto, weaponName, skinName, wearName, stickerFeatures, client),
 
                 _ => new BadRequestObjectResult($"Unsupported pattern style: {patternStyle}")
             };

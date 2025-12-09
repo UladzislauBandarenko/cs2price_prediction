@@ -22,6 +22,7 @@ models: Dict[str, CatBoostRegressor] = {}
 
 # ========= 1. Pydantic-схемы =========
 
+
 class CaseHardenedRequest(BaseModel):
     float: float
     pattern: int
@@ -133,6 +134,7 @@ class FloatSensitiveGunsRequest(BaseModel):
 
 # ========= 2. Загрузка CatBoost-моделей =========
 
+
 def load_catboost_model(filename: str) -> CatBoostRegressor:
     path = os.path.join(MODELS_DIR, filename)
     print("Trying to load model:", path)
@@ -157,6 +159,7 @@ def load_all_models():
 
 
 # ========= 3. Endpoints =========
+
 
 @app.get("/health")
 def health():
