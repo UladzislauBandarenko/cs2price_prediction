@@ -1,6 +1,6 @@
 # Admin API Documentation
 
-All **Admin** endpoints require **JWT authorization**:
+All **Admin** endpoints require **API authorization**:
 
 ```
 Authorization: API_KEY 
