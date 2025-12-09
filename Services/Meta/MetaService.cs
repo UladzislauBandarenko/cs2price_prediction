@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+using System;
+using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using cs2price_prediction.Data;
@@ -16,6 +17,7 @@ namespace cs2price_prediction.Services.Meta
             _db = db;
         }
 
+        // Returns the list of all weapon types (sorted by ID)
         public async Task<IEnumerable<WeaponTypeDto>> GetWeaponTypesAsync()
         {
             return await _db.WeaponTypes
@@ -29,6 +31,7 @@ namespace cs2price_prediction.Services.Meta
                 .ToListAsync();
         }
 
+        // Returns all weapons for a specific weapon type
         public async Task<IEnumerable<WeaponDto>> GetWeaponsForTypeAsync(int weaponTypeId)
         {
             return await _db.Weapons
@@ -42,6 +45,7 @@ namespace cs2price_prediction.Services.Meta
                 .ToListAsync();
         }
 
+        // Returns all skins for a specific weapon
         public async Task<IEnumerable<SkinDto>> GetSkinsForWeaponAsync(int weaponId)
         {
             return await _db.Skins
@@ -56,6 +60,7 @@ namespace cs2price_prediction.Services.Meta
                 .ToListAsync();
         }
 
+        // Returns all allowed wear tiers for a specific skin
         public async Task<IEnumerable<WearTierDto>> GetWearForSkinAsync(int skinId)
         {
             return await _db.SkinWearTiers
@@ -69,12 +74,16 @@ namespace cs2price_prediction.Services.Meta
                 .ToListAsync();
         }
 
+        // Returns available pattern options depending on the skin's pattern style.
+        // If the skin does not exist → SkinExists = false.
+        // If the skin exists but does not use patterns → empty list.
         public async Task<(bool SkinExists, IEnumerable<PatternOptionDto> Patterns)> GetPatternsForSkinAsync(int skinId)
         {
             var skin = await _db.Skins
                 .AsNoTracking()
                 .FirstOrDefaultAsync(s => s.Id == skinId);
 
+            // Skin not found
             if (skin is null)
                 return (false, Enumerable.Empty<PatternOptionDto>());
 
@@ -82,6 +91,9 @@ namespace cs2price_prediction.Services.Meta
 
             switch (style)
             {
+                // -------------------------------
+                // Case-Hardened guns
+                // -------------------------------
                 case "ch_gun":
                     {
                         var patterns = await _db.CaseHardenedGunPatterns
@@ -97,6 +109,9 @@ namespace cs2price_prediction.Services.Meta
                         return (true, patterns);
                     }
 
+                // -------------------------------
+                // Case-Hardened knives
+                // -------------------------------
                 case "ch_knife":
                     {
                         var patterns = await _db.CaseHardenedKnifePatterns
@@ -112,6 +127,9 @@ namespace cs2price_prediction.Services.Meta
                         return (true, patterns);
                     }
 
+                // -------------------------------
+                // Fade guns
+                // -------------------------------
                 case "fade_gun":
                     {
                         var patterns = await _db.FadeGunPatterns
@@ -127,6 +145,9 @@ namespace cs2price_prediction.Services.Meta
                         return (true, patterns);
                     }
 
+                // -------------------------------
+                // Fade knives
+                // -------------------------------
                 case "fade_knife":
                     {
                         var patterns = await _db.FadeKnifePatterns
@@ -142,6 +163,9 @@ namespace cs2price_prediction.Services.Meta
                         return (true, patterns);
                     }
 
+                // -------------------------------
+                // Doppler knives (Pattern = PhaseId)
+                // -------------------------------
                 case "doppler_knife":
                     {
                         var phases = await _db.DopplerSkinPhases
@@ -158,26 +182,41 @@ namespace cs2price_prediction.Services.Meta
                         return (true, phases);
                     }
 
+                // -------------------------------
+                // Skins where pattern does not matter (float-only guns)
+                // -------------------------------
                 case "float_gun":
                 default:
-                    // паттерны не важны → пустой список, но скин существует
                     return (true, Enumerable.Empty<PatternOptionDto>());
             }
         }
 
+        // Returns filtered list of stickers.
+        // Supports case-insensitive search via ILIKE.
         public async Task<IEnumerable<StickerDto>> GetStickersAsync(string? q, int limit)
         {
             var query = _db.Stickers
                 .AsNoTracking()
                 .AsQueryable();
 
-            if (!string.IsNullOrWhiteSpace(q))
-            {
-                query = query.Where(s => EF.Functions.ILike(s.Name, $"%{q}%"));
-            }
-
+            // limits
             if (limit <= 0 || limit > 200)
                 limit = 50;
+
+            if (!string.IsNullOrWhiteSpace(q))
+            {
+                // PostgreSQL
+                if (_db.Database.ProviderName?.Contains("Npgsql", StringComparison.OrdinalIgnoreCase) == true)
+                {
+                    query = query.Where(s => EF.Functions.ILike(s.Name, $"%{q}%"));
+                }
+                else
+                {
+                    // InMemory / other providers
+                    var qLower = q.ToLower();
+                    query = query.Where(s => s.Name.ToLower().Contains(qLower));
+                }
+            }
 
             return await query
                 .OrderBy(s => s.Name)

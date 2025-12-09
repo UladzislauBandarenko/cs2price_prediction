@@ -1,0 +1,132 @@
+Summary
+  Generated on: 09.12.2025 - 0:46:55
+  Coverage date: 08.12.2025 - 18:43:45 - 09.12.2025 - 0:45:27
+  Parser: MultiReport (15x Cobertura)
+  Assemblies: 1
+  Classes: 110
+  Files: 113
+  Line coverage: 46.3%
+  Covered lines: 2707
+  Uncovered lines: 3136
+  Coverable lines: 5843
+  Total lines: 8924
+  Branch coverage: 80.7% (642 of 795)
+  Covered branches: 642
+  Total branches: 795
+  Method coverage: 93.6% (517 of 552)
+  Full method coverage: 89.3% (493 of 552)
+  Covered methods: 517
+  Fully covered methods: 493
+  Total methods: 552
+
+cs2price_prediction                                                                                    46.3%
+  cs2price_prediction.Config.OpenAiOptions                                                               80%
+  cs2price_prediction.Controllers.Admin.AdminSkinsController                                            100%
+  cs2price_prediction.Controllers.Admin.AdminSkinWearTiersController                                    100%
+  cs2price_prediction.Controllers.Admin.AdminStickersController                                         100%
+  cs2price_prediction.Controllers.Admin.AdminWeaponsController                                          100%
+  cs2price_prediction.Controllers.Admin.AdminWeaponTypesController                                      100%
+  cs2price_prediction.Controllers.Admin.AdminWearTiersController                                        100%
+  cs2price_prediction.Controllers.Admin.Patterns.AdminCaseHardenedGunPatternsController                 100%
+  cs2price_prediction.Controllers.Admin.Patterns.AdminCaseHardenedKnifePatternsController               100%
+  cs2price_prediction.Controllers.Admin.Patterns.AdminDopplerPhasesController                           100%
+  cs2price_prediction.Controllers.Admin.Patterns.AdminDopplerSkinPhasesController                       100%
+  cs2price_prediction.Controllers.Admin.Patterns.AdminFadeGunPatternsController                         100%
+  cs2price_prediction.Controllers.Admin.Patterns.AdminFadeKnifePatternsController                       100%
+  cs2price_prediction.Controllers.AiExplanationController                                               100%
+  cs2price_prediction.Controllers.AiExplanationV2Controller                                             100%
+  cs2price_prediction.Controllers.MetaController                                                        100%
+  cs2price_prediction.Controllers.PredictionController                                                  100%
+  cs2price_prediction.Data.AdminDbContextFactory                                                          0%
+  cs2price_prediction.Data.AppDbContext                                                                 100%
+  cs2price_prediction.Data.DbSeeder                                                                    83.6%
+  cs2price_prediction.Data.DesignTimeDbContextFactory                                                     0%
+  cs2price_prediction.Domain.Meta.Skin                                                                 64.7%
+  cs2price_prediction.Domain.Meta.SkinWearTier                                                           80%
+  cs2price_prediction.Domain.Meta.Weapon                                                                 80%
+  cs2price_prediction.Domain.Meta.WeaponType                                                            100%
+  cs2price_prediction.Domain.Meta.WearTier                                                              100%
+  cs2price_prediction.Domain.Patterns.CaseHardenedGunPattern                                            100%
+  cs2price_prediction.Domain.Patterns.CaseHardenedKnifePattern                                          100%
+  cs2price_prediction.Domain.Patterns.DopplerPhase                                                       75%
+  cs2price_prediction.Domain.Patterns.DopplerSkinPhase                                                  100%
+  cs2price_prediction.Domain.Patterns.FadeGunPattern                                                    100%
+  cs2price_prediction.Domain.Patterns.FadeKnifePattern                                                  100%
+  cs2price_prediction.Domain.Stickers.Sticker                                                            75%
+  cs2price_prediction.Domain.Stickers.StickerPrice                                                      100%
+  cs2price_prediction.DTOs.Admin.Patterns.CaseHardenedGun.CreateCaseHardenedGunPatternDto               100%
+  cs2price_prediction.DTOs.Admin.Patterns.CaseHardenedGun.UpdateCaseHardenedGunPatternDto               100%
+  cs2price_prediction.DTOs.Admin.Patterns.CaseHardenedKnife.CreateCaseHardenedKnifePatternDto           100%
+  cs2price_prediction.DTOs.Admin.Patterns.CaseHardenedKnife.UpdateCaseHardenedKnifePatternDto           100%
+  cs2price_prediction.DTOs.Admin.Patterns.Doppler.CreateDopplerPhaseDto                                 100%
+  cs2price_prediction.DTOs.Admin.Patterns.Doppler.UpdateDopplerPhaseDto                                 100%
+  cs2price_prediction.DTOs.Admin.Patterns.DopplerSkin.CreateDopplerSkinPhaseDto                         100%
+  cs2price_prediction.DTOs.Admin.Patterns.DopplerSkin.UpdateDopplerSkinPhaseDto                         100%
+  cs2price_prediction.DTOs.Admin.Patterns.FadeGun.CreateFadeGunPatternDto                               100%
+  cs2price_prediction.DTOs.Admin.Patterns.FadeGun.UpdateFadeGunPatternDto                               100%
+  cs2price_prediction.DTOs.Admin.Patterns.FadeKnife.CreateFadeKnifePatternDto                           100%
+  cs2price_prediction.DTOs.Admin.Patterns.FadeKnife.UpdateFadeKnifePatternDto                           100%
+  cs2price_prediction.DTOs.Admin.Skins.CreateSkinDto                                                    100%
+  cs2price_prediction.DTOs.Admin.Skins.UpdateSkinDto                                                    100%
+  cs2price_prediction.DTOs.Admin.SkinWearTiers.CreateSkinWearTierDto                                    100%
+  cs2price_prediction.DTOs.Admin.SkinWearTiers.DeleteSkinWearTierDto                                    100%
+  cs2price_prediction.DTOs.Admin.SkinWearTiers.UpdateSkinWearTierDto                                    100%
+  cs2price_prediction.DTOs.Admin.Stickers.CreateStickerDto                                              100%
+  cs2price_prediction.DTOs.Admin.Stickers.UpdateStickerDto                                              100%
+  cs2price_prediction.DTOs.Admin.Weapons.CreateWeaponDto                                                100%
+  cs2price_prediction.DTOs.Admin.Weapons.UpdateWeaponDto                                                100%
+  cs2price_prediction.DTOs.Admin.WeaponTypes.CreateWeaponTypeDto                                        100%
+  cs2price_prediction.DTOs.Admin.WeaponTypes.UpdateWeaponTypeDto                                        100%
+  cs2price_prediction.DTOs.Admin.WearTiers.CreateWearTierDto                                            100%
+  cs2price_prediction.DTOs.Admin.WearTiers.UpdateWearTierDto                                            100%
+  cs2price_prediction.DTOs.AI.AiExplainFrontendInputDto                                                 100%
+  cs2price_prediction.DTOs.AI.CaseHardenedKnife.AiCaseHardenedKnifeRequest                              100%
+  cs2price_prediction.DTOs.AI.ChGuns.AiChGunsRequest                                                    100%
+  cs2price_prediction.DTOs.AI.Doppler.AiDopplerRequest                                                  100%
+  cs2price_prediction.DTOs.AI.FadeGun.AiFadeGunsRequest                                                 100%
+  cs2price_prediction.DTOs.AI.FadeKnife.AiFadeKnivesRequest                                             100%
+  cs2price_prediction.DTOs.AI.FloatGuns.AiFloatSensitiveGunsRequest                                     100%
+  cs2price_prediction.DTOs.AI.StickersDtoForAI.StickersDtoForAI                                         100%
+  cs2price_prediction.DTOs.Meta.PatternOptionDto                                                        100%
+  cs2price_prediction.DTOs.Meta.SkinDto                                                                 100%
+  cs2price_prediction.DTOs.Meta.StickerDto                                                              100%
+  cs2price_prediction.DTOs.Meta.WeaponDto                                                               100%
+  cs2price_prediction.DTOs.Meta.WeaponTypeDto                                                           100%
+  cs2price_prediction.DTOs.Meta.WearTierDto                                                             100%
+  cs2price_prediction.DTOs.Ml.MlCaseHardenedKnifeRequest                                                100%
+  cs2price_prediction.DTOs.Ml.MlChGunsRequest                                                           100%
+  cs2price_prediction.DTOs.Ml.MlDopplerRequest                                                          100%
+  cs2price_prediction.DTOs.Ml.MlFadeGunsRequest                                                         100%
+  cs2price_prediction.DTOs.Ml.MlFadeKnivesRequest                                                       100%
+  cs2price_prediction.DTOs.Ml.MlFloatSensitiveGunsRequest                                               100%
+  cs2price_prediction.DTOs.Prediction.MlPredictionResponse                                              100%
+  cs2price_prediction.DTOs.Prediction.MlStickerFeaturesResponse                                           0%
+  cs2price_prediction.DTOs.Prediction.PredictionRequestDto                                              100%
+  cs2price_prediction.Migrations.AddSkinWearTiers                                                         0%
+  cs2price_prediction.Migrations.AppDbContextModelSnapshot                                                0%
+  cs2price_prediction.Migrations.InitialCs2Schema                                                         0%
+  cs2price_prediction.Migrations.InitSchema                                                               0%
+  cs2price_prediction.Migrations.RemoveFadeSeedFromFadeGunPatterns                                        0%
+  cs2price_prediction.Security.AdminApiKeyMiddleware                                                    100%
+  cs2price_prediction.Services.Admin.Patterns.CaseHardenedGun.AdminCaseHardenedGunPatternService        100%
+  cs2price_prediction.Services.Admin.Patterns.CaseHardenedKnife.AdminCaseHardenedKnifePatternService    100%
+  cs2price_prediction.Services.Admin.Patterns.DopplerPhase.AdminDopplerPhaseService                     100%
+  cs2price_prediction.Services.Admin.Patterns.DopplerSkinPhase.AdminDopplerSkinPhaseService             100%
+  cs2price_prediction.Services.Admin.Patterns.FadeGun.AdminFadeGunPatternService                        100%
+  cs2price_prediction.Services.Admin.Patterns.FadeKnife.AdminFadeKnifePatternService                    100%
+  cs2price_prediction.Services.Admin.Skins.AdminSkinService                                             100%
+  cs2price_prediction.Services.Admin.SkinWearTiers.AdminSkinWearTierService                             100%
+  cs2price_prediction.Services.Admin.Stickers.AdminStickerService                                       100%
+  cs2price_prediction.Services.Admin.Weapons.AdminWeaponService                                         100%
+  cs2price_prediction.Services.Admin.WeaponTypes.AdminWeaponTypeService                                 100%
+  cs2price_prediction.Services.Admin.WearTiers.AdminWearTierService                                     100%
+  cs2price_prediction.Services.AI.AiExplanation.AiExplanationService                                     67%
+  cs2price_prediction.Services.AI.AiPromptService.AiPromptFactory                                       100%
+  cs2price_prediction.Services.AI.AiStickerService.AiStickerService                                     100%
+  cs2price_prediction.Services.AI.Llm.LlmFailoverService                                                100%
+  cs2price_prediction.Services.AI.Llm.OpenAiClient                                                     84.1%
+  cs2price_prediction.Services.Meta.MetaService                                                        96.4%
+  cs2price_prediction.Services.Prediction.PredictionService                                            97.1%
+  cs2price_prediction.Services.Stickers.StickerFeatures                                                 100%
+  cs2price_prediction.Services.Stickers.StickerService                                                  100%
+  Program                                                                                                 0%

@@ -7,7 +7,6 @@ namespace cs2price_prediction.DTOs.Prediction
         [JsonPropertyName("predicted_price")]
         public double PredictedPrice { get; set; }
 
-        // Если хочешь забирать ещё и фичи стикеров из ответа ML:
         [JsonPropertyName("stickers_features")]
         public MlStickerFeaturesResponse? StickersFeatures { get; set; }
     }

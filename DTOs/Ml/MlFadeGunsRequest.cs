@@ -19,7 +19,6 @@ namespace cs2price_prediction.DTOs.Ml
         [JsonPropertyName("fade_rank")]
         public double FadeRank { get; set; }
 
-        // stickers
         [JsonPropertyName("stickers_count")]
         public int StickersCount { get; set; }
 

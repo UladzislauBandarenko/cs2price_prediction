@@ -2,5 +2,16 @@ __pycache__/
 *.pyc
 .venv/
 .pytest_cache/
+
+# git
 .git/
 .gitignore
+
+# environment
+.env
+
+# logs
+**/*.log
+
+# development-only files (not included in production image)
+tests/

@@ -1,16 +1,32 @@
+# .NET / Visual Studio artifacts
 bin/
 obj/
 .vs/
+
+# git
 .git/
 .gitignore
+
+# Environment and user-specific files
+.env
 *.user
 *.suo
 
+# Docker files (excluded from repository)
 Dockerfile
 docker-compose.yml
 
+# Python artifacts: caches and virtual environment
 cs2_ml_service/__pycache__/
 cs2_ml_service/.venv/
 cs2_ml_service/.pytest_cache/
 
+# Jupyter notebooks and related files (not needed in repo)
+cs2_ml_service/notebook/
+
+# CatBoost models and related files (not needed in the image)
+cs2_ml_service/models/
+cs2_ml_service/**/*.cbm
+
+# Logs
 **/*.log

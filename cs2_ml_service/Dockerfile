@@ -1,20 +1,24 @@
-FROM python:3.11-slim AS base
+FROM python:3.11-slim
 
 WORKDIR /app
 
-ENV PYTHONDONTWRITEBYTECODE=1
-ENV PYTHONUNBUFFERED=1
+ENV PYTHONDONTWRITEBYTECODE=1 \
+    PYTHONUNBUFFERED=1
 
-RUN apt-get update && apt-get install -y --no-install-recommends \
-    build-essential \
- && rm -rf /var/lib/apt/lists/*
+# Install curl (for healthcheck)
+RUN apt-get update && apt-get install -y --no-install-recommends curl \
+    && rm -rf /var/lib/apt/lists/*
 
-# requirements.txt должен лежать в cs2_ml_service/
+# requirements.txt is located in cs2_ml_service/
 COPY cs2_ml_service/requirements.txt ./requirements.txt
-RUN pip install --no-cache-dir -r requirements.txt
+RUN pip install --no-cache-dir --upgrade pip \
+    && pip install --no-cache-dir -r requirements.txt
 
+# Copy project source code
+# (models/ and notebook/ are excluded by root .dockerignore)
 COPY cs2_ml_service/. .
 
+# non-root user
 RUN useradd -m mluser
 USER mluser
 

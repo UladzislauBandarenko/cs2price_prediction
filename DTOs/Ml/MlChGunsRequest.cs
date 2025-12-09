@@ -1,4 +1,4 @@
-﻿using System.Text.Json.Serialization;
+using System.Text.Json.Serialization;
 
 namespace cs2price_prediction.DTOs.Ml
 {
@@ -17,7 +17,6 @@ namespace cs2price_prediction.DTOs.Ml
         [JsonPropertyName("pattern_style")]
         public string PatternStyle { get; set; } = "";
 
-        // ---------- numeric ----------
         [JsonPropertyName("float")]
         public double Float { get; set; }
 
@@ -33,7 +32,6 @@ namespace cs2price_prediction.DTOs.Ml
         [JsonPropertyName("playside_blue")]
         public double PlaysideBlue { get; set; }
 
-        // ---------- sticker features ----------
         [JsonPropertyName("stickers_count")]
         public int StickersCount { get; set; }
 
@@ -58,7 +56,6 @@ namespace cs2price_prediction.DTOs.Ml
         [JsonPropertyName("slot3_price")]
         public double Slot3Price { get; set; }
 
-        // ---------- engineered ----------
         [JsonPropertyName("blue_score")]
         public double BlueScore { get; set; }
 
