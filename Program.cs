@@ -180,4 +180,5 @@ app.UseMiddleware<AdminApiKeyMiddleware>();
 
 app.UseAuthorization();
 app.MapControllers();
+
 app.Run();

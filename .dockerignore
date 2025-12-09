@@ -1,4 +1,4 @@
-# .NET / Visual Studio артефакты
+# .NET / Visual Studio artifacts
 bin/
 obj/
 .vs/
@@ -7,26 +7,26 @@ obj/
 .git/
 .gitignore
 
-# локальные и пользовательские файлы
+# Environment and user-specific files
 .env
 *.user
 *.suo
 
-# docker-файлы (внутри образа не нужны)
+# Docker files (excluded from repository)
 Dockerfile
 docker-compose.yml
 
-# Python-сервис: кеши и виртуалки
+# Python artifacts: caches and virtual environment
 cs2_ml_service/__pycache__/
 cs2_ml_service/.venv/
 cs2_ml_service/.pytest_cache/
 
-# Jupyter notebook Ч нужны в репо, Ќ≈ нужны в образе
+# Jupyter notebooks and related files (not needed in repo)
 cs2_ml_service/notebook/
 
-# ћќƒ≈Ћ» CatBoost Ч храним в репо, Ќ≈ тащим в image
+# CatBoost models and related files (not needed in the image)
 cs2_ml_service/models/
 cs2_ml_service/**/*.cbm
 
-# логи
+# Logs
 **/*.log

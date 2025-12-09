@@ -7,11 +7,11 @@ __pycache__/
 .git/
 .gitignore
 
-# секреты
+# environment
 .env
 
-# логи
+# logs
 **/*.log
 
-# опционально: тесты и прочие dev-файлы
+# development-only files (not included in production image)
 tests/

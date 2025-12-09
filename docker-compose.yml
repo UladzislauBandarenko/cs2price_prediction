@@ -24,7 +24,7 @@ services:
       ConnectionStrings__DefaultConnection: "Host=db;Port=${POSTGRES_PORT_CONTAINER};Database=${POSTGRES_DB};Username=${POSTGRES_USER};Password=${POSTGRES_PASSWORD}"
       ConnectionStrings__AdminConnection: "Host=db;Port=${POSTGRES_PORT_CONTAINER};Database=${POSTGRES_DB};Username=${POSTGRES_USER};Password=${POSTGRES_PASSWORD}"
 
-      # 🔹 OpenAI (API key is taken from .env)
+      # OpenAI (API key is taken from .env)
       OpenAI__ApiKey: ${OpenAI__ApiKey}
 
     depends_on:

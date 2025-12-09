@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+using System;
+using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using cs2price_prediction.Data;
@@ -204,14 +205,14 @@ namespace cs2price_prediction.Services.Meta
 
             if (!string.IsNullOrWhiteSpace(q))
             {
-                //  (PostgreSQL) 
+                // PostgreSQL
                 if (_db.Database.ProviderName?.Contains("Npgsql", StringComparison.OrdinalIgnoreCase) == true)
                 {
                     query = query.Where(s => EF.Functions.ILike(s.Name, $"%{q}%"));
                 }
                 else
                 {
-                    //  (InMemory) 
+                    // InMemory / other providers
                     var qLower = q.ToLower();
                     query = query.Where(s => s.Name.ToLower().Contains(qLower));
                 }
@@ -226,6 +227,5 @@ namespace cs2price_prediction.Services.Meta
                 ))
                 .ToListAsync();
         }
-
     }
 }
