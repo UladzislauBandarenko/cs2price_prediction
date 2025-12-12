@@ -1,0 +1,715 @@
+{
+	"id": "c0f57aed-3cc5-477a-8500-4871346f6346",
+	"name": "cs2price_prediction - Explain Endpoints Tests",
+	"timestamp": "2025-12-11T21:18:35.743Z",
+	"collection_id": "41171600-0251b898-8ca3-4155-91ae-70a8355ccd11",
+	"folder_id": 0,
+	"environment_id": "0",
+	"totalPass": 28,
+	"delay": 0,
+	"persist": true,
+	"status": "finished",
+	"startedAt": "2025-12-11T21:17:50.532Z",
+	"totalFail": 0,
+	"results": [
+		{
+			"id": "8465a426-c8a5-4b27-b2d6-f5039e338473",
+			"name": "AiExplanation v1 - TC_EXPL_V1_01 - Happy Path",
+			"url": "http://localhost:8087/api/ai/explain",
+			"time": 3042,
+			"responseCode": {
+				"code": 200,
+				"name": "OK"
+			},
+			"tests": {
+				"Status is 200": true,
+				"Response is JSON": true,
+				"Has non-empty explanation": true
+			},
+			"testPassFailCounts": {
+				"Status is 200": {
+					"pass": 1,
+					"fail": 0
+				},
+				"Response is JSON": {
+					"pass": 1,
+					"fail": 0
+				},
+				"Has non-empty explanation": {
+					"pass": 1,
+					"fail": 0
+				}
+			},
+			"times": [
+				3042
+			],
+			"allTests": [
+				{
+					"Status is 200": true,
+					"Response is JSON": true,
+					"Has non-empty explanation": true
+				}
+			]
+		},
+		{
+			"id": "3aca3db7-a540-4871-82b7-64922f77010e",
+			"name": "AiExplanation v1 - TC_EXPL_V1_02 - Missing predictedPrice",
+			"url": "http://localhost:8087/api/ai/explain",
+			"time": 2,
+			"responseCode": {
+				"code": 400,
+				"name": "Bad Request"
+			},
+			"tests": {
+				"Status is 4xx": true,
+				"Error mentions predictedPrice": true
+			},
+			"testPassFailCounts": {
+				"Status is 4xx": {
+					"pass": 1,
+					"fail": 0
+				},
+				"Error mentions predictedPrice": {
+					"pass": 1,
+					"fail": 0
+				}
+			},
+			"times": [
+				2
+			],
+			"allTests": [
+				{
+					"Status is 4xx": true,
+					"Error mentions predictedPrice": true
+				}
+			]
+		},
+		{
+			"id": "a8f01837-e55d-480e-908f-afea5cefbf9e",
+			"name": "AiExplanation v1 - TC_EXPL_V1_03 - Wrong type predictedPrice",
+			"url": "http://localhost:8087/api/ai/explain",
+			"time": 3,
+			"responseCode": {
+				"code": 400,
+				"name": "Bad Request"
+			},
+			"tests": {
+				"Status is 4xx": true
+			},
+			"testPassFailCounts": {
+				"Status is 4xx": {
+					"pass": 1,
+					"fail": 0
+				}
+			},
+			"times": [
+				3
+			],
+			"allTests": [
+				{
+					"Status is 4xx": true
+				}
+			]
+		},
+		{
+			"id": "8f931b7d-f38c-4f57-81f3-6f7dee2214f2",
+			"name": "AiExplanation v1 - TC_EXPL_V1_04 - Empty stickers array",
+			"url": "http://localhost:8087/api/ai/explain",
+			"time": 2974,
+			"responseCode": {
+				"code": 200,
+				"name": "OK"
+			},
+			"tests": {
+				"Status 200 or handled": true,
+				"Has explanation": true
+			},
+			"testPassFailCounts": {
+				"Status 200 or handled": {
+					"pass": 1,
+					"fail": 0
+				},
+				"Has explanation": {
+					"pass": 1,
+					"fail": 0
+				}
+			},
+			"times": [
+				2974
+			],
+			"allTests": [
+				{
+					"Status 200 or handled": true,
+					"Has explanation": true
+				}
+			]
+		},
+		{
+			"id": "bedefc17-f856-4b42-aba9-7e322a5449e9",
+			"name": "AiExplanation v1 - TC_EXPL_V1_05 - Large stickers array (500)",
+			"url": "http://localhost:8087/api/ai/explain",
+			"time": 4,
+			"responseCode": {
+				"code": 400,
+				"name": "Bad Request"
+			},
+			"tests": {
+				"Status 200 or 413 or 4xx": true
+			},
+			"testPassFailCounts": {
+				"Status 200 or 413 or 4xx": {
+					"pass": 1,
+					"fail": 0
+				}
+			},
+			"times": [
+				4
+			],
+			"allTests": [
+				{
+					"Status 200 or 413 or 4xx": true
+				}
+			]
+		},
+		{
+			"id": "a1dbd56c-171c-4c1c-9bf9-399eee8a5a8e",
+			"name": "AiExplanation v1 - TC_EXPL_V1_06 - Semantic relevance (Factory New + low float)",
+			"url": "http://localhost:8087/api/ai/explain",
+			"time": 3256,
+			"responseCode": {
+				"code": 200,
+				"name": "OK"
+			},
+			"tests": {
+				"Status 200": true,
+				"Has explanation text": true
+			},
+			"testPassFailCounts": {
+				"Status 200": {
+					"pass": 1,
+					"fail": 0
+				},
+				"Has explanation text": {
+					"pass": 1,
+					"fail": 0
+				}
+			},
+			"times": [
+				3256
+			],
+			"allTests": [
+				{
+					"Status 200": true,
+					"Has explanation text": true
+				}
+			]
+		},
+		{
+			"id": "dedad30a-571e-4afe-967b-d33c47b218eb",
+			"name": "AiExplanation v1 - TC_EXPL_V1_07 - Invalid Content-Type",
+			"url": "http://localhost:8087/api/ai/explain",
+			"time": 2,
+			"responseCode": {
+				"code": 415,
+				"name": "Unsupported Media Type"
+			},
+			"tests": {
+				"Status 4xx or 415": true
+			},
+			"testPassFailCounts": {
+				"Status 4xx or 415": {
+					"pass": 1,
+					"fail": 0
+				}
+			},
+			"times": [
+				2
+			],
+			"allTests": [
+				{
+					"Status 4xx or 415": true
+				}
+			]
+		},
+		{
+			"id": "83883f0f-6633-49e6-80ac-b64d6cdb5ad1",
+			"name": "AiExplanation v1 - TC_EXPL_V1_08 - Extremely large predictedPrice",
+			"url": "http://localhost:8087/api/ai/explain",
+			"time": 3688,
+			"responseCode": {
+				"code": 200,
+				"name": "OK"
+			},
+			"tests": {
+				"Status 200 or 4xx": true
+			},
+			"testPassFailCounts": {
+				"Status 200 or 4xx": {
+					"pass": 1,
+					"fail": 0
+				}
+			},
+			"times": [
+				3688
+			],
+			"allTests": [
+				{
+					"Status 200 or 4xx": true
+				}
+			]
+		},
+		{
+			"id": "a970d39a-6084-4a50-adcb-c09e663ea368",
+			"name": "AiExplanation v1 - TC_EXPL_V1_09 - Zero predictedPrice",
+			"url": "http://localhost:8087/api/ai/explain",
+			"time": 2,
+			"responseCode": {
+				"code": 400,
+				"name": "Bad Request"
+			},
+			"tests": {
+				"Status 200 or handled": true
+			},
+			"testPassFailCounts": {
+				"Status 200 or handled": {
+					"pass": 1,
+					"fail": 0
+				}
+			},
+			"times": [
+				2
+			],
+			"allTests": [
+				{
+					"Status 200 or handled": true
+				}
+			]
+		},
+		{
+			"id": "7029a167-7520-48d6-92c3-9a6da2820010",
+			"name": "AiExplanation v1 - TC_EXPL_V1_10 - Malformed JSON",
+			"url": "http://localhost:8087/api/ai/explain",
+			"time": 2,
+			"responseCode": {
+				"code": 400,
+				"name": "Bad Request"
+			},
+			"tests": {
+				"Expect 4xx": true
+			},
+			"testPassFailCounts": {
+				"Expect 4xx": {
+					"pass": 1,
+					"fail": 0
+				}
+			},
+			"times": [
+				2
+			],
+			"allTests": [
+				{
+					"Expect 4xx": true
+				}
+			]
+		},
+		{
+			"id": "ce1486a1-8664-4093-97a2-c39f60e3ee13",
+			"name": "AiExplanation v1 - TC_EXPL_V1_11 - Partially invalid stickers",
+			"url": "http://localhost:8087/api/ai/explain",
+			"time": 2,
+			"responseCode": {
+				"code": 400,
+				"name": "Bad Request"
+			},
+			"tests": {
+				"Status 200 or 4xx": true
+			},
+			"testPassFailCounts": {
+				"Status 200 or 4xx": {
+					"pass": 1,
+					"fail": 0
+				}
+			},
+			"times": [
+				2
+			],
+			"allTests": [
+				{
+					"Status 200 or 4xx": true
+				}
+			]
+		},
+		{
+			"id": "51b14df4-7f9e-496b-931f-a1f27d99422b",
+			"name": "AiExplanation v1 - TC_EXPL_V1_12 - Rate limit spot-check",
+			"url": "http://localhost:8087/api/ai/explain",
+			"time": 5505,
+			"responseCode": {
+				"code": 200,
+				"name": "OK"
+			},
+			"tests": {
+				"Status is 200 or 429 or 4xx": true
+			},
+			"testPassFailCounts": {
+				"Status is 200 or 429 or 4xx": {
+					"pass": 1,
+					"fail": 0
+				}
+			},
+			"times": [
+				5505
+			],
+			"allTests": [
+				{
+					"Status is 200 or 429 or 4xx": true
+				}
+			]
+		},
+		{
+			"id": "aef65bf0-0b8f-4464-aa19-563919c657e2",
+			"name": "AiExplanation v2 - TC_EXPL_V2_01 - Happy Path",
+			"url": "http://localhost:8087/api/ai/explain-v2",
+			"time": 2341,
+			"responseCode": {
+				"code": 200,
+				"name": "OK"
+			},
+			"tests": {
+				"Status 200": true,
+				"Has explanation": true
+			},
+			"testPassFailCounts": {
+				"Status 200": {
+					"pass": 1,
+					"fail": 0
+				},
+				"Has explanation": {
+					"pass": 1,
+					"fail": 0
+				}
+			},
+			"times": [
+				2341
+			],
+			"allTests": [
+				{
+					"Status 200": true,
+					"Has explanation": true
+				}
+			]
+		},
+		{
+			"id": "3f161268-8c20-4469-a522-f65a4306f8a6",
+			"name": "AiExplanation v2 - TC_EXPL_V2_02 - Comparative v1 vs v2 (manual)",
+			"url": "http://localhost:8087/api/ai/explain-v2",
+			"time": 3769,
+			"responseCode": {
+				"code": 200,
+				"name": "OK"
+			},
+			"tests": {
+				"Status 200": true
+			},
+			"testPassFailCounts": {
+				"Status 200": {
+					"pass": 1,
+					"fail": 0
+				}
+			},
+			"times": [
+				3769
+			],
+			"allTests": [
+				{
+					"Status 200": true
+				}
+			]
+		},
+		{
+			"id": "641f3e1e-5f3e-4958-bbed-b16b7ae55618",
+			"name": "AiExplanation v2 - TC_EXPL_V2_03 - Negative predictedPrice",
+			"url": "http://localhost:8087/api/ai/explain-v2",
+			"time": 2,
+			"responseCode": {
+				"code": 400,
+				"name": "Bad Request"
+			},
+			"tests": {
+				"Status 4xx or 200 handled": true
+			},
+			"testPassFailCounts": {
+				"Status 4xx or 200 handled": {
+					"pass": 1,
+					"fail": 0
+				}
+			},
+			"times": [
+				2
+			],
+			"allTests": [
+				{
+					"Status 4xx or 200 handled": true
+				}
+			]
+		},
+		{
+			"id": "b9394e30-a4e6-44d1-b195-b8f011d5f766",
+			"name": "AiExplanation v2 - TC_EXPL_V2_04 - Repeatability 1",
+			"url": "http://localhost:8087/api/ai/explain-v2",
+			"time": 2706,
+			"responseCode": {
+				"code": 200,
+				"name": "OK"
+			},
+			"tests": {
+				"Status 200": true
+			},
+			"testPassFailCounts": {
+				"Status 200": {
+					"pass": 1,
+					"fail": 0
+				}
+			},
+			"times": [
+				2706
+			],
+			"allTests": [
+				{
+					"Status 200": true
+				}
+			]
+		},
+		{
+			"id": "c6fc1d5f-0b0c-416a-9fee-fa3fd2cde58c",
+			"name": "AiExplanation v2 - TC_EXPL_V2_04 - Repeatability 2",
+			"url": "http://localhost:8087/api/ai/explain-v2",
+			"time": 5717,
+			"responseCode": {
+				"code": 200,
+				"name": "OK"
+			},
+			"tests": {
+				"Status 200": true
+			},
+			"testPassFailCounts": {
+				"Status 200": {
+					"pass": 1,
+					"fail": 0
+				}
+			},
+			"times": [
+				5717
+			],
+			"allTests": [
+				{
+					"Status 200": true
+				}
+			]
+		},
+		{
+			"id": "6f0064d2-d50b-4392-a5fb-aa86b7448522",
+			"name": "AiExplanation v2 - TC_EXPL_V2_04 - Repeatability 3",
+			"url": "http://localhost:8087/api/ai/explain-v2",
+			"time": 2150,
+			"responseCode": {
+				"code": 200,
+				"name": "OK"
+			},
+			"tests": {
+				"Status 200": true
+			},
+			"testPassFailCounts": {
+				"Status 200": {
+					"pass": 1,
+					"fail": 0
+				}
+			},
+			"times": [
+				2150
+			],
+			"allTests": [
+				{
+					"Status 200": true
+				}
+			]
+		},
+		{
+			"id": "9c0c3cc7-f6f1-43ec-b3b1-11144cf2f008",
+			"name": "AiExplanation v2 - TC_EXPL_V2_04 - Repeatability 4",
+			"url": "http://localhost:8087/api/ai/explain-v2",
+			"time": 2354,
+			"responseCode": {
+				"code": 200,
+				"name": "OK"
+			},
+			"tests": {
+				"Status 200": true
+			},
+			"testPassFailCounts": {
+				"Status 200": {
+					"pass": 1,
+					"fail": 0
+				}
+			},
+			"times": [
+				2354
+			],
+			"allTests": [
+				{
+					"Status 200": true
+				}
+			]
+		},
+		{
+			"id": "a59f7e6f-60b0-4eb7-8858-30b591009171",
+			"name": "AiExplanation v2 - TC_EXPL_V2_04 - Repeatability 5",
+			"url": "http://localhost:8087/api/ai/explain-v2",
+			"time": 2995,
+			"responseCode": {
+				"code": 200,
+				"name": "OK"
+			},
+			"tests": {
+				"Status 200": true
+			},
+			"testPassFailCounts": {
+				"Status 200": {
+					"pass": 1,
+					"fail": 0
+				}
+			},
+			"times": [
+				2995
+			],
+			"allTests": [
+				{
+					"Status 200": true
+				}
+			]
+		},
+		{
+			"id": "37886ace-5721-4a46-987d-9379adffd8eb",
+			"name": "AiExplanation v2 - TC_EXPL_V2_05 - Empty stickers handling",
+			"url": "http://localhost:8087/api/ai/explain-v2",
+			"time": 2707,
+			"responseCode": {
+				"code": 200,
+				"name": "OK"
+			},
+			"tests": {
+				"Status 200": true,
+				"Has explanation": true
+			},
+			"testPassFailCounts": {
+				"Status 200": {
+					"pass": 1,
+					"fail": 0
+				},
+				"Has explanation": {
+					"pass": 1,
+					"fail": 0
+				}
+			},
+			"times": [
+				2707
+			],
+			"allTests": [
+				{
+					"Status 200": true,
+					"Has explanation": true
+				}
+			]
+		}
+	],
+	"count": 1,
+	"totalTime": 43223,
+	"collection": {
+		"requests": [
+			{
+				"id": "8465a426-c8a5-4b27-b2d6-f5039e338473",
+				"method": "POST"
+			},
+			{
+				"id": "3aca3db7-a540-4871-82b7-64922f77010e",
+				"method": "POST"
+			},
+			{
+				"id": "a8f01837-e55d-480e-908f-afea5cefbf9e",
+				"method": "POST"
+			},
+			{
+				"id": "8f931b7d-f38c-4f57-81f3-6f7dee2214f2",
+				"method": "POST"
+			},
+			{
+				"id": "bedefc17-f856-4b42-aba9-7e322a5449e9",
+				"method": "POST"
+			},
+			{
+				"id": "a1dbd56c-171c-4c1c-9bf9-399eee8a5a8e",
+				"method": "POST"
+			},
+			{
+				"id": "dedad30a-571e-4afe-967b-d33c47b218eb",
+				"method": "POST"
+			},
+			{
+				"id": "83883f0f-6633-49e6-80ac-b64d6cdb5ad1",
+				"method": "POST"
+			},
+			{
+				"id": "a970d39a-6084-4a50-adcb-c09e663ea368",
+				"method": "POST"
+			},
+			{
+				"id": "7029a167-7520-48d6-92c3-9a6da2820010",
+				"method": "POST"
+			},
+			{
+				"id": "ce1486a1-8664-4093-97a2-c39f60e3ee13",
+				"method": "POST"
+			},
+			{
+				"id": "51b14df4-7f9e-496b-931f-a1f27d99422b",
+				"method": "POST"
+			},
+			{
+				"id": "aef65bf0-0b8f-4464-aa19-563919c657e2",
+				"method": "POST"
+			},
+			{
+				"id": "3f161268-8c20-4469-a522-f65a4306f8a6",
+				"method": "POST"
+			},
+			{
+				"id": "641f3e1e-5f3e-4958-bbed-b16b7ae55618",
+				"method": "POST"
+			},
+			{
+				"id": "b9394e30-a4e6-44d1-b195-b8f011d5f766",
+				"method": "POST"
+			},
+			{
+				"id": "c6fc1d5f-0b0c-416a-9fee-fa3fd2cde58c",
+				"method": "POST"
+			},
+			{
+				"id": "6f0064d2-d50b-4392-a5fb-aa86b7448522",
+				"method": "POST"
+			},
+			{
+				"id": "9c0c3cc7-f6f1-43ec-b3b1-11144cf2f008",
+				"method": "POST"
+			},
+			{
+				"id": "a59f7e6f-60b0-4eb7-8858-30b591009171",
+				"method": "POST"
+			},
+			{
+				"id": "37886ace-5721-4a46-987d-9379adffd8eb",
+				"method": "POST"
+			}
+		]
+	}
+}

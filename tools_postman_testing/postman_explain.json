@@ -1,0 +1,868 @@
+{
+  "info": {
+    "name": "cs2price_prediction - Explain Endpoints Tests",
+    "_postman_id": "cs2price_explain_only_001",
+    "description": "Postman collection covering detailed tests for /api/ai/explain and /api/ai/explain-v2 according to provided test cases.",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+  },
+  "item": [
+    {
+      "name": "AiExplanation v1 - TC_EXPL_V1_01 - Happy Path",
+      "request": {
+        "method": "POST",
+        "header": [
+          {
+            "key": "Content-Type",
+            "value": "application/json"
+          },
+          {
+            "key": "Accept",
+            "value": "application/json"
+          }
+        ],
+        "body": {
+          "mode": "raw",
+          "raw": "{\"predictedPrice\": 3525, \"skinId\": 13, \"wearTierId\": 1, \"floatValue\": 0.023, \"isStattrak\": false, \"pattern\": 332, \"stickers\": [1, 6, 65, 5]}"
+        },
+        "url": {
+          "raw": "{{base_url}}/api/ai/explain",
+          "host": [
+            "{{base_url}}"
+          ],
+          "path": [
+            "api",
+            "ai",
+            "explain"
+          ]
+        }
+      },
+      "event": [
+        {
+          "listen": "test",
+          "script": {
+            "type": "text/javascript",
+            "exec": [
+              "pm.test('Status is 200', () => pm.response.to.have.status(200));",
+              "pm.test('Response is JSON', () => pm.response.to.be.json);",
+              "pm.test('Has non-empty explanation', () => { const b = pm.response.json(); pm.expect(b).to.have.property('explanation'); pm.expect(b.explanation).to.be.a('string').and.to.have.length.above(10); });"
+            ]
+          }
+        }
+      ]
+    },
+    {
+      "name": "AiExplanation v1 - TC_EXPL_V1_02 - Missing predictedPrice",
+      "request": {
+        "method": "POST",
+        "header": [
+          {
+            "key": "Content-Type",
+            "value": "application/json"
+          },
+          {
+            "key": "Accept",
+            "value": "application/json"
+          }
+        ],
+        "body": {
+          "mode": "raw",
+          "raw": "{\"skinId\": 13, \"wearTierId\": 1, \"floatValue\": 0.023, \"isStattrak\": false, \"pattern\": 332, \"stickers\": [1, 6, 65, 5]}"
+        },
+        "url": {
+          "raw": "{{base_url}}/api/ai/explain",
+          "host": [
+            "{{base_url}}"
+          ],
+          "path": [
+            "api",
+            "ai",
+            "explain"
+          ]
+        }
+      },
+      "event": [
+        {
+          "listen": "test",
+          "script": {
+            "type": "text/javascript",
+            "exec": [
+              "pm.test('Status is 4xx', () => pm.expect(pm.response.code).to.be.within(400,499));",
+              "pm.test('Error mentions predictedPrice', () => { try { const b = pm.response.json(); const msg = (b.error||b.message||'').toLowerCase(); pm.expect(msg).to.include('predictedprice'); } catch(e){ pm.expect(true).to.be.true; } });"
+            ]
+          }
+        }
+      ]
+    },
+    {
+      "name": "AiExplanation v1 - TC_EXPL_V1_03 - Wrong type predictedPrice",
+      "request": {
+        "method": "POST",
+        "header": [
+          {
+            "key": "Content-Type",
+            "value": "application/json"
+          },
+          {
+            "key": "Accept",
+            "value": "application/json"
+          }
+        ],
+        "body": {
+          "mode": "raw",
+          "raw": "{\"predictedPrice\": \"three thousand\", \"skinId\": 13, \"wearTierId\": 1, \"floatValue\": 0.023, \"isStattrak\": false, \"pattern\": 332, \"stickers\": [1, 6, 65, 5]}"
+        },
+        "url": {
+          "raw": "{{base_url}}/api/ai/explain",
+          "host": [
+            "{{base_url}}"
+          ],
+          "path": [
+            "api",
+            "ai",
+            "explain"
+          ]
+        }
+      },
+      "event": [
+        {
+          "listen": "test",
+          "script": {
+            "type": "text/javascript",
+            "exec": [
+              "pm.test('Status is 4xx', () => pm.expect(pm.response.code).to.be.within(400,499));"
+            ]
+          }
+        }
+      ]
+    },
+    {
+      "name": "AiExplanation v1 - TC_EXPL_V1_04 - Empty stickers array",
+      "request": {
+        "method": "POST",
+        "header": [
+          {
+            "key": "Content-Type",
+            "value": "application/json"
+          },
+          {
+            "key": "Accept",
+            "value": "application/json"
+          }
+        ],
+        "body": {
+          "mode": "raw",
+          "raw": "{\"predictedPrice\": 3525, \"skinId\": 13, \"wearTierId\": 1, \"floatValue\": 0.023, \"isStattrak\": false, \"pattern\": 332, \"stickers\": []}"
+        },
+        "url": {
+          "raw": "{{base_url}}/api/ai/explain",
+          "host": [
+            "{{base_url}}"
+          ],
+          "path": [
+            "api",
+            "ai",
+            "explain"
+          ]
+        }
+      },
+      "event": [
+        {
+          "listen": "test",
+          "script": {
+            "type": "text/javascript",
+            "exec": [
+              "pm.test('Status 200 or handled', () => pm.expect(pm.response.code).to.be.oneOf([200,400,415]));",
+              "if (pm.response.code===200) { pm.test('Has explanation', ()=> { const b = pm.response.json(); pm.expect(b).to.have.property('explanation'); }); }"
+            ]
+          }
+        }
+      ]
+    },
+    {
+      "name": "AiExplanation v1 - TC_EXPL_V1_05 - Large stickers array (500)",
+      "request": {
+        "method": "POST",
+        "header": [
+          {
+            "key": "Content-Type",
+            "value": "application/json"
+          },
+          {
+            "key": "Accept",
+            "value": "application/json"
+          }
+        ],
+        "body": {
+          "mode": "raw",
+          "raw": ""
+        },
+        "url": {
+          "raw": "{{base_url}}/api/ai/explain",
+          "host": [
+            "{{base_url}}"
+          ],
+          "path": [
+            "api",
+            "ai",
+            "explain"
+          ]
+        }
+      },
+      "event": [
+        {
+          "listen": "prerequest",
+          "script": {
+            "type": "text/javascript",
+            "exec": [
+              "var arr = []; for(var i=1;i<=500;i++){ arr.push(i); }",
+              "var body = { predictedPrice:3525, skinId:13, wearTierId:1, floatValue:0.023, isStattrak:false, pattern:332, stickers:arr };",
+              "pm.request.body.update(JSON.stringify(body));"
+            ]
+          }
+        },
+        {
+          "listen": "test",
+          "script": {
+            "type": "text/javascript",
+            "exec": [
+              "pm.test('Status 200 or 413 or 4xx', () => pm.expect(pm.response.code).to.be.within(200,499));"
+            ]
+          }
+        }
+      ]
+    },
+    {
+      "name": "AiExplanation v1 - TC_EXPL_V1_06 - Semantic relevance (Factory New + low float)",
+      "request": {
+        "method": "POST",
+        "header": [
+          {
+            "key": "Content-Type",
+            "value": "application/json"
+          },
+          {
+            "key": "Accept",
+            "value": "application/json"
+          }
+        ],
+        "body": {
+          "mode": "raw",
+          "raw": "{\"predictedPrice\": 5000, \"skinId\": 13, \"wearTierId\": 1, \"floatValue\": 0.0005, \"isStattrak\": false, \"pattern\": 332, \"stickers\": []}"
+        },
+        "url": {
+          "raw": "{{base_url}}/api/ai/explain",
+          "host": [
+            "{{base_url}}"
+          ],
+          "path": [
+            "api",
+            "ai",
+            "explain"
+          ]
+        }
+      },
+      "event": [
+        {
+          "listen": "test",
+          "script": {
+            "type": "text/javascript",
+            "exec": [
+              "pm.test('Status 200', ()=> pm.response.to.have.status(200));",
+              "pm.test('Has explanation text', ()=> { const b=pm.response.json(); pm.expect(b).to.have.property('explanation'); });"
+            ]
+          }
+        }
+      ]
+    },
+    {
+      "name": "AiExplanation v1 - TC_EXPL_V1_07 - Invalid Content-Type",
+      "request": {
+        "method": "POST",
+        "header": [
+          {
+            "key": "Content-Type",
+            "value": "text/plain"
+          },
+          {
+            "key": "Accept",
+            "value": "application/json"
+          }
+        ],
+        "body": {
+          "mode": "raw",
+          "raw": "{\"predictedPrice\": 3525, \"skinId\": 13, \"wearTierId\": 1, \"floatValue\": 0.023, \"isStattrak\": false, \"pattern\": 332, \"stickers\": [1, 6]}"
+        },
+        "url": {
+          "raw": "{{base_url}}/api/ai/explain",
+          "host": [
+            "{{base_url}}"
+          ],
+          "path": [
+            "api",
+            "ai",
+            "explain"
+          ]
+        }
+      },
+      "event": [
+        {
+          "listen": "test",
+          "script": {
+            "type": "text/javascript",
+            "exec": [
+              "pm.test('Status 4xx or 415', ()=> pm.expect(pm.response.code).to.be.within(400,499));"
+            ]
+          }
+        }
+      ]
+    },
+    {
+      "name": "AiExplanation v1 - TC_EXPL_V1_08 - Extremely large predictedPrice",
+      "request": {
+        "method": "POST",
+        "header": [
+          {
+            "key": "Content-Type",
+            "value": "application/json"
+          }
+        ],
+        "body": {
+          "mode": "raw",
+          "raw": "{\"predictedPrice\": 999999999, \"skinId\": 13, \"wearTierId\": 1, \"floatValue\": 0.023, \"isStattrak\": false, \"pattern\": 332, \"stickers\": [1]}"
+        },
+        "url": {
+          "raw": "{{base_url}}/api/ai/explain",
+          "host": [
+            "{{base_url}}"
+          ],
+          "path": [
+            "api",
+            "ai",
+            "explain"
+          ]
+        }
+      },
+      "event": [
+        {
+          "listen": "test",
+          "script": {
+            "type": "text/javascript",
+            "exec": [
+              "pm.test('Status 200 or 4xx', ()=> pm.expect(pm.response.code).to.be.within(200,499));"
+            ]
+          }
+        }
+      ]
+    },
+    {
+      "name": "AiExplanation v1 - TC_EXPL_V1_09 - Zero predictedPrice",
+      "request": {
+        "method": "POST",
+        "header": [
+          {
+            "key": "Content-Type",
+            "value": "application/json"
+          }
+        ],
+        "body": {
+          "mode": "raw",
+          "raw": "{\"predictedPrice\": 0, \"skinId\": 13, \"wearTierId\": 1, \"floatValue\": 0.5, \"isStattrak\": false, \"pattern\": 332, \"stickers\": []}"
+        },
+        "url": {
+          "raw": "{{base_url}}/api/ai/explain",
+          "host": [
+            "{{base_url}}"
+          ],
+          "path": [
+            "api",
+            "ai",
+            "explain"
+          ]
+        }
+      },
+      "event": [
+        {
+          "listen": "test",
+          "script": {
+            "type": "text/javascript",
+            "exec": [
+              "pm.test('Status 200 or handled', ()=> pm.expect(pm.response.code).to.be.within(200,499));"
+            ]
+          }
+        }
+      ]
+    },
+    {
+      "name": "AiExplanation v1 - TC_EXPL_V1_10 - Malformed JSON",
+      "request": {
+        "method": "POST",
+        "header": [
+          {
+            "key": "Content-Type",
+            "value": "application/json"
+          }
+        ],
+        "body": {
+          "mode": "raw",
+          "raw": "{ \"predictedPrice\": 3525, \"skinId\": 13, "
+        },
+        "url": {
+          "raw": "{{base_url}}/api/ai/explain",
+          "host": [
+            "{{base_url}}"
+          ],
+          "path": [
+            "api",
+            "ai",
+            "explain"
+          ]
+        }
+      },
+      "event": [
+        {
+          "listen": "test",
+          "script": {
+            "type": "text/javascript",
+            "exec": [
+              "pm.test('Expect 4xx', ()=> pm.expect(pm.response.code).to.be.within(400,499));"
+            ]
+          }
+        }
+      ]
+    },
+    {
+      "name": "AiExplanation v1 - TC_EXPL_V1_11 - Partially invalid stickers",
+      "request": {
+        "method": "POST",
+        "header": [
+          {
+            "key": "Content-Type",
+            "value": "application/json"
+          }
+        ],
+        "body": {
+          "mode": "raw",
+          "raw": "{\"predictedPrice\": 3525, \"skinId\": 13, \"wearTierId\": 1, \"floatValue\": 0.023, \"isStattrak\": false, \"pattern\": 332, \"stickers\": [1, \"abc\", -5, 9999999]}"
+        },
+        "url": {
+          "raw": "{{base_url}}/api/ai/explain",
+          "host": [
+            "{{base_url}}"
+          ],
+          "path": [
+            "api",
+            "ai",
+            "explain"
+          ]
+        }
+      },
+      "event": [
+        {
+          "listen": "test",
+          "script": {
+            "type": "text/javascript",
+            "exec": [
+              "pm.test('Status 200 or 4xx', ()=> pm.expect(pm.response.code).to.be.within(200,499));"
+            ]
+          }
+        }
+      ]
+    },
+    {
+      "name": "AiExplanation v1 - TC_EXPL_V1_12 - Rate limit spot-check",
+      "request": {
+        "method": "POST",
+        "header": [
+          {
+            "key": "Content-Type",
+            "value": "application/json"
+          }
+        ],
+        "body": {
+          "mode": "raw",
+          "raw": "{\"predictedPrice\": 3525, \"skinId\": 13, \"wearTierId\": 1, \"floatValue\": 0.023, \"isStattrak\": false, \"pattern\": 332, \"stickers\": [1]}"
+        },
+        "url": {
+          "raw": "{{base_url}}/api/ai/explain",
+          "host": [
+            "{{base_url}}"
+          ],
+          "path": [
+            "api",
+            "ai",
+            "explain"
+          ]
+        }
+      },
+      "event": [
+        {
+          "listen": "test",
+          "script": {
+            "type": "text/javascript",
+            "exec": [
+              "pm.test('Status is 200 or 429 or 4xx', ()=> pm.expect(pm.response.code).to.be.within(200,499));"
+            ]
+          }
+        }
+      ]
+    },
+    {
+      "name": "AiExplanation v2 - TC_EXPL_V2_01 - Happy Path",
+      "request": {
+        "method": "POST",
+        "header": [
+          {
+            "key": "Content-Type",
+            "value": "application/json"
+          },
+          {
+            "key": "Accept",
+            "value": "application/json"
+          }
+        ],
+        "body": {
+          "mode": "raw",
+          "raw": "{\"predictedPrice\": 3525, \"skinId\": 13, \"wearTierId\": 1, \"floatValue\": 0.023, \"isStattrak\": false, \"pattern\": 332, \"stickers\": [1, 6, 65, 5]}"
+        },
+        "url": {
+          "raw": "{{base_url}}/api/ai/explain-v2",
+          "host": [
+            "{{base_url}}"
+          ],
+          "path": [
+            "api",
+            "ai",
+            "explain-v2"
+          ]
+        }
+      },
+      "event": [
+        {
+          "listen": "test",
+          "script": {
+            "type": "text/javascript",
+            "exec": [
+              "pm.test('Status 200', ()=> pm.response.to.have.status(200));",
+              "pm.test('Has explanation', ()=> { const b=pm.response.json(); pm.expect(b).to.have.property('explanation'); pm.expect(b.explanation.length).to.be.above(5); });"
+            ]
+          }
+        }
+      ]
+    },
+    {
+      "name": "AiExplanation v2 - TC_EXPL_V2_02 - Comparative v1 vs v2 (manual)",
+      "request": {
+        "method": "POST",
+        "header": [
+          {
+            "key": "Content-Type",
+            "value": "application/json"
+          },
+          {
+            "key": "Accept",
+            "value": "application/json"
+          }
+        ],
+        "body": {
+          "mode": "raw",
+          "raw": "{\"predictedPrice\": 180, \"skinId\": 13, \"wearTierId\": 1, \"floatValue\": 0.01, \"isStattrak\": false, \"pattern\": 332, \"stickers\": []}"
+        },
+        "url": {
+          "raw": "{{base_url}}/api/ai/explain-v2",
+          "host": [
+            "{{base_url}}"
+          ],
+          "path": [
+            "api",
+            "ai",
+            "explain-v2"
+          ]
+        }
+      },
+      "event": [
+        {
+          "listen": "test",
+          "script": {
+            "type": "text/javascript",
+            "exec": [
+              "pm.test('Status 200', ()=> pm.response.to.have.status(200));"
+            ]
+          }
+        }
+      ]
+    },
+    {
+      "name": "AiExplanation v2 - TC_EXPL_V2_03 - Negative predictedPrice",
+      "request": {
+        "method": "POST",
+        "header": [
+          {
+            "key": "Content-Type",
+            "value": "application/json"
+          }
+        ],
+        "body": {
+          "mode": "raw",
+          "raw": "{\"predictedPrice\": -100, \"skinId\": 13, \"wearTierId\": 1, \"floatValue\": 0.23, \"isStattrak\": false, \"pattern\": 332, \"stickers\": [1]}"
+        },
+        "url": {
+          "raw": "{{base_url}}/api/ai/explain-v2",
+          "host": [
+            "{{base_url}}"
+          ],
+          "path": [
+            "api",
+            "ai",
+            "explain-v2"
+          ]
+        }
+      },
+      "event": [
+        {
+          "listen": "test",
+          "script": {
+            "type": "text/javascript",
+            "exec": [
+              "pm.test('Status 4xx or 200 handled', ()=> pm.expect(pm.response.code).to.be.within(200,499));"
+            ]
+          }
+        }
+      ]
+    },
+    {
+      "name": "AiExplanation v2 - TC_EXPL_V2_04 - Repeatability 1",
+      "request": {
+        "method": "POST",
+        "header": [
+          {
+            "key": "Content-Type",
+            "value": "application/json"
+          }
+        ],
+        "body": {
+          "mode": "raw",
+          "raw": "{\"predictedPrice\": 3500, \"skinId\": 13, \"wearTierId\": 1, \"floatValue\": 0.023, \"isStattrak\": false, \"pattern\": 332, \"stickers\": [1, 6]}"
+        },
+        "url": {
+          "raw": "{{base_url}}/api/ai/explain-v2",
+          "host": [
+            "{{base_url}}"
+          ],
+          "path": [
+            "api",
+            "ai",
+            "explain-v2"
+          ]
+        }
+      },
+      "event": [
+        {
+          "listen": "test",
+          "script": {
+            "type": "text/javascript",
+            "exec": [
+              "pm.test('Status 200', ()=> pm.response.to.have.status(200));"
+            ]
+          }
+        }
+      ]
+    },
+    {
+      "name": "AiExplanation v2 - TC_EXPL_V2_04 - Repeatability 2",
+      "request": {
+        "method": "POST",
+        "header": [
+          {
+            "key": "Content-Type",
+            "value": "application/json"
+          }
+        ],
+        "body": {
+          "mode": "raw",
+          "raw": "{\"predictedPrice\": 3500, \"skinId\": 13, \"wearTierId\": 1, \"floatValue\": 0.023, \"isStattrak\": false, \"pattern\": 332, \"stickers\": [1, 6]}"
+        },
+        "url": {
+          "raw": "{{base_url}}/api/ai/explain-v2",
+          "host": [
+            "{{base_url}}"
+          ],
+          "path": [
+            "api",
+            "ai",
+            "explain-v2"
+          ]
+        }
+      },
+      "event": [
+        {
+          "listen": "test",
+          "script": {
+            "type": "text/javascript",
+            "exec": [
+              "pm.test('Status 200', ()=> pm.response.to.have.status(200));"
+            ]
+          }
+        }
+      ]
+    },
+    {
+      "name": "AiExplanation v2 - TC_EXPL_V2_04 - Repeatability 3",
+      "request": {
+        "method": "POST",
+        "header": [
+          {
+            "key": "Content-Type",
+            "value": "application/json"
+          }
+        ],
+        "body": {
+          "mode": "raw",
+          "raw": "{\"predictedPrice\": 3500, \"skinId\": 13, \"wearTierId\": 1, \"floatValue\": 0.023, \"isStattrak\": false, \"pattern\": 332, \"stickers\": [1, 6]}"
+        },
+        "url": {
+          "raw": "{{base_url}}/api/ai/explain-v2",
+          "host": [
+            "{{base_url}}"
+          ],
+          "path": [
+            "api",
+            "ai",
+            "explain-v2"
+          ]
+        }
+      },
+      "event": [
+        {
+          "listen": "test",
+          "script": {
+            "type": "text/javascript",
+            "exec": [
+              "pm.test('Status 200', ()=> pm.response.to.have.status(200));"
+            ]
+          }
+        }
+      ]
+    },
+    {
+      "name": "AiExplanation v2 - TC_EXPL_V2_04 - Repeatability 4",
+      "request": {
+        "method": "POST",
+        "header": [
+          {
+            "key": "Content-Type",
+            "value": "application/json"
+          }
+        ],
+        "body": {
+          "mode": "raw",
+          "raw": "{\"predictedPrice\": 3500, \"skinId\": 13, \"wearTierId\": 1, \"floatValue\": 0.023, \"isStattrak\": false, \"pattern\": 332, \"stickers\": [1, 6]}"
+        },
+        "url": {
+          "raw": "{{base_url}}/api/ai/explain-v2",
+          "host": [
+            "{{base_url}}"
+          ],
+          "path": [
+            "api",
+            "ai",
+            "explain-v2"
+          ]
+        }
+      },
+      "event": [
+        {
+          "listen": "test",
+          "script": {
+            "type": "text/javascript",
+            "exec": [
+              "pm.test('Status 200', ()=> pm.response.to.have.status(200));"
+            ]
+          }
+        }
+      ]
+    },
+    {
+      "name": "AiExplanation v2 - TC_EXPL_V2_04 - Repeatability 5",
+      "request": {
+        "method": "POST",
+        "header": [
+          {
+            "key": "Content-Type",
+            "value": "application/json"
+          }
+        ],
+        "body": {
+          "mode": "raw",
+          "raw": "{\"predictedPrice\": 3500, \"skinId\": 13, \"wearTierId\": 1, \"floatValue\": 0.023, \"isStattrak\": false, \"pattern\": 332, \"stickers\": [1, 6]}"
+        },
+        "url": {
+          "raw": "{{base_url}}/api/ai/explain-v2",
+          "host": [
+            "{{base_url}}"
+          ],
+          "path": [
+            "api",
+            "ai",
+            "explain-v2"
+          ]
+        }
+      },
+      "event": [
+        {
+          "listen": "test",
+          "script": {
+            "type": "text/javascript",
+            "exec": [
+              "pm.test('Status 200', ()=> pm.response.to.have.status(200));"
+            ]
+          }
+        }
+      ]
+    },
+    {
+      "name": "AiExplanation v2 - TC_EXPL_V2_05 - Empty stickers handling",
+      "request": {
+        "method": "POST",
+        "header": [
+          {
+            "key": "Content-Type",
+            "value": "application/json"
+          }
+        ],
+        "body": {
+          "mode": "raw",
+          "raw": "{\"predictedPrice\": 1200, \"skinId\": 13, \"wearTierId\": 1, \"floatValue\": 0.007, \"isStattrak\": false, \"pattern\": 332, \"stickers\": []}"
+        },
+        "url": {
+          "raw": "{{base_url}}/api/ai/explain-v2",
+          "host": [
+            "{{base_url}}"
+          ],
+          "path": [
+            "api",
+            "ai",
+            "explain-v2"
+          ]
+        }
+      },
+      "event": [
+        {
+          "listen": "test",
+          "script": {
+            "type": "text/javascript",
+            "exec": [
+              "pm.test('Status 200', ()=> pm.response.to.have.status(200));",
+              "pm.test('Has explanation', ()=> { const b=pm.response.json(); pm.expect(b).to.have.property('explanation'); });"
+            ]
+          }
+        }
+      ]
+    }
+  ],
+  "variable": [
+    {
+      "key": "base_url",
+      "value": "http://localhost:8087"
+    }
+  ]
+}

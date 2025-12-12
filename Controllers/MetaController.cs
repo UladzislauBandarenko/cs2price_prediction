@@ -67,7 +67,7 @@ namespace cs2price_prediction.Controllers
             return Ok(patterns);
         }
 
-        // 7) Sticker search (for selecting up to 4 stickers)
+        // 6) Sticker search (for selecting up to 4 stickers)
         //
         // GET /api/meta/stickers?q=...&limit=50
         [HttpGet("stickers")]

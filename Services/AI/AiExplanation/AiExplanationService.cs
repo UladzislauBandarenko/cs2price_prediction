@@ -1,4 +1,6 @@
-﻿using System.Collections.Generic;
+﻿// File: Services/AI/AiExplanation/AiExplanationService.cs
+using System.Collections.Generic;
+using System.Linq;
 using System.Threading.Tasks;
 using cs2price_prediction.Data;
 using cs2price_prediction.DTOs.AI;
@@ -37,10 +39,21 @@ namespace cs2price_prediction.Services.AI.AiExplanation
         }
 
         /// <summary>
-        /// Главный вход: строим данные для AI, промпт и вызываем LLM с учётом приоритета модели.
+        /// Main entry: prepare data for AI, build prompt and query LLM according to priority.
+        /// - Validates PredictedPrice: it must be greater than 0 (non-zero).
+        /// - Validates wear / skin existence and allowed wear tiers.
+        /// - Validates floatValue matches wear-tier ranges.
+        /// - Builds sticker DTOs (knives ignore stickers).
+        /// - Enforces strict validation: maximum allowed stickers is 4 for non-knife items.
         /// </summary>
         public async Task<IActionResult> ExplainAsync(AiExplainFrontendInputDto dto, LlmPriority priority)
         {
+            // Validate predicted price: cannot be zero or negative.
+            if (dto.PredictedPrice <= 0)
+            {
+                return new BadRequestObjectResult("PredictedPrice must be greater than 0. Provide a valid non-zero predicted price.");
+            }
+
             var skin = await _db.Skins
                 .Include(s => s.Weapon)
                 .FirstOrDefaultAsync(s => s.Id == dto.SkinId);
@@ -66,9 +79,46 @@ namespace cs2price_prediction.Services.AI.AiExplanation
             var wearName = wear.Name;
 
             // ----------------------------
+            // FLOAT vs WEAR validation
+            // ----------------------------
+            // Define allowed ranges per wear tier and validate incoming float value.
+            // Ranges (inclusive):
+            // Factory New:    0.00  - 0.07
+            // Minimal Wear:   0.07  - 0.15
+            // Field-Tested:   0.15  - 0.38
+            // Well-Worn:      0.38  - 0.45
+            // Battle-Scarred: 0.45  - 1.00
+
+            (double Min, double Max, bool Found) GetWearRange(string wName) =>
+                wName switch
+                {
+                    "Factory New" => (0.00, 0.07, true),
+                    "Minimal Wear" => (0.07, 0.15, true),
+                    "Field-Tested" => (0.15, 0.38, true),
+                    "Well-Worn" => (0.38, 0.45, true),
+                    "Battle-Scarred" => (0.45, 1.00, true),
+                    _ => (0.0, 0.0, false)
+                };
+
+            var (minAllowed, maxAllowed, foundRange) = GetWearRange(wearName);
+
+            if (!foundRange)
+            {
+                // If wear name is unexpected — treat as bad request.
+                return new BadRequestObjectResult($"Unknown wear tier name: '{wearName}'.");
+            }
+
+            // Float value should be within the allowed inclusive range.
+            if (dto.FloatValue < minAllowed || dto.FloatValue > maxAllowed)
+            {
+                return new BadRequestObjectResult(
+                    $"Float value {dto.FloatValue} is invalid for wear tier '{wearName}'. Allowed range: [{minAllowed:F2} - {maxAllowed:F2}]."
+                );
+            }
+
+            // ----------------------------
             // STICKER LOGIC
             // ----------------------------
-
             var isKnife =
                 patternStyle == "ch_knife" ||
                 patternStyle == "fade_knife" ||
@@ -78,7 +128,7 @@ namespace cs2price_prediction.Services.AI.AiExplanation
 
             if (isKnife)
             {
-                // НОЖИ: полностью игнорируем стикеры
+                // For knives we ignore sticker prices/names (they don't affect knife explanation).
                 stickersForAi = new StickersDtoForAI
                 {
                     Slot0Price = 0,
@@ -94,13 +144,20 @@ namespace cs2price_prediction.Services.AI.AiExplanation
             else
             {
                 var stickerIds = dto.Stickers ?? new List<int>();
-                stickersForAi = await _aiStickerService.BuildStickersDtoForAiAsync(stickerIds);
+
+                // Strict validation: reject requests with more than 4 stickers for non-knife items.
+                if (stickerIds.Count > 4)
+                {
+                    return new BadRequestObjectResult("Maximum 4 stickers are allowed. Provide 4 or fewer sticker IDs.");
+                }
+
+                // Build DTO for AI (preserves order and duplicates as implemented in IAiStickerService).
+                stickersForAi = await BuildStickersDtoForAiWrapperAsync(stickerIds);
             }
 
             // ----------------------------
             // ROUTING BY pattern_style
             // ----------------------------
-
             return patternStyle switch
             {
                 "ch_knife" =>
@@ -125,46 +182,54 @@ namespace cs2price_prediction.Services.AI.AiExplanation
             };
         }
 
-        // -------------------------
-        // ВСПОМОГАТЕЛЬНЫЙ МЕТОД ДЛЯ ВЫЗОВА LLM С ПРИОРИТЕТОМ
-        // -------------------------
+        /// <summary>
+        /// Wrapper that converts IReadOnlyCollection<int> to IReadOnlyList<int> (List<int>)
+        /// because IAiStickerService.BuildStickersDtoForAiAsync expects IReadOnlyList<int>.
+        /// This preserves order and duplicates.
+        /// </summary>
+        private async Task<StickersDtoForAI> BuildStickersDtoForAiWrapperAsync(IReadOnlyCollection<int> stickerIds)
+        {
+            if (stickerIds is IReadOnlyList<int> readOnlyList)
+            {
+                return await _aiStickerService.BuildStickersDtoForAiAsync(readOnlyList);
+            }
 
+            var list = stickerIds.ToList();
+            return await _aiStickerService.BuildStickersDtoForAiAsync(list);
+        }
+
+        // -------------------------
+        // Helper to query LLM with priority fallback
+        // -------------------------
         private async Task<string> QueryWithPriorityAsync(string prompt, LlmPriority priority)
         {
-            // Имена моделей: подгони под свои реальные, если отличаются
+            // Model names - adjust to your actual available models if different
             const string MiniModel = "gpt-4o-mini";
             const string BigModel = "gpt-4.1-mini";
 
             switch (priority)
             {
                 case LlmPriority.MiniThenGpt41:
+                    try
                     {
-                        // Сначала mini, если упала — big
-                        try
-                        {
-                            return await _llmClient.QueryAsync(prompt, MiniModel);
-                        }
-                        catch
-                        {
-                            return await _llmClient.QueryAsync(prompt, BigModel);
-                        }
+                        return await _llmClient.QueryAsync(prompt, MiniModel);
+                    }
+                    catch
+                    {
+                        return await _llmClient.QueryAsync(prompt, BigModel);
                     }
 
                 case LlmPriority.Gpt41ThenMini:
+                    try
                     {
-                        // Сначала big, если упала — mini
-                        try
-                        {
-                            return await _llmClient.QueryAsync(prompt, BigModel);
-                        }
-                        catch
-                        {
-                            return await _llmClient.QueryAsync(prompt, MiniModel);
-                        }
+                        return await _llmClient.QueryAsync(prompt, BigModel);
+                    }
+                    catch
+                    {
+                        return await _llmClient.QueryAsync(prompt, MiniModel);
                     }
 
                 default:
-                    // На всякий случай — по умолчанию mini
                     return await _llmClient.QueryAsync(prompt, MiniModel);
             }
         }
@@ -334,7 +399,7 @@ namespace cs2price_prediction.Services.AI.AiExplanation
                 FadeRank = row.FadeRank,
 
                 Slot0Price = stickers.Slot0Price,
-                Slot1Price = stickers.Slot1Price,
+                Slot1Price = stickers.StickerSlot1Name != null ? stickers.Slot1Price : 0,
                 Slot2Price = stickers.Slot2Price,
                 Slot3Price = stickers.Slot3Price,
 
