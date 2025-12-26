@@ -33,7 +33,7 @@
 **So that** I can make informed trading decisions.
 
 **Acceptance Criteria:**
-- Prediction response time ≤ 2 seconds
+- Prediction response time <= 2 seconds
 - Prediction is displayed in the UI
 - Prediction history is persisted
 
@@ -77,7 +77,7 @@
 
 ## Non-Functional Requirements
 
-- Performance: response time ≤ 2 seconds
+- Performance: response time <= 2 seconds
 - Security: HTTPS, JWT, secure data storage
 - Scalability: up to 500 concurrent users
 - Availability: ≥ 99%

@@ -6,7 +6,7 @@ Each table is described with its purpose, columns, data types, constraints, and 
 
 ---
 
-![Correlation matrix](../../../assets/images/BD/er.jpg)  
+![ER](../../../../assets/images/BD/er.jpg)  
 
 
 ## 1. weapon_types

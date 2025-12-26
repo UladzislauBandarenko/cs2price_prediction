@@ -102,7 +102,7 @@ and aligns with modern best practices for production ML systems.
 The model selection strategy combines:
 - domain-driven decomposition of the problem,
 - a unified and well-justified algorithm choice,
-- careful consideration of accuracy–latency trade-offs.
+- careful consideration of accuracyâ€“latency trade-offs.
 
 As a result, the final system achieves high predictive performance,
 clear interpretability, and production readiness across multiple CS2 market segments.

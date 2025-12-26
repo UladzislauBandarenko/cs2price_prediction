@@ -166,7 +166,7 @@ Missing values are present in several sticker-related columns and are handled du
 
 ## 2.7 Average Price by Weapon Type
 
-![Mean price by weapon](../../../../assets/assets/images/ML/fade_weapon/weapon_mean_price.jpg)
+![Mean price by weapon](../../../../assets/images/ML/fade_weapon/weapon_mean_price.jpg)
 
 ### Mean Price per Weapon
 
@@ -351,7 +351,7 @@ The tuned CatBoost model clearly outperforms all alternatives.
 
 ## 3.8 Learning Curves
 
-![Learning curves](../assets/images/ML/fade_weapon/learning_curves.jpg)
+![Learning curves](../../../../assets/images/ML/fade_weapon/learning_curves.jpg)
 
 The learning curves show:
 
@@ -365,7 +365,7 @@ This indicates that the model capacity is well matched to dataset size.
 
 ## 3.9 Feature Importance Analysis
 
-![Feature importance](../assets/images/ML/fade_weapon/feature_importance.jpg)
+![Feature importance](../../../../assets/images/ML/fade_weapon/feature_importance.jpg)
 
 ### Observations
 

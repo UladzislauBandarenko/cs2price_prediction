@@ -16,6 +16,14 @@ The project also serves an academic purpose by demonstrating the practical appli
 - web system architecture design,
 - and data-driven decision support systems.
 
+## Contents
+
+- [Problem Statement & Goals](problem-and-goals.md)
+- [Stakeholders & Users](stakeholders.md)
+- [Scope](scope.md)
+- [Features](features.md)
+
+
 ## Scope of This Document
 
 This Project Overview focuses on the **Business Analysis (BA) perspective** and does not describe low-level implementation details. Technical architecture and implementation aspects are addressed only at a conceptual level to support business requirements.
@@ -36,7 +44,7 @@ The Counter-Strike 2 skin market represents a mature virtual economy with real m
 
 Existing tools typically provide aggregated or simplified price estimates, failing to capture the multidimensional nature of item valuation. Moreover, most platforms do not explain why a specific price is suggested, which reduces user trust and increases financial risk.
 
-This diploma project proposes an interactive web-based system that allows users to input detailed skin parameters, receive machine learning–based price predictions, and explore historical price trends and factor influence through visual analytics. Market data is automatically synchronized with external trading platforms such as Steam Market, Buff, and Skinport, ensuring data relevance and reliability.
+This diploma project proposes an interactive web-based system that allows users to input detailed skin parameters, receive machine learningâ€“based price predictions, and explore historical price trends and factor influence through visual analytics. Market data is automatically synchronized with external trading platforms such as Steam Market, Buff, and Skinport, ensuring data relevance and reliability.
 
 ## Key Highlights
 
@@ -47,5 +55,5 @@ This diploma project proposes an interactive web-based system that allows users 
 | Proposed Solution | ML-based analytical web platform |
 | Target Users | CS2 players, traders, trading platforms |
 | Key Capabilities | Prediction, visualization, automation |
-| Architecture | Frontend – Backend API – ML Service – Database |
+| Architecture | Frontend â€“ Backend API â€“ ML Service â€“ Database |
 | Academic Focus | Business analysis, ML, data visualization |

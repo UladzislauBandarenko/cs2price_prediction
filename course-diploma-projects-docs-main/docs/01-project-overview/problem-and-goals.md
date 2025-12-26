@@ -40,7 +40,7 @@ Inaccurate valuation increases financial risk, reduces market efficiency, and un
 | Pricing Accuracy | Improve correctness of price estimates | ≥ 90% accuracy |
 | Risk Reduction | Support informed trading decisions | ≥ 80% user satisfaction |
 | Transparency | Explain pricing factors | SHAP visualizations |
-| Automation | Reduce manual data handling | ≤ 24h data refresh |
+| Automation | Reduce manual data handling | <= 24h data refresh |
 | Reliability | Ensure stable system behavior | ≥ 99% uptime |
 
 ## Project Objectives

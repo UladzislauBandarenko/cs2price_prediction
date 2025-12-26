@@ -38,8 +38,7 @@ The dataset contains sufficient variety across knife types and phases to support
 ### Purpose
 To verify data completeness.
 
-### Figure
-![Missing values](../../../../assets/images/ML/doppler_knives/eda_missing_values.jpg)
+
 
 *Figure 2.1 — Number of missing values per feature*
 

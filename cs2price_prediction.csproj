@@ -53,7 +53,6 @@
 	<ItemGroup>
 	  <Folder Include="course-diploma-projects-docs-main\docs\02-technical\criteria\Containerization\" />
 	  <Folder Include="course-diploma-projects-docs-main\docs\02-technical\criteria\AI_assistant_or_Chatbot\" />
-	  <Folder Include="course-diploma-projects-docs-main\docs\02-technical\criteria\Backend\" />
 	  <Folder Include="course-diploma-projects-docs-main\docs\assets\images\ML\ch_gun\" />
 	  <Folder Include="course-diploma-projects-docs-main\docs\assets\images\ML\ch_knives\" />
 	  <Folder Include="course-diploma-projects-docs-main\docs\assets\images\ML\doppler_knives\" />

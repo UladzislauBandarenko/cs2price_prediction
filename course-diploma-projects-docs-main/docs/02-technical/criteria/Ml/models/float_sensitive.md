@@ -147,7 +147,7 @@ non-linear interactions.
 
 ## 2.7 Effect of StatTrak on Price
 
-![StatTrak boxplot](../../../../assets/ML/float_sensitive_weapon/stattrak_boxplot.jpg)
+![StatTrak boxplot](../../../../assets/images/ML/float_sensitive_weapon/stattrak_boxplot.jpg)
 
 Weapons with `StatTrak = 1` consistently exhibit a higher median price.
 This confirms that StatTrak acts as an additional premium factor
