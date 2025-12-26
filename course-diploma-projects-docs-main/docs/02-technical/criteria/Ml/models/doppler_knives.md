@@ -39,7 +39,7 @@ The dataset contains sufficient variety across knife types and phases to support
 To verify data completeness.
 
 ### Figure
-![Missing values](docs/assets/images/ML/doppler_knives/eda_missing_values.jpg)
+![Missing values](../../../../assets/images/ML/doppler_knives/eda_missing_values.jpg)
 
 *Figure 2.1 — Number of missing values per feature*
 
@@ -58,11 +58,11 @@ No complex imputation strategies are required.
 To analyze the statistical properties of the target variable.
 
 ### Figures
-![Price histogram](docs/assets/images/ML/doppler_knives/eda_price_hist.jpg)
+![Price histogram](../../../../assets/images/ML/doppler_knives/eda_price_hist.jpg)
 
 *Figure 2.2 — Histogram of Doppler knife prices*
 
-![Price boxplot](docs/assets/images/ML/doppler_knives/eda_price_boxplot.jpg)
+![Price boxplot](../../../../assets/images/ML/doppler_knives/eda_price_boxplot.jpg)
 
 *Figure 2.3 — Boxplot of Doppler knife prices*
 
@@ -81,15 +81,15 @@ Price is non-normally distributed, requiring robust and non-linear models.
 To evaluate categorical feature imbalance.
 
 ### Figures
-![Weapon distribution](docs/assets/images/ML/doppler_knives/eda_weapon_distribution.jpg)
+![Weapon distribution](../../../../assets/images/ML/doppler_knives/eda_weapon_distribution.jpg)
 
 *Figure 2.4 — Distribution by knife type*
 
-![Phase distribution](docs/assets/images/ML/doppler_knives/eda_phase_distribution.jpg)
+![Phase distribution](../../../../assets/images/ML/doppler_knives/eda_phase_distribution.jpg)
 
 *Figure 2.5 — Distribution by Doppler phase*
 
-![Wear distribution](docs/assets/images/ML/doppler_knives/eda_wear_distribution.jpg)
+![Wear distribution](../../../../assets/images/ML/doppler_knives/eda_wear_distribution.jpg)
 
 *Figure 2.6 — Distribution by wear category*
 
@@ -108,7 +108,7 @@ Categorical imbalance must be handled carefully; CatBoost is well-suited for thi
 To analyze continuous wear variability.
 
 ### Figure
-![Float distribution](docs/assets/images/ML/doppler_knives/eda_float_distribution.jpg)
+![Float distribution](../../../../assets/images/ML/doppler_knives/eda_float_distribution.jpg)
 
 *Figure 2.7 — Distribution of float values*
 
@@ -126,7 +126,7 @@ Float should be included as a numerical predictor.
 To justify using float over wear categories.
 
 ### Figure
-![Wear vs float](docs/assets/images/ML/doppler_knives/eda_wear_vs_float.jpg)
+![Wear vs float](../../../../assets/images/ML/doppler_knives/eda_wear_vs_float.jpg)
 
 *Figure 2.8 — Float distribution across wear categories*
 
@@ -144,7 +144,7 @@ Float is a more precise measure of wear than categorical labels.
 To examine linear dependencies.
 
 ### Figure
-![Correlation matrix](docs/assets/images/ML/doppler_knives/eda_numeric_correlation.jpg)
+![Correlation matrix](../../../../assets/images/ML/doppler_knives/eda_numeric_correlation.jpg)
 
 *Figure 2.9 — Correlation matrix of numerical features*
 
@@ -162,7 +162,7 @@ Non-linear models are required.
 To estimate baseline prices.
 
 ### Figure
-![Mean price by weapon](docs/assets/images/ML/doppler_knives/eda_mean_price_weapon.jpg)
+![Mean price by weapon](../../../../assets/images/ML/doppler_knives/eda_mean_price_weapon.jpg)
 
 *Figure 2.10 — Mean price by knife type*
 
@@ -177,7 +177,7 @@ Weapon type defines a baseline price level.
 To quantify phase impact.
 
 ### Figure
-![Mean price by phase](docs/assets/images/ML/doppler_knives/eda_mean_price_phase.jpg)
+![Mean price by phase](../../../../assets/images/ML/doppler_knives/eda_mean_price_phase.jpg)
 
 *Figure 2.11 — Mean price by Doppler phase*
 
@@ -192,7 +192,7 @@ Doppler phase is the strongest price driver.
 To analyze StatTrak influence.
 
 ### Figure
-![StatTrak vs price](docs/assets/images/ML/doppler_knives/eda_stattrak_price.jpg)
+![StatTrak vs price](../../../../assets/images/ML/doppler_knives/eda_stattrak_price.jpg)
 
 *Figure 2.12 — Price distribution with and without StatTrak*
 
@@ -207,7 +207,7 @@ StatTrak is a secondary but meaningful modifier.
 To examine wear-price dependency.
 
 ### Figure
-![Float vs price](docs/assets/images/ML/doppler_knives/eda_float_vs_price.jpg)
+![Float vs price](../../../../assets/images/ML/doppler_knives/eda_float_vs_price.jpg)
 
 *Figure 2.13 — Relationship between float and price*
 

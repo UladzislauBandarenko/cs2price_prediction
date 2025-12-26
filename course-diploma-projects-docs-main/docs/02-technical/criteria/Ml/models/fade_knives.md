@@ -22,10 +22,10 @@ The objective of this section is to:
 
 ### 2.1 Price Distribution
 
-![Price distribution histogram](assets/images/ML/fade_knives/eda_price_distribution_hist.jpg)  
+![Price distribution histogram](../../../../assets/images/ML/fade_knives/eda_price_distribution_hist.jpg)  
 *Figure 2.1 — Histogram of Fade knife prices*
 
-![Price distribution boxplot](assets/images/ML/fade_knives/eda_price_distribution_boxplot.jpg)  
+![Price distribution boxplot](../../../../assets/images/ML/fade_knives/eda_price_distribution_boxplot.jpg)  
 *Figure 2.2 — Boxplot of Fade knife prices*
 
 The price distribution is strongly right-skewed. Most Fade knives are traded within a moderate price range, while a limited number of items reach very high prices due to near-perfect fade quality and premium weapon types.
@@ -40,10 +40,10 @@ The price distribution is strongly right-skewed. Most Fade knives are traded wit
 
 ### 2.2 Distribution by Weapon Type and Wear
 
-![Weapon distribution](assets/images/ML/fade_knives/eda_weapon_distribution.jpg)  
+![Weapon distribution](../../../../assets/images/ML/fade_knives/eda_weapon_distribution.jpg)  
 *Figure 2.3 — Distribution by weapon type*
 
-![Wear distribution](assets/images/ML/fade_knives/eda_wear_distribution.jpg)  
+![Wear distribution](../../../../assets/images/ML/fade_knives/eda_wear_distribution.jpg)  
 *Figure 2.4 — Distribution by wear category*
 
 Weapon distribution highlights which knife models dominate the dataset, implying better learning quality for frequent weapon types.  
@@ -59,13 +59,13 @@ Wear distribution shows that Factory New and Minimal Wear states are most common
 
 ### 2.3 Distribution of Visual Fade Features
 
-![Float distribution](assets/images/ML/fade_knives/eda_float_distribution.jpg)  
+![Float distribution](../../../../assets/images/ML/fade_knives/eda_float_distribution.jpg)  
 *Figure 2.5 — Distribution of float values*
 
-![Fade percentage distribution](assets/images/ML/fade_knives/eda_fade_percentage_distribution.jpg)  
+![Fade percentage distribution](../../../../assets/images/ML/fade_knives/eda_fade_percentage_distribution.jpg)  
 *Figure 2.6 — Distribution of fade_percentage*
 
-![Fade rank distribution](assets/images/ML/fade_knives/eda_fade_rank_distribution.jpg)  
+![Fade rank distribution](../../../../assets/images/ML/fade_knives/eda_fade_rank_distribution.jpg)  
 *Figure 2.7 — Distribution of fade_rank*
 
 Fade-specific features show highly non-uniform distributions.  
@@ -81,7 +81,7 @@ High fade percentages and top fade ranks occur significantly less frequently, re
 
 ### 2.4 Correlation Analysis
 
-![Correlation matrix](assets/images/ML/fade_knives/eda_correlation_matrix.jpg)  
+![Correlation matrix](../../../../assets/images/ML/fade_knives/eda_correlation_matrix.jpg)  
 *Figure 2.8 — Correlation matrix of numerical features*
 
 The correlation matrix reveals:
@@ -100,7 +100,7 @@ The correlation matrix reveals:
 
 ### 2.5 Relationship Between Float and Price
 
-![Float vs price](assets/images/ML/fade_knives/eda_float_vs_price.jpg)  
+![Float vs price](../../../../assets/images/ML/fade_knives/eda_float_vs_price.jpg)  
 *Figure 2.9 — Relationship between float and price*
 
 The scatter plot shows a weak downward trend with substantial dispersion.
@@ -115,7 +115,7 @@ The scatter plot shows a weak downward trend with substantial dispersion.
 
 ### 2.6 Relationship Between Fade Rank and Price
 
-![Fade rank vs price](assets/images/ML/fade_knives/eda_fade_rank_vs_price.jpg)  
+![Fade rank vs price](../../../../assets/images/ML/fade_knives/eda_fade_rank_vs_price.jpg)  
 *Figure 2.10 — Relationship between fade_rank and price*
 
 A clear upward trend is observed: higher fade ranks correspond to higher prices.
@@ -129,7 +129,7 @@ A clear upward trend is observed: higher fade ranks correspond to higher prices.
 
 ### 2.7 Impact of StatTrak
 
-![StatTrak vs price](assets/images/ML/fade_knives/eda_stattrak_vs_price.jpg)  
+![StatTrak vs price](../../../../assets/images/ML/fade_knives/eda_stattrak_vs_price.jpg)  
 *Figure 2.11 — Price distribution with and without StatTrak*
 
 StatTrak knives show higher median prices, although variance remains high.
@@ -143,7 +143,7 @@ StatTrak knives show higher median prices, although variance remains high.
 
 ### 2.8 Average Price by Weapon Type
 
-![Mean price by weapon](assets/images/ML/fade_knives/eda_mean_price_by_weapon.jpg)  
+![Mean price by weapon](../../../../assets/images/ML/fade_knives/eda_mean_price_by_weapon.jpg)  
 *Figure 2.12 — Mean price by weapon type*
 
 Premium knife types (e.g., Karambit, Butterfly) have higher baseline prices.

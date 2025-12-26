@@ -48,9 +48,9 @@ Expanded test execution report including automated Postman runs, quantitative me
 
 ## 3. Charts
 
-![Pass Rate](assets/images/Q_or_q/pass_rate.png)
+![Pass Rate](../../../assets/images/Q_or_q/pass_rate.png)
 
-![Average response time](assets/images/Q_or_q/avg_response_time.png)
+![Average response time](../../../assets/images/Q_or_q/avg_response_time.png)
 
 ---
 

@@ -48,7 +48,7 @@ for float-sensitive CS2 weapons.
 
 ### Missing Values Analysis
 
-![Missing values](../assets/images/ML/float_sensitive_weapon/missing_values.jpg)
+![Missing values](../../../../assets/images/ML/float_sensitive_weapon/missing_values.jpg)
 
 The missing values diagram shows that missing data are sparse and occur mainly
 in numerical features related to stickers and slot prices.
@@ -65,8 +65,8 @@ which natively handles categorical variables.
 
 ## 2.2 Distribution of the Target Variable (Price)
 
-![Price distribution](../assets/images/ML/float_sensitive_weapon/price_hist.jpg)  
-![Price boxplot](../assets/images/ML/float_sensitive_weapon/price_boxplot.jpg)
+![Price distribution](../../../../assets/images/ML/float_sensitive_weapon/price_hist.jpg)  
+![Price boxplot](../../../../assets/images/ML/float_sensitive_weapon/price_boxplot.jpg)
 
 The price distribution is clearly **right-skewed**:
 
@@ -86,8 +86,8 @@ for evaluation.
 
 ## 2.3 Categorical Features: Weapon and Wear
 
-![Weapon distribution](../assets/images/ML/float_sensitive_weapon/weapon_distribution.jpg)  
-![Wear distribution](../assets/images/ML/float_sensitive_weapon/wear_distribution.jpg)
+![Weapon distribution](../../../../assets/images/ML/float_sensitive_weapon/weapon_distribution.jpg)  
+![Wear distribution](../../../../assets/images/ML/float_sensitive_weapon/wear_distribution.jpg)
 
 The distribution of `weapon` shows that some weapon types appear significantly
 more frequently than others. Similarly, Factory New and Minimal Wear dominate
@@ -103,7 +103,7 @@ the `wear` distribution.
 
 ## 2.4 Distribution of Float Values
 
-![Float distribution](../assets/images/ML/float_sensitive_weapon/float_distribution.jpg)
+![Float distribution](../../../../assets/images/ML/float_sensitive_weapon/float_distribution.jpg)
 
 The float distribution is concentrated in the lower part of the range,
 indicating that most traded items have low wear.
@@ -118,7 +118,7 @@ indicating that most traded items have low wear.
 
 ## 2.5 Correlation Analysis of Numerical Features
 
-![Correlation matrix](../assets/images/ML/float_sensitive_weapon/correlation_matrix.jpg)
+![Correlation matrix](../../../../assets/images/ML/float_sensitive_weapon/correlation_matrix.jpg)
 
 The correlation matrix reveals:
 
@@ -133,7 +133,7 @@ and cannot be fully explained by linear relationships.
 
 ## 2.6 Relationship Between Float and Price
 
-![Float vs price](../assets/images/ML/float_sensitive_weapon/float_vs_price.jpg)
+![Float vs price](../../../../assets/images/ML/float_sensitive_weapon/float_vs_price.jpg)
 
 The scatter plot demonstrates a general downward trend:
 as `float` increases, the price tends to decrease.
@@ -147,7 +147,7 @@ non-linear interactions.
 
 ## 2.7 Effect of StatTrak on Price
 
-![StatTrak boxplot](../assets/images/ML/float_sensitive_weapon/stattrak_boxplot.jpg)
+![StatTrak boxplot](../../../../assets/ML/float_sensitive_weapon/stattrak_boxplot.jpg)
 
 Weapons with `StatTrak = 1` consistently exhibit a higher median price.
 This confirms that StatTrak acts as an additional premium factor
@@ -157,7 +157,7 @@ and should be included as a binary feature.
 
 ## 2.8 Average Price by Weapon Type
 
-![Mean price by weapon](../assets/images/ML/float_sensitive_weapon/weapon_mean_price.jpg)
+![Mean price by weapon](../../../../assets/images/ML/float_sensitive_weapon/weapon_mean_price.jpg)
 
 The average price by weapon type shows clear stratification between
 budget and premium weapons.

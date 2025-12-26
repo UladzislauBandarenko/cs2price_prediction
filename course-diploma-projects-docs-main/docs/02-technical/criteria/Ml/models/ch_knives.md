@@ -21,10 +21,10 @@ The present chapter focuses on exploratory data analysis, which serves as the fo
 To analyze the statistical properties of the target variable (price), identify skewness, outliers, and assess whether standard distributional assumptions hold.
 
 #### Figures  
-![Price histogram](../../../assets/images/ML/ch_knives/eda_price_distribution_hist.jpg)  
+![Price histogram](../../../../assets/images/ML/ch_knives/eda_price_distribution_hist.jpg)  
 *Figure 2.1 — Histogram of Case Hardened knife prices*
 
-![Price boxplot]()../../../assets/images/ML/ch_knives/eda_price_distribution_boxplot.jpg)  
+![Price boxplot](../../../../assets/images/ML/ch_knives/eda_price_distribution_boxplot.jpg)  
 *Figure 2.2 — Boxplot of Case Hardened knife prices*
 
 #### Explanation  
@@ -48,10 +48,10 @@ The distribution deviates significantly from normality, indicating that both the
 To evaluate dataset balance across key categorical variables and identify potential sources of prediction bias.
 
 #### Figures  
-![Weapon distribution](../../../assets/images/ML/ch_knives/eda_weapon_distribution.jpg)  
+![Weapon distribution](../../../../assets/images/ML/ch_knives/eda_weapon_distribution.jpg)  
 *Figure 2.3 — Distribution by knife type (weapon)*
 
-![Wear distribution](../../../assets/images/ML/ch_knives/eda_wear_distribution.jpg)  
+![Wear distribution](../../../../assets/images/ML/ch_knives/eda_wear_distribution.jpg)  
 *Figure 2.4 — Distribution by wear category*
 
 #### Explanation  
@@ -72,7 +72,7 @@ The wear distribution demonstrates that **Field-Tested** and **Minimal Wear** co
 To analyze the rarity and variability of color components that define Case Hardened visual patterns.
 
 #### Figures  
-![Color distribution](../../../assets/images/ML/ch_knives/eda_color_components_distribution.jpg)  
+![Color distribution](../../../../assets/images/ML/ch_knives/eda_color_components_distribution.jpg)  
 *Figure 2.5 — Distribution of playside and backside color components*
 
 #### Explanation  
@@ -93,7 +93,7 @@ Backside color components show weaker concentration effects, which aligns with m
 To identify linear relationships between numerical features and price and assess the limitations of linear modeling.
 
 #### Figures  
-![Correlation matrix](../../../assets/images/ML/ch_knives/eda_correlation_matrix.jpg)  
+![Correlation matrix](../../../../assets/images/ML/ch_knives/eda_correlation_matrix.jpg)  
 *Figure 2.6 — Correlation matrix of numerical features*
 
 #### Explanation  
@@ -114,10 +114,10 @@ However, no feature demonstrates near-perfect linear correlation, indicating tha
 To compare the relative influence of wear and visual dominance on price formation.
 
 #### Figures  
-![Float vs price](../../../assets/images/ML/ch_knives/eda_float_vs_price.jpg)  
+![Float vs price](../../../../assets/images/ML/ch_knives/eda_float_vs_price.jpg)  
 *Figure 2.7 — Relationship between float and price*
 
-![Playside blue vs price](../../../assets/images/ML/ch_knives/eda_playside_blue_vs_price.jpg)  
+![Playside blue vs price](../../../../assets/images/ML/ch_knives/eda_playside_blue_vs_price.jpg)  
 *Figure 2.8 — Relationship between playside_blue and price*
 
 #### Explanation  
@@ -138,7 +138,7 @@ In contrast, `playside_blue` shows a clear positive relationship with price. Hig
 To assess the contribution of the StatTrak feature to overall price formation.
 
 #### Figures  
-![StatTrak vs price](../../../assets/images/ML/ch_knives/eda_stattrak_vs_price.jpg)  
+![StatTrak vs price](../../../../assets/images/ML/ch_knives/eda_stattrak_vs_price.jpg)  
 *Figure 2.9 — Price distribution with and without StatTrak*
 
 #### Explanation  

@@ -34,11 +34,11 @@ These features allow the dataset to reflect real market logic, where visually do
 To understand the global statistical properties of the target variable (price) and to identify distributional characteristics that influence model selection and evaluation.
 
 ### Figure Placeholders
-![Histogram of prices](docs/assets/images/ML/ch_gun/eda_price_distribution_hist.jpg)
+![Histogram of prices](../../../../assets/images/ML/ch_gun/eda_price_distribution_hist.jpg)
 
 *Figure 2.1 — Histogram of Case Hardened prices*
 
-![Boxplot of prices](docs/assets/images/ML/ch_gun/eda_price_distribution_boxplot.jpg)
+![Boxplot of prices](../../../../assets/images/ML/ch_gun/eda_price_distribution_boxplot.jpg)
 
 *Figure 2.2 — Boxplot of Case Hardened prices*
 
@@ -60,15 +60,15 @@ The boxplot further emphasizes this behavior by showing a large number of high-v
 To evaluate the balance of the dataset across key categorical variables and to understand potential sources of bias in model training.
 
 ### Figure Placeholders
-![Weapon distribution](docs/assets/images/ML/ch_gun/eda_weapon_distribution.jpg)
+![Weapon distribution](../../../../assets/images/ML/ch_gun/eda_weapon_distribution.jpg)
 
 *Figure 2.3 — Distribution by weapon type*
 
-![Wear distribution](docs/assets/images/ML/ch_gun/eda_wear_distribution.jpg)
+![Wear distribution](../../../../assets/images/ML/ch_gun/eda_wear_distribution.jpg)
 
 *Figure 2.4 — Distribution by wear category*
 
-![Pattern style distribution](docs/assets/images/ML/ch_gun/eda_pattern_style_distribution.jpg)
+![Pattern style distribution](../../../../assets/images/ML/ch_gun/eda_pattern_style_distribution.jpg)
 
 *Figure 2.5 — Distribution by pattern_style*
 
@@ -92,19 +92,19 @@ The pattern_style distribution highlights the extreme rarity of true blue_gem pa
 To analyze the variability and rarity of blue color dominance, which is the central factor in Case Hardened pricing.
 
 ### Figure Placeholders
-![Playside blue](docs/assets/images/ML/ch_gun/eda_playside_blue_distribution.jpg)
+![Playside blue](../../../../assets/images/ML/ch_gun/eda_playside_blue_distribution.jpg)
 
 *Figure 2.6 — Distribution of playside_blue*
 
-![Backside blue](docs/assets/images/ML/ch_gun/eda_backside_blue_distribution.jpg)
+![Backside blue](../../../../assets/images/ML/ch_gun/eda_backside_blue_distribution.jpg)
 
 *Figure 2.7 — Distribution of backside_blue*
 
-![Blue score](docs/assets/images/ML/ch_gun/eda_blue_score_distribution.jpg)
+![Blue score](../../../../assets/images/ML/ch_gun/eda_blue_score_distribution.jpg)
 
 *Figure 2.8 — Distribution of blue_score*
 
-![Blue tier](docs/assets/images/ML/ch_gun/eda_blue_tier_distribution.jpg)
+![Blue tier](../../../../assets/images/ML/ch_gun/eda_blue_tier_distribution.jpg)
 
 *Figure 2.9 — Distribution of blue_tier*
 
@@ -126,7 +126,7 @@ The observed distributions accurately reflect the real-world scarcity structure 
 To identify linear relationships between numerical variables and to obtain a first approximation of feature relevance.
 
 ### Figure Placeholder
-![Correlation matrix](docs/assets/images/ML/ch_gun/eda_numeric_correlation_matrix.jpg)
+![Correlation matrix](../../../../assets/images/ML/ch_gun/eda_numeric_correlation_matrix.jpg)
 
 *Figure 2.10 — Correlation matrix of numerical features*
 
@@ -148,7 +148,7 @@ Moderate correlation values indicate that linear models are insufficient and mot
 To analyze how the aggregated measure of blue dominance (blue_score) influences the market price of Case Hardened skins and to assess whether this relationship is linear or non-linear.
 
 ### Figure Placeholder
-![Blue score vs price](docs/assets/images/ML/ch_gun/eda_blue_score_vs_price.jpg)
+![Blue score vs price](../../../../assets/images/ML/ch_gun/eda_blue_score_vs_price.jpg)
 
 *Figure 2.11 — Relationship between blue_score and price*
 
@@ -170,7 +170,7 @@ Blue_score is one of the most influential numerical features in the dataset and 
 To validate the discrete categorization of blue dominance and assess its impact on market price.
 
 ### Figure Placeholder
-![Blue tier vs price](docs/assets/images/ML/ch_gun/eda_blue_tier_vs_price.jpg)
+![Blue tier vs price](../../../../assets/images/ML/ch_gun/eda_blue_tier_vs_price.jpg)
 
 *Figure 2.12 — Price distribution by blue_tier*
 
@@ -190,7 +190,7 @@ The blue_tier feature provides an interpretable and effective discretization of 
 To quantify the influence of the StatTrak attribute on Case Hardened skin prices.
 
 ### Figure Placeholder
-![StatTrak vs price](docs/assets/images/ML/ch_gun/eda_stattrak_vs_price.jpg)
+![StatTrak vs price](../../../../assets/images/ML/ch_gun/eda_stattrak_vs_price.jpg)
 
 *Figure 2.13 — Price distribution with and without StatTrak*
 
@@ -210,7 +210,7 @@ StatTrak has a consistent positive effect on price and should be included as a b
 To estimate baseline price differences between weapon models independent of pattern characteristics.
 
 ### Figure Placeholder
-![Mean price by weapon](docs/assets/images/ML/ch_gun/eda_mean_price_by_weapon.jpg)
+![Mean price by weapon](../../../../assets/images/ML/ch_gun/eda_mean_price_by_weapon.jpg)
 
 *Figure 2.14 — Mean price by weapon type*
 

@@ -43,9 +43,9 @@ Missing values are present in several sticker-related columns and are handled du
 
 ## 2.2 Price Distribution
 
-![Price distribution histogram](../assets/images/ML/fade_weapon/price_hist.jpg)
+![Price distribution histogram](../../../../assets/images/ML/fade_weapon/price_hist.jpg)
 
-![Price boxplot](../assets/images/ML/fade_weapon/price_boxplot.jpg)
+![Price boxplot](../../../../assets/images/ML/fade_weapon/price_boxplot.jpg)
 
 ### Price Distribution (Histogram + Boxplot)
 
@@ -65,9 +65,9 @@ Missing values are present in several sticker-related columns and are handled du
 
 ## 2.2 Distribution by Weapon Type and Wear
 
-![Weapon distribution](../assets/images/ML/fade_weapon/weapon_distribution.jpg)
+![Weapon distribution](../../../../assets//images/ML/fade_weapon/weapon_distribution.jpg)
 
-![Wear distribution](../assets/images/ML/fade_weapon/wear_distribution.jpg)
+![Wear distribution](../../../../assets//images/ML/fade_weapon/wear_distribution.jpg)
 
 ### Weapon and Wear Distributions
 
@@ -86,9 +86,9 @@ Missing values are present in several sticker-related columns and are handled du
 
 ## 2.3 Distribution of Float and Fade Rank
 
-![Float distribution](../assets/images/ML/fade_weapon/float_distribution.jpg)
+![Float distribution](../../../../assets/images/ML/fade_weapon/float_distribution.jpg)
 
-![Fade rank distribution](../assets/images/ML/fade_weapon/fade_rank_distribution.jpg)
+![Fade rank distribution](../../../../assets/images/ML/fade_weapon/fade_rank_distribution.jpg)
 
 ### Float and Fade Rank Distributions
 
@@ -107,7 +107,7 @@ Missing values are present in several sticker-related columns and are handled du
 
 ## 2.4 Correlation Analysis
 
-![Correlation heatmap](../assets/images/ML/fade_weapon/correlation_matrix.jpg)
+![Correlation heatmap](../../../../assets/images/ML/fade_weapon/correlation_matrix.jpg)
 
 ### Correlation Matrix
 
@@ -128,7 +128,7 @@ Missing values are present in several sticker-related columns and are handled du
 
 ## 2.5 Relationship Between Float and Price
 
-![Float vs price](../assets/images/ML/fade_weapon/float_vs_price.jpg)
+![Float vs price](../../../../assets/images/ML/fade_weapon/float_vs_price.jpg)
 
 ### Float → Price
 
@@ -147,7 +147,7 @@ Missing values are present in several sticker-related columns and are handled du
 
 ## 2.6 Relationship Between Fade Rank and Price
 
-![Fade rank vs price](../assets/images/ML/fade_weapon/fade_rank_vs_price.jpg)
+![Fade rank vs price](../../../../assets/images/ML/fade_weapon/fade_rank_vs_price.jpg)
 
 ### Fade Rank → Price
 
@@ -166,7 +166,7 @@ Missing values are present in several sticker-related columns and are handled du
 
 ## 2.7 Average Price by Weapon Type
 
-![Mean price by weapon](../assets/images/ML/fade_weapon/weapon_mean_price.jpg)
+![Mean price by weapon](../../../../assets/assets/images/ML/fade_weapon/weapon_mean_price.jpg)
 
 ### Mean Price per Weapon
 
