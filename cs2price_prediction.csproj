@@ -29,6 +29,10 @@
 	</ItemGroup>
 
 	<ItemGroup>
+	  <Compile Include="course-diploma-projects-docs-main\docs\02-technical\criteria\Ml\data_collection.md" />
+	</ItemGroup>
+
+	<ItemGroup>
 		<ContainerPort Include="8081" />
 	</ItemGroup>
 
@@ -44,6 +48,18 @@
 		</PackageReference>
 		<PackageReference Include="Npgsql.EntityFrameworkCore.PostgreSQL" Version="8.0.0" />
 		<PackageReference Include="Swashbuckle.AspNetCore" Version="6.5.0" />
+	</ItemGroup>
+
+	<ItemGroup>
+	  <Folder Include="course-diploma-projects-docs-main\docs\02-technical\criteria\Containerization\" />
+	  <Folder Include="course-diploma-projects-docs-main\docs\02-technical\criteria\AI_assistant_or_Chatbot\" />
+	  <Folder Include="course-diploma-projects-docs-main\docs\02-technical\criteria\Backend\" />
+	  <Folder Include="course-diploma-projects-docs-main\docs\assets\images\ML\ch_gun\" />
+	  <Folder Include="course-diploma-projects-docs-main\docs\assets\images\ML\ch_knives\" />
+	  <Folder Include="course-diploma-projects-docs-main\docs\assets\images\ML\doppler_knives\" />
+	  <Folder Include="course-diploma-projects-docs-main\docs\assets\images\ML\fade_knives\" />
+	  <Folder Include="course-diploma-projects-docs-main\docs\assets\images\ML\fade_weapon\" />
+	  <Folder Include="course-diploma-projects-docs-main\docs\assets\images\ML\float_sensitive_weapon\" />
 	</ItemGroup>
 
 </Project>

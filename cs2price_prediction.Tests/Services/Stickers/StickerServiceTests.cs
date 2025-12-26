@@ -52,7 +52,7 @@ namespace cs2price_prediction.Tests.Services.Stickers
             using var db = CreateDbContext(Guid.NewGuid().ToString());
             var service = new StickerService(db);
 
-            // в БД нет StickerPrices с такими Id
+            // there are no StickerPrices with these ids in the database
             var ids = new[] { 1, 2, 3 };
 
             // act
@@ -71,9 +71,8 @@ namespace cs2price_prediction.Tests.Services.Stickers
             // arrange
             using var db = CreateDbContext(Guid.NewGuid().ToString());
 
-            // ⚠️ здесь я предполагаю, что у тебя есть сущность StickerPrice
-            // с полями StickerId (int) и Price (double/decimal).
-            // Если название/типы другие — просто подправь этот участок под свою модель.
+            
+            // with fields StickerId (int) and Price (double/decimal).
             db.StickerPrices.AddRange(
                 new StickerPrice { StickerId = 1, Price = 10.0 },
                 new StickerPrice { StickerId = 2, Price = 20.0 },
@@ -94,9 +93,9 @@ namespace cs2price_prediction.Tests.Services.Stickers
             result.StickersAvgValue.Should().BeApproximately(35.0 / 3.0, 0.0001);
             result.StickersMaxValue.Should().Be(20.0);
 
-            // порядок зависит от того, как EF вернёт список.
-            // В твоём коде: prices = ... Select(p => p.Price).ToListAsync();
-            // Обычно он соответствует порядку добавления.
+            // the order depends on how EF returns the list.
+            // In your code: prices = ... Select(p => p.Price).ToListAsync();
+            // Usually it matches the insertion order.
             result.Slot0Price.Should().Be(10.0);
             result.Slot1Price.Should().Be(20.0);
             result.Slot2Price.Should().Be(5.0);

@@ -18,7 +18,7 @@ namespace cs2price_prediction.Tests.Services.AI.AiPromptService
 
         public AiPromptFactoryTests()
         {
-            // Чтобы в тестах всегда был разделитель "." (0.1999, 123.45 и т.д.)
+            // Ensure "." is always used as the decimal separator in tests (0.1999, 123.45, etc.)
             Thread.CurrentThread.CurrentCulture = CultureInfo.InvariantCulture;
             _factory = new AiPromptFactory();
         }
@@ -150,7 +150,7 @@ namespace cs2price_prediction.Tests.Services.AI.AiPromptService
 
             prompt.Should().Contain("StatTrak: no");
 
-            // Ветка allZero && allNamesEmpty
+            // Branch: allZero && allNamesEmpty
             prompt.Should().Contain("There are no meaningful stickers on this weapon. Stickers should not influence the predicted price.");
             prompt.Should().NotContain("Sticker slots and their price contribution (if any):");
 

@@ -8,7 +8,7 @@ using FluentAssertions;
 using Microsoft.EntityFrameworkCore;
 using Xunit;
 
-// Алиас, чтобы явно указать класс сервиса и не путать его с namespace
+// Alias to explicitly reference the service class and avoid confusion with the namespace
 using AiStickerServiceImpl = cs2price_prediction.Services.AI.AiStickerService.AiStickerService;
 
 namespace cs2price_prediction.Tests.Services.AI.AiStickerService
@@ -37,7 +37,7 @@ namespace cs2price_prediction.Tests.Services.AI.AiStickerService
         }
 
         // -----------------------------
-        // Базовые кейсы
+        // Basic cases
         // -----------------------------
 
         [Fact]
@@ -71,7 +71,7 @@ namespace cs2price_prediction.Tests.Services.AI.AiStickerService
 
             await using (var seed = new AppDbContext(options))
             {
-                // БД пустая, никаких стикеров не создаём
+                // The database is empty, no stickers are created
                 await seed.SaveChangesAsync();
             }
 
@@ -84,7 +84,7 @@ namespace cs2price_prediction.Tests.Services.AI.AiStickerService
         }
 
         // -----------------------------
-        // Нормальный кейс: несколько стикеров, несколько цен
+        // Normal case: multiple stickers, multiple prices
         // -----------------------------
 
         [Fact]
@@ -101,17 +101,17 @@ namespace cs2price_prediction.Tests.Services.AI.AiStickerService
 
                 seed.Stickers.AddRange(s1, s2, s3, s4);
 
-                // Для каждого стикера сделаем пару цен, чтобы проверить,
-                // что берётся последняя (по Id, т.к. OrderByDescending(p.Id))
+                // For each sticker, create multiple prices to verify
+                // that the latest one is used (by Id, since OrderByDescending(p.Id))
                 seed.StickerPrices.AddRange(
                     new StickerPrice { Id = 1, Sticker = s1, Price = 1.0 },
-                    new StickerPrice { Id = 2, Sticker = s1, Price = 1.5 },   // последняя
+                    new StickerPrice { Id = 2, Sticker = s1, Price = 1.5 },   // latest
 
                     new StickerPrice { Id = 3, Sticker = s2, Price = 2.0 },
-                    new StickerPrice { Id = 4, Sticker = s2, Price = 2.2 },   // последняя
+                    new StickerPrice { Id = 4, Sticker = s2, Price = 2.2 },   // latest
 
-                    new StickerPrice { Id = 5, Sticker = s3, Price = 3.0 },   // единственная
-                    new StickerPrice { Id = 6, Sticker = s4, Price = 4.4 }    // единственная
+                    new StickerPrice { Id = 5, Sticker = s3, Price = 3.0 },   // only one
+                    new StickerPrice { Id = 6, Sticker = s4, Price = 4.4 }    // only one
                 );
 
                 await seed.SaveChangesAsync();
@@ -119,13 +119,13 @@ namespace cs2price_prediction.Tests.Services.AI.AiStickerService
 
             var service = CreateService(options);
 
-            // stickerIds по слотам: 0→1, 1→2, 2→3, 3→4
+            // stickerIds by slots: 0→1, 1→2, 2→3, 3→4
             IReadOnlyList<int> ids = new[] { 1, 2, 3, 4 };
 
             var result = await service.BuildStickersDtoForAiAsync(ids);
 
-            result.Slot0Price.Should().Be(1.5);   // последняя цена для Sticker 1
-            result.Slot1Price.Should().Be(2.2);   // последняя цена для Sticker 2
+            result.Slot0Price.Should().Be(1.5);   // latest price for Sticker 1
+            result.Slot1Price.Should().Be(2.2);   // latest price for Sticker 2
             result.Slot2Price.Should().Be(3.0);
             result.Slot3Price.Should().Be(4.4);
 
@@ -136,7 +136,7 @@ namespace cs2price_prediction.Tests.Services.AI.AiStickerService
         }
 
         // -----------------------------
-        // Игнорирование некорректных/дубликатов
+        // Ignoring invalid / duplicate values
         // -----------------------------
 
         [Fact]
@@ -161,14 +161,14 @@ namespace cs2price_prediction.Tests.Services.AI.AiStickerService
 
             var service = CreateService(options);
 
-            // Микс: несуществующий id (999), ноль, отрицательный и два валидных
+            // Mixed input: non-existing id (999), zero, negative, and two valid ones
             IReadOnlyList<int> ids = new[] { 999, 0, -5, 10, 20 };
 
             var result = await service.BuildStickersDtoForAiAsync(ids);
 
-            // FillSlot(0,0) → 999 → нет в dict → пропускаем
-            // FillSlot(1,1) → 0   → <=0      → пропускаем
-            // FillSlot(2,2) → -5  → <=0      → пропускаем
+            // FillSlot(0,0) → 999 → not in dict → skipped
+            // FillSlot(1,1) → 0   → <=0        → skipped
+            // FillSlot(2,2) → -5  → <=0        → skipped
             // FillSlot(3,3) → 10  → ok → Slot3 + StickerSlot4Name
 
             result.Slot0Price.Should().Be(0);

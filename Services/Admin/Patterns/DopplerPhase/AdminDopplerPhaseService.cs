@@ -60,7 +60,7 @@ namespace cs2price_prediction.Services.Admin.Patterns.DopplerPhase
             }
             catch (DbUpdateException)
             {
-                // есть зависимые DopplerSkinPhases
+                // there are dependent DopplerSkinPhases
                 return false;
             }
         }
