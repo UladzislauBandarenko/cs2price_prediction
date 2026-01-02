@@ -92,8 +92,8 @@ namespace cs2price_prediction.Tests.Services.AI.Llm
         {
             var clientMock = new Mock<ILLMClient>();
 
-            // Primary пустой → должен использоваться "gpt-4o-mini"
-            // Fallback пустой → "gpt-4.1-mini"
+            // Primary is empty → "gpt-4o-mini" should be used
+            // Fallback is empty → "gpt-4.1-mini"
             clientMock
                 .Setup(c => c.QueryAsync("hello", "gpt-4o-mini"))
                 .ReturnsAsync("ok-default");
@@ -132,3 +132,4 @@ namespace cs2price_prediction.Tests.Services.AI.Llm
         }
     }
 }
+

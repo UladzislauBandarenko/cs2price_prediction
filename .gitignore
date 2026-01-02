@@ -367,3 +367,4 @@ MigrationBackup/
 
 # Fody
 FodyWeavers.xsd
+.env

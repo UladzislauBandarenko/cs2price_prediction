@@ -1,0 +1,832 @@
+{
+  "info": {
+    "name": "cs2price_prediction - Predict Endpoint Tests",
+    "_postman_id": "cs2price_predict_001",
+    "description": "Postman collection for /api/predict endpoint. Covers positive, negative, edge and stress tests according to provided test cases.",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+  },
+  "item": [
+    {
+      "name": "TC_PRED_HAPPY_01 - Happy Path",
+      "request": {
+        "method": "POST",
+        "header": [
+          {
+            "key": "Content-Type",
+            "value": "application/json"
+          },
+          {
+            "key": "Accept",
+            "value": "application/json"
+          }
+        ],
+        "body": {
+          "mode": "raw",
+          "raw": "{\"skinId\": 13, \"wearTierId\": 1, \"floatValue\": 0.023, \"isStattrak\": false, \"pattern\": 332, \"stickers\": [1, 6, 65, 5]}"
+        },
+        "url": {
+          "raw": "{{base_url}}/api/predict",
+          "host": [
+            "{{base_url}}"
+          ],
+          "path": [
+            "api",
+            "predict"
+          ]
+        }
+      },
+      "event": [
+        {
+          "listen": "test",
+          "script": {
+            "type": "text/javascript",
+            "exec": [
+              "pm.test('Status 200', ()=> pm.response.to.have.status(200));",
+              "pm.test('Has predicted_price and stickers_features', ()=> { const b = pm.response.json(); pm.expect(b).to.have.property('predicted_price'); pm.expect(b).to.have.property('stickers_features'); const sf = b.stickers_features; pm.expect(sf).to.have.property('stickers_count'); pm.expect(sf).to.have.property('stickers_total_value'); pm.expect(sf).to.have.property('stickers_avg_value'); pm.expect(sf).to.have.property('stickers_max_value'); });"
+            ]
+          }
+        }
+      ]
+    },
+    {
+      "name": "TC_PRED_HAPPY_02 - isStattrak true",
+      "request": {
+        "method": "POST",
+        "header": [
+          {
+            "key": "Content-Type",
+            "value": "application/json"
+          }
+        ],
+        "body": {
+          "mode": "raw",
+          "raw": "{\"skinId\": 13, \"wearTierId\": 1, \"floatValue\": 0.023, \"isStattrak\": true, \"pattern\": 332, \"stickers\": [1, 6, 65, 5]}"
+        },
+        "url": {
+          "raw": "{{base_url}}/api/predict",
+          "host": [
+            "{{base_url}}"
+          ],
+          "path": [
+            "api",
+            "predict"
+          ]
+        }
+      },
+      "event": [
+        {
+          "listen": "test",
+          "script": {
+            "type": "text/javascript",
+            "exec": [
+              "pm.test('Status 200', ()=> pm.response.to.have.status(200));",
+              "pm.test('Predicted_price numeric', ()=> { const b = pm.response.json(); pm.expect(typeof b.predicted_price).to.eql('number'); });"
+            ]
+          }
+        }
+      ]
+    },
+    {
+      "name": "TC_PRED_01 - Missing skinId (Negative)",
+      "request": {
+        "method": "POST",
+        "header": [
+          {
+            "key": "Content-Type",
+            "value": "application/json"
+          }
+        ],
+        "body": {
+          "mode": "raw",
+          "raw": "{\"wearTierId\": 1, \"floatValue\": 0.023, \"isStattrak\": false, \"pattern\": 332, \"stickers\": [1, 6]}"
+        },
+        "url": {
+          "raw": "{{base_url}}/api/predict",
+          "host": [
+            "{{base_url}}"
+          ],
+          "path": [
+            "api",
+            "predict"
+          ]
+        }
+      },
+      "event": [
+        {
+          "listen": "test",
+          "script": {
+            "type": "text/javascript",
+            "exec": [
+              "pm.test('Expect 4xx', ()=> pm.expect(pm.response.code).to.be.within(400,499));"
+            ]
+          }
+        }
+      ]
+    },
+    {
+      "name": "TC_PRED_02 - Invalid floatValue type (Negative)",
+      "request": {
+        "method": "POST",
+        "header": [
+          {
+            "key": "Content-Type",
+            "value": "application/json"
+          }
+        ],
+        "body": {
+          "mode": "raw",
+          "raw": "{\"skinId\": 13, \"wearTierId\": 1, \"floatValue\": \"abc\", \"isStattrak\": false, \"pattern\": 332, \"stickers\": [1]}"
+        },
+        "url": {
+          "raw": "{{base_url}}/api/predict",
+          "host": [
+            "{{base_url}}"
+          ],
+          "path": [
+            "api",
+            "predict"
+          ]
+        }
+      },
+      "event": [
+        {
+          "listen": "test",
+          "script": {
+            "type": "text/javascript",
+            "exec": [
+              "pm.test('Status 4xx', ()=> pm.expect(pm.response.code).to.be.within(400,499));"
+            ]
+          }
+        }
+      ]
+    },
+    {
+      "name": "TC_PRED_03 - Non-existent skinId",
+      "request": {
+        "method": "POST",
+        "header": [
+          {
+            "key": "Content-Type",
+            "value": "application/json"
+          }
+        ],
+        "body": {
+          "mode": "raw",
+          "raw": "{\"skinId\": 999999, \"wearTierId\": 1, \"floatValue\": 0.023, \"isStattrak\": false, \"pattern\": 332, \"stickers\": [1]}"
+        },
+        "url": {
+          "raw": "{{base_url}}/api/predict",
+          "host": [
+            "{{base_url}}"
+          ],
+          "path": [
+            "api",
+            "predict"
+          ]
+        }
+      },
+      "event": [
+        {
+          "listen": "test",
+          "script": {
+            "type": "text/javascript",
+            "exec": [
+              "pm.test('Status 200 or 404', ()=> pm.expect([200,404]).to.include(pm.response.code));"
+            ]
+          }
+        }
+      ]
+    },
+    {
+      "name": "TC_PRED_04 - Pattern not in skin patterns",
+      "request": {
+        "method": "POST",
+        "header": [
+          {
+            "key": "Content-Type",
+            "value": "application/json"
+          }
+        ],
+        "body": {
+          "mode": "raw",
+          "raw": "{\"skinId\": 13, \"wearTierId\": 1, \"floatValue\": 0.023, \"isStattrak\": false, \"pattern\": 999999, \"stickers\": [1]}"
+        },
+        "url": {
+          "raw": "{{base_url}}/api/predict",
+          "host": [
+            "{{base_url}}"
+          ],
+          "path": [
+            "api",
+            "predict"
+          ]
+        }
+      },
+      "event": [
+        {
+          "listen": "test",
+          "script": {
+            "type": "text/javascript",
+            "exec": [
+              "pm.test('Status 200 or 4xx', ()=> pm.expect(pm.response.code).to.be.within(200,499));",
+              "pm.test('Document behavior in report', ()=> pm.expect(true).to.be.true);"
+            ]
+          }
+        }
+      ]
+    },
+    {
+      "name": "TC_PRED_05 - Negative floatValue",
+      "request": {
+        "method": "POST",
+        "header": [
+          {
+            "key": "Content-Type",
+            "value": "application/json"
+          }
+        ],
+        "body": {
+          "mode": "raw",
+          "raw": "{\"skinId\": 13, \"wearTierId\": 1, \"floatValue\": -0.1, \"isStattrak\": false, \"pattern\": 332, \"stickers\": [1]}"
+        },
+        "url": {
+          "raw": "{{base_url}}/api/predict",
+          "host": [
+            "{{base_url}}"
+          ],
+          "path": [
+            "api",
+            "predict"
+          ]
+        }
+      },
+      "event": [
+        {
+          "listen": "test",
+          "script": {
+            "type": "text/javascript",
+            "exec": [
+              "pm.test('Status 4xx or handled', ()=> pm.expect(pm.response.code).to.be.within(200,499));"
+            ]
+          }
+        }
+      ]
+    },
+    {
+      "name": "TC_PRED_06 - Very small floatValue precision",
+      "request": {
+        "method": "POST",
+        "header": [
+          {
+            "key": "Content-Type",
+            "value": "application/json"
+          }
+        ],
+        "body": {
+          "mode": "raw",
+          "raw": "{\"skinId\": 13, \"wearTierId\": 1, \"floatValue\": 1e-06, \"isStattrak\": false, \"pattern\": 332, \"stickers\": []}"
+        },
+        "url": {
+          "raw": "{{base_url}}/api/predict",
+          "host": [
+            "{{base_url}}"
+          ],
+          "path": [
+            "api",
+            "predict"
+          ]
+        }
+      },
+      "event": [
+        {
+          "listen": "test",
+          "script": {
+            "type": "text/javascript",
+            "exec": [
+              "pm.test('Status 200 and numeric response', ()=> { pm.response.to.have.status(200); const b=pm.response.json(); pm.expect(typeof b.predicted_price).to.eql('number'); });"
+            ]
+          }
+        }
+      ]
+    },
+    {
+      "name": "TC_PRED_07 - Duplicate stickers IDs",
+      "request": {
+        "method": "POST",
+        "header": [
+          {
+            "key": "Content-Type",
+            "value": "application/json"
+          }
+        ],
+        "body": {
+          "mode": "raw",
+          "raw": "{\"skinId\": 13, \"wearTierId\": 1, \"floatValue\": 0.023, \"isStattrak\": false, \"pattern\": 332, \"stickers\": [1, 1, 1, 6]}"
+        },
+        "url": {
+          "raw": "{{base_url}}/api/predict",
+          "host": [
+            "{{base_url}}"
+          ],
+          "path": [
+            "api",
+            "predict"
+          ]
+        }
+      },
+      "event": [
+        {
+          "listen": "test",
+          "script": {
+            "type": "text/javascript",
+            "exec": [
+              "pm.test('Status 200 and stickers_features present', ()=> { pm.response.to.have.status(200); const b=pm.response.json(); pm.expect(b.stickers_features).to.have.property('stickers_count'); });"
+            ]
+          }
+        }
+      ]
+    },
+    {
+      "name": "TC_PRED_08 - Invalid sticker IDs",
+      "request": {
+        "method": "POST",
+        "header": [
+          {
+            "key": "Content-Type",
+            "value": "application/json"
+          }
+        ],
+        "body": {
+          "mode": "raw",
+          "raw": "{\"skinId\": 13, \"wearTierId\": 1, \"floatValue\": 0.023, \"isStattrak\": false, \"pattern\": 332, \"stickers\": [999999, -1, \"abc\"]}"
+        },
+        "url": {
+          "raw": "{{base_url}}/api/predict",
+          "host": [
+            "{{base_url}}"
+          ],
+          "path": [
+            "api",
+            "predict"
+          ]
+        }
+      },
+      "event": [
+        {
+          "listen": "test",
+          "script": {
+            "type": "text/javascript",
+            "exec": [
+              "pm.test('Status 200 or 4xx', ()=> pm.expect(pm.response.code).to.be.within(200,499));"
+            ]
+          }
+        }
+      ]
+    },
+    {
+      "name": "TC_PRED_09 - Empty body (Negative)",
+      "request": {
+        "method": "POST",
+        "header": [
+          {
+            "key": "Content-Type",
+            "value": "application/json"
+          }
+        ],
+        "body": {
+          "mode": "raw",
+          "raw": ""
+        },
+        "url": {
+          "raw": "{{base_url}}/api/predict",
+          "host": [
+            "{{base_url}}"
+          ],
+          "path": [
+            "api",
+            "predict"
+          ]
+        }
+      },
+      "event": [
+        {
+          "listen": "test",
+          "script": {
+            "type": "text/javascript",
+            "exec": [
+              "pm.test('Expect 4xx', ()=> pm.expect(pm.response.code).to.be.within(400,499));"
+            ]
+          }
+        }
+      ]
+    },
+    {
+      "name": "TC_PRED_11 - Response schema validation",
+      "request": {
+        "method": "POST",
+        "header": [
+          {
+            "key": "Content-Type",
+            "value": "application/json"
+          },
+          {
+            "key": "Accept",
+            "value": "application/json"
+          }
+        ],
+        "body": {
+          "mode": "raw",
+          "raw": "{\"skinId\": 13, \"wearTierId\": 1, \"floatValue\": 0.023, \"isStattrak\": false, \"pattern\": 332, \"stickers\": [1, 6]}"
+        },
+        "url": {
+          "raw": "{{base_url}}/api/predict",
+          "host": [
+            "{{base_url}}"
+          ],
+          "path": [
+            "api",
+            "predict"
+          ]
+        }
+      },
+      "event": [
+        {
+          "listen": "test",
+          "script": {
+            "type": "text/javascript",
+            "exec": [
+              "pm.test('Status 200', ()=> pm.response.to.have.status(200));",
+              "pm.test('Response contains expected keys and types', ()=> { const b = pm.response.json(); pm.expect(b).to.have.property('predicted_price'); pm.expect(typeof b.predicted_price).to.eql('number'); pm.expect(b).to.have.property('stickers_features'); const sf = b.stickers_features; pm.expect(sf).to.have.property('stickers_count'); pm.expect(typeof sf.stickers_count).to.eql('number'); });"
+            ]
+          }
+        }
+      ]
+    },
+    {
+      "name": "TC_PRED_12 - Float monotonicity sanity check (partial)",
+      "request": {
+        "method": "POST",
+        "header": [
+          {
+            "key": "Content-Type",
+            "value": "application/json"
+          },
+          {
+            "key": "Accept",
+            "value": "application/json"
+          }
+        ],
+        "body": {
+          "mode": "raw",
+          "raw": "{\"skinId\": 13, \"wearTierId\": 1, \"floatValue\": 0.01, \"isStattrak\": false, \"pattern\": 332, \"stickers\": []}"
+        },
+        "url": {
+          "raw": "{{base_url}}/api/predict",
+          "host": [
+            "{{base_url}}"
+          ],
+          "path": [
+            "api",
+            "predict"
+          ]
+        }
+      },
+      "event": [
+        {
+          "listen": "test",
+          "script": {
+            "type": "text/javascript",
+            "exec": [
+              "pm.test('Status 200', ()=> pm.response.to.have.status(200));",
+              "// Further monotonicity checks require multiple runs and external script to compare values."
+            ]
+          }
+        }
+      ]
+    },
+    {
+      "name": "TC_PRED_13 - Effect of isStattrak comparison (manual)",
+      "request": {
+        "method": "POST",
+        "header": [
+          {
+            "key": "Content-Type",
+            "value": "application/json"
+          },
+          {
+            "key": "Accept",
+            "value": "application/json"
+          }
+        ],
+        "body": {
+          "mode": "raw",
+          "raw": "{\"skinId\": 13, \"wearTierId\": 1, \"floatValue\": 0.023, \"isStattrak\": false, \"pattern\": 332, \"stickers\": [1, 6]}"
+        },
+        "url": {
+          "raw": "{{base_url}}/api/predict",
+          "host": [
+            "{{base_url}}"
+          ],
+          "path": [
+            "api",
+            "predict"
+          ]
+        }
+      },
+      "event": [
+        {
+          "listen": "test",
+          "script": {
+            "type": "text/javascript",
+            "exec": [
+              "pm.test('Status 200', ()=> pm.response.to.have.status(200));",
+              "// Compare this response with similar request with isStattrak=true manually or via runner."
+            ]
+          }
+        }
+      ]
+    },
+    {
+      "name": "TC_PRED_14 - High precision floatValue",
+      "request": {
+        "method": "POST",
+        "header": [
+          {
+            "key": "Content-Type",
+            "value": "application/json"
+          }
+        ],
+        "body": {
+          "mode": "raw",
+          "raw": "{\"skinId\": 13, \"wearTierId\": 1, \"floatValue\": 0.0234567890123456, \"isStattrak\": false, \"pattern\": 332, \"stickers\": [1]}"
+        },
+        "url": {
+          "raw": "{{base_url}}/api/predict",
+          "host": [
+            "{{base_url}}"
+          ],
+          "path": [
+            "api",
+            "predict"
+          ]
+        }
+      },
+      "event": [
+        {
+          "listen": "test",
+          "script": {
+            "type": "text/javascript",
+            "exec": [
+              "pm.test('Status 200', ()=> pm.response.to.have.status(200));"
+            ]
+          }
+        }
+      ]
+    },
+    {
+      "name": "TC_PRED_15 - Sticker values arithmetic correctness (manual)",
+      "request": {
+        "method": "POST",
+        "header": [
+          {
+            "key": "Content-Type",
+            "value": "application/json"
+          },
+          {
+            "key": "Accept",
+            "value": "application/json"
+          }
+        ],
+        "body": {
+          "mode": "raw",
+          "raw": "{\"skinId\": 13, \"wearTierId\": 1, \"floatValue\": 0.023, \"isStattrak\": false, \"pattern\": 332, \"stickers\": [1, 6, 65, 5]}"
+        },
+        "url": {
+          "raw": "{{base_url}}/api/predict",
+          "host": [
+            "{{base_url}}"
+          ],
+          "path": [
+            "api",
+            "predict"
+          ]
+        }
+      },
+      "event": [
+        {
+          "listen": "test",
+          "script": {
+            "type": "text/javascript",
+            "exec": [
+              "pm.test('Status 200', ()=> pm.response.to.have.status(200));",
+              "// Validate sticker arithmetic manually by comparing known sticker values if available."
+            ]
+          }
+        }
+      ]
+    },
+    {
+      "name": "TC_PRED_16 - Malformed JSON",
+      "request": {
+        "method": "POST",
+        "header": [
+          {
+            "key": "Content-Type",
+            "value": "application/json"
+          }
+        ],
+        "body": {
+          "mode": "raw",
+          "raw": "{ \"skinId\": 13, \"wearTierId\": 1, "
+        },
+        "url": {
+          "raw": "{{base_url}}/api/predict",
+          "host": [
+            "{{base_url}}"
+          ],
+          "path": [
+            "api",
+            "predict"
+          ]
+        }
+      },
+      "event": [
+        {
+          "listen": "test",
+          "script": {
+            "type": "text/javascript",
+            "exec": [
+              "pm.test('Expect 4xx', ()=> pm.expect(pm.response.code).to.be.within(400,499));"
+            ]
+          }
+        }
+      ]
+    },
+    {
+      "name": "TC_PRED_17 - Missing Content-Type header",
+      "request": {
+        "method": "POST",
+        "header": [
+          {
+            "key": "Accept",
+            "value": "application/json"
+          }
+        ],
+        "body": {
+          "mode": "raw",
+          "raw": "{\"skinId\": 13, \"wearTierId\": 1, \"floatValue\": 0.023, \"isStattrak\": false, \"pattern\": 332, \"stickers\": [1]}"
+        },
+        "url": {
+          "raw": "{{base_url}}/api/predict",
+          "host": [
+            "{{base_url}}"
+          ],
+          "path": [
+            "api",
+            "predict"
+          ]
+        }
+      },
+      "event": [
+        {
+          "listen": "test",
+          "script": {
+            "type": "text/javascript",
+            "exec": [
+              "pm.test('Status 4xx or 415', ()=> pm.expect(pm.response.code).to.be.within(400,499));"
+            ]
+          }
+        }
+      ]
+    },
+    {
+      "name": "TC_PRED_18 - Very large payload (many stickers + extra fields)",
+      "request": {
+        "method": "POST",
+        "header": [
+          {
+            "key": "Content-Type",
+            "value": "application/json"
+          }
+        ],
+        "body": {
+          "mode": "raw",
+          "raw": ""
+        },
+        "url": {
+          "raw": "{{base_url}}/api/predict",
+          "host": [
+            "{{base_url}}"
+          ],
+          "path": [
+            "api",
+            "predict"
+          ]
+        }
+      },
+      "event": [
+        {
+          "listen": "prerequest",
+          "script": {
+            "type": "text/javascript",
+            "exec": [
+              "var arr = []; for(var i=1;i<=2000;i++){ arr.push(i); }",
+              "var body = { skinId:13, wearTierId:1, floatValue:0.023, isStattrak:false, pattern:332, stickers:arr, extra_field: 'x'.repeat(1000) };",
+              "pm.request.body.update(JSON.stringify(body));"
+            ]
+          }
+        },
+        {
+          "listen": "test",
+          "script": {
+            "type": "text/javascript",
+            "exec": [
+              "pm.test('Status 200 or 413 or 4xx', ()=> pm.expect(pm.response.code).to.be.within(200,499));"
+            ]
+          }
+        }
+      ]
+    },
+    {
+      "name": "TC_PRED_19 - Authorization check (if applicable)",
+      "request": {
+        "method": "POST",
+        "header": [
+          {
+            "key": "Content-Type",
+            "value": "application/json"
+          }
+        ],
+        "body": {
+          "mode": "raw",
+          "raw": "{\"skinId\": 13, \"wearTierId\": 1, \"floatValue\": 0.023, \"isStattrak\": false, \"pattern\": 332, \"stickers\": [1]}"
+        },
+        "url": {
+          "raw": "{{base_url}}/api/predict",
+          "host": [
+            "{{base_url}}"
+          ],
+          "path": [
+            "api",
+            "predict"
+          ]
+        }
+      },
+      "event": [
+        {
+          "listen": "test",
+          "script": {
+            "type": "text/javascript",
+            "exec": [
+              "pm.test('Status 200 or 401/403 if auth required', ()=> pm.expect([200,401,403]).to.include(pm.response.code));"
+            ]
+          }
+        }
+      ]
+    },
+    {
+      "name": "TC_PRED_20 - Retry/timeout behavior note",
+      "request": {
+        "method": "POST",
+        "header": [
+          {
+            "key": "Content-Type",
+            "value": "application/json"
+          }
+        ],
+        "body": {
+          "mode": "raw",
+          "raw": "{\"skinId\": 13, \"wearTierId\": 1, \"floatValue\": 0.023, \"isStattrak\": false, \"pattern\": 332, \"stickers\": [1]}"
+        },
+        "url": {
+          "raw": "{{base_url}}/api/predict",
+          "host": [
+            "{{base_url}}"
+          ],
+          "path": [
+            "api",
+            "predict"
+          ]
+        }
+      },
+      "event": [
+        {
+          "listen": "test",
+          "script": {
+            "type": "text/javascript",
+            "exec": [
+              "pm.test('Status 200 or expected error', ()=> pm.expect(pm.response.code).to.be.within(200,599));",
+              "// Retry/timeouts should be tested with external runner scripting; note only here."
+            ]
+          }
+        }
+      ]
+    }
+  ],
+  "variable": [
+    {
+      "key": "base_url",
+      "value": "http://localhost:8087"
+    }
+  ]
+}

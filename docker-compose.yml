@@ -1,3 +1,5 @@
+version: "3.9"
+
 services:
   # --------- PROD API ---------
   api:
@@ -6,7 +8,6 @@ services:
       dockerfile: Dockerfile
     container_name: cs2-api
 
-    # All sensitive data comes from .env (which is in .gitignore)
     env_file:
       - .env
     environment:
@@ -14,17 +15,17 @@ services:
       ASPNETCORE_ENVIRONMENT: ${ASPNETCORE_ENVIRONMENT:-Production}
       ASPNETCORE_URLS: "http://0.0.0.0:${API_PORT_CONTAINER}"
 
-      # Admin panel API key (from .env)
+      # Admin panel API key
       ADMIN_AUTH_APIKEY: ${ADMIN_AUTH_APIKEY}
 
       # URL of the ML service
       ML_SERVICE_URL: ${ML_SERVICE_URL}
 
-      # Connection strings
-      ConnectionStrings__DefaultConnection: "Host=db;Port=${POSTGRES_PORT_CONTAINER};Database=${POSTGRES_DB};Username=${POSTGRES_USER};Password=${POSTGRES_PASSWORD}"
-      ConnectionStrings__AdminConnection: "Host=db;Port=${POSTGRES_PORT_CONTAINER};Database=${POSTGRES_DB};Username=${POSTGRES_USER};Password=${POSTGRES_PASSWORD}"
+      # Connection strings (используем прикладных юзеров)
+      ConnectionStrings__DefaultConnection: "Host=db;Port=${POSTGRES_PORT_CONTAINER};Database=${POSTGRES_DB};Username=${APP_DB_USER};Password=${APP_DB_PASS}"
+      ConnectionStrings__AdminConnection:   "Host=db;Port=${POSTGRES_PORT_CONTAINER};Database=${POSTGRES_DB};Username=${APP_DB_ADMIN_USER};Password=${APP_DB_ADMIN_PASS}"
 
-      # OpenAI (API key is taken from .env)
+      # OpenAI
       OpenAI__ApiKey: ${OpenAI__ApiKey}
 
     depends_on:
@@ -70,11 +71,11 @@ services:
       ASPNETCORE_ENVIRONMENT: Development
 
       ADMIN_AUTH_APIKEY: ${ADMIN_AUTH_APIKEY}
-
-      ConnectionStrings__DefaultConnection: "Host=db;Port=${POSTGRES_PORT_CONTAINER};Database=${POSTGRES_DB};Username=${POSTGRES_USER};Password=${POSTGRES_PASSWORD}"
-      ConnectionStrings__AdminConnection: "Host=db;Port=${POSTGRES_PORT_CONTAINER};Database=${POSTGRES_DB};Username=${POSTGRES_USER};Password=${POSTGRES_PASSWORD}"
-
       ML_SERVICE_URL: ${ML_SERVICE_URL}
+
+      # те же коннекты, что и у prod API
+      ConnectionStrings__DefaultConnection: "Host=db;Port=${POSTGRES_PORT_CONTAINER};Database=${POSTGRES_DB};Username=${APP_DB_USER};Password=${APP_DB_PASS}"
+      ConnectionStrings__AdminConnection:   "Host=db;Port=${POSTGRES_PORT_CONTAINER};Database=${POSTGRES_DB};Username=${APP_DB_ADMIN_USER};Password=${APP_DB_ADMIN_PASS}"
 
       OpenAI__ApiKey: ${OpenAI__ApiKey}
 
@@ -109,17 +110,15 @@ services:
     env_file:
       - .env
     environment:
-      # Inside the container, models will be stored here
       MODELS_DIR: "/app/models"
 
     expose:
       - "${ML_PORT_CONTAINER}"
 
     ports:
-      - "${ML_PORT_HOST}:${ML_PORT_CONTAINER}"  # 8000:8000 from .env
+      - "${ML_PORT_HOST}:${ML_PORT_CONTAINER}"  # 8000:8000
 
     volumes:
-      # Mount CatBoost models from host into the container (read-only)
       - ./cs2_ml_service/models:/app/models:ro
 
     networks:
@@ -136,7 +135,7 @@ services:
 
   # --------- Postgres ---------
   db:
-    image: postgres:16-alpine   # fixed version, not latest
+    image: postgres:16-alpine
     container_name: cs2-postgres
     restart: always
 

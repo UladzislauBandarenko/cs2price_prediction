@@ -4,7 +4,7 @@
     {
         public int SkinId { get; set; }
         public int WearTierId { get; set; }
-        public double FloatValue { get; set; }
+        public double FloatValue { get; set; }//0.00333333333333334444444
 
         // true/false c фронта, в ML уйдёт 1/0
         public bool IsStattrak { get; set; }

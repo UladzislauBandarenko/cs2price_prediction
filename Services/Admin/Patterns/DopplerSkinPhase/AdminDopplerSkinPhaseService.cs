@@ -5,7 +5,7 @@ using cs2price_prediction.Domain.Meta;
 using cs2price_prediction.DTOs.Admin.Patterns.DopplerSkin;
 using Microsoft.EntityFrameworkCore;
 
-// alias на доменную сущность DopplerSkinPhase
+// alias to the DopplerSkinPhase domain entity
 using DomainDopplerSkinPhase = cs2price_prediction.Domain.Patterns.DopplerSkinPhase;
 
 namespace cs2price_prediction.Services.Admin.Patterns.DopplerSkinPhase

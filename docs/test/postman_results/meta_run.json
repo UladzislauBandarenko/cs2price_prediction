@@ -1,0 +1,758 @@
+{
+	"id": "b940ce39-de54-45a1-bcee-a083a64c19e4",
+	"name": "cs2price_prediction - Meta Endpoints Tests",
+	"timestamp": "2025-12-11T21:34:26.909Z",
+	"collection_id": "41171600-20d08ab1-d071-4814-9421-0e3267b0d048",
+	"folder_id": 0,
+	"environment_id": "0",
+	"totalPass": 31,
+	"delay": 0,
+	"persist": true,
+	"status": "finished",
+	"startedAt": "2025-12-11T21:34:24.696Z",
+	"totalFail": 0,
+	"results": [
+		{
+			"id": "d7c1e175-368c-4330-824b-43174668db59",
+			"name": "GET /api/meta/weapon-types - TC_META_WT_01",
+			"url": "http://localhost:8087/api/meta/weapon-types",
+			"time": 10,
+			"responseCode": {
+				"code": 200,
+				"name": "OK"
+			},
+			"tests": {
+				"Status is 200": true,
+				"Response is JSON array": true
+			},
+			"testPassFailCounts": {
+				"Status is 200": {
+					"pass": 1,
+					"fail": 0
+				},
+				"Response is JSON array": {
+					"pass": 1,
+					"fail": 0
+				}
+			},
+			"times": [
+				10
+			],
+			"allTests": [
+				{
+					"Status is 200": true,
+					"Response is JSON array": true
+				}
+			]
+		},
+		{
+			"id": "6b79bf55-a092-442e-b0f6-d03c2047913f",
+			"name": "GET /api/meta/weapon-types - TC_META_WT_02 (schema types)",
+			"url": "http://localhost:8087/api/meta/weapon-types",
+			"time": 3,
+			"responseCode": {
+				"code": 200,
+				"name": "OK"
+			},
+			"tests": {
+				"Status is 200": true,
+				"Each item has id:int, code:string, name:string": true
+			},
+			"testPassFailCounts": {
+				"Status is 200": {
+					"pass": 1,
+					"fail": 0
+				},
+				"Each item has id:int, code:string, name:string": {
+					"pass": 1,
+					"fail": 0
+				}
+			},
+			"times": [
+				3
+			],
+			"allTests": [
+				{
+					"Status is 200": true,
+					"Each item has id:int, code:string, name:string": true
+				}
+			]
+		},
+		{
+			"id": "8f1a334d-e84b-42e7-a035-cb3595ac5da7",
+			"name": "GET /api/meta/weapon-types - TC_META_WT_03 Unsupported Accept header",
+			"url": "http://localhost:8087/api/meta/weapon-types",
+			"time": 2,
+			"responseCode": {
+				"code": 200,
+				"name": "OK"
+			},
+			"tests": {
+				"Status is 200 or 406": true
+			},
+			"testPassFailCounts": {
+				"Status is 200 or 406": {
+					"pass": 1,
+					"fail": 0
+				}
+			},
+			"times": [
+				2
+			],
+			"allTests": [
+				{
+					"Status is 200 or 406": true
+				}
+			]
+		},
+		{
+			"id": "aa7fcc51-04fa-4b7a-88cd-10593c9bcb5c",
+			"name": "GET /api/meta/weapon-types/{weaponTypeId}/weapons - TC_META_WT_WEAP_01 valid id",
+			"url": "http://localhost:8087/api/meta/weapon-types/2/weapons",
+			"time": 4,
+			"responseCode": {
+				"code": 200,
+				"name": "OK"
+			},
+			"tests": {
+				"Status 200": true,
+				"Response is array of objects with id and name": true
+			},
+			"testPassFailCounts": {
+				"Status 200": {
+					"pass": 1,
+					"fail": 0
+				},
+				"Response is array of objects with id and name": {
+					"pass": 1,
+					"fail": 0
+				}
+			},
+			"times": [
+				4
+			],
+			"allTests": [
+				{
+					"Status 200": true,
+					"Response is array of objects with id and name": true
+				}
+			]
+		},
+		{
+			"id": "10bf1a5a-7271-4591-b548-ed5fcb0e2cbe",
+			"name": "GET /api/meta/weapon-types/{weaponTypeId}/weapons - TC_META_WT_WEAP_02 non-integer param",
+			"url": "http://localhost:8087/api/meta/weapon-types/abc/weapons",
+			"time": 1,
+			"responseCode": {
+				"code": 404,
+				"name": "Not Found"
+			},
+			"tests": {
+				"Expect 4xx": true
+			},
+			"testPassFailCounts": {
+				"Expect 4xx": {
+					"pass": 1,
+					"fail": 0
+				}
+			},
+			"times": [
+				1
+			],
+			"allTests": [
+				{
+					"Expect 4xx": true
+				}
+			]
+		},
+		{
+			"id": "2d0048d0-a46b-40a2-953e-cb6bf2ccb1ff",
+			"name": "GET /api/meta/weapon-types/{weaponTypeId}/weapons - TC_META_WT_WEAP_03 non-existent id",
+			"url": "http://localhost:8087/api/meta/weapon-types/9999/weapons",
+			"time": 3,
+			"responseCode": {
+				"code": 200,
+				"name": "OK"
+			},
+			"tests": {
+				"Status 200 or 404 or empty array": true
+			},
+			"testPassFailCounts": {
+				"Status 200 or 404 or empty array": {
+					"pass": 1,
+					"fail": 0
+				}
+			},
+			"times": [
+				3
+			],
+			"allTests": [
+				{
+					"Status 200 or 404 or empty array": true
+				}
+			]
+		},
+		{
+			"id": "faf77b8c-614a-4faf-81fd-20850c374cea",
+			"name": "GET /api/meta/weapon-types/{weaponTypeId}/weapons - TC_META_WT_WEAP_04 boundary values",
+			"url": "http://localhost:8087/api/meta/weapon-types/0/weapons",
+			"time": 2,
+			"responseCode": {
+				"code": 200,
+				"name": "OK"
+			},
+			"tests": {
+				"Status 200 or 4xx or 404": true
+			},
+			"testPassFailCounts": {
+				"Status 200 or 4xx or 404": {
+					"pass": 1,
+					"fail": 0
+				}
+			},
+			"times": [
+				2
+			],
+			"allTests": [
+				{
+					"Status 200 or 4xx or 404": true
+				}
+			]
+		},
+		{
+			"id": "1f66f09e-6bb8-4a2b-a428-b234d56f42c0",
+			"name": "GET /api/meta/weapon-types/{weaponTypeId}/weapons - TC_META_WT_WEAP_05 parallel stress note",
+			"url": "http://localhost:8087/api/meta/weapon-types/2/weapons",
+			"time": 3,
+			"responseCode": {
+				"code": 200,
+				"name": "OK"
+			},
+			"tests": {
+				"Status 200": true
+			},
+			"testPassFailCounts": {
+				"Status 200": {
+					"pass": 1,
+					"fail": 0
+				}
+			},
+			"times": [
+				3
+			],
+			"allTests": [
+				{
+					"Status 200": true
+				}
+			]
+		},
+		{
+			"id": "75783961-2e48-4195-8daa-7fea2a0c2c43",
+			"name": "GET /api/meta/weapons/{weaponId}/skins - TC_META_WEAP_SKIN_01 valid weaponId",
+			"url": "http://localhost:8087/api/meta/weapons/16/skins",
+			"time": 3,
+			"responseCode": {
+				"code": 200,
+				"name": "OK"
+			},
+			"tests": {
+				"Status 200": true,
+				"Array of skins with id,name,patternStyle": true
+			},
+			"testPassFailCounts": {
+				"Status 200": {
+					"pass": 1,
+					"fail": 0
+				},
+				"Array of skins with id,name,patternStyle": {
+					"pass": 1,
+					"fail": 0
+				}
+			},
+			"times": [
+				3
+			],
+			"allTests": [
+				{
+					"Status 200": true,
+					"Array of skins with id,name,patternStyle": true
+				}
+			]
+		},
+		{
+			"id": "e3e0d18d-9641-4c46-b530-bfdc8bfd1927",
+			"name": "GET /api/meta/weapons/{weaponId}/skins - TC_META_WEAP_SKIN_02 non-existent weaponId",
+			"url": "http://localhost:8087/api/meta/weapons/9999/skins",
+			"time": 2,
+			"responseCode": {
+				"code": 200,
+				"name": "OK"
+			},
+			"tests": {
+				"Status 200 or 404": true
+			},
+			"testPassFailCounts": {
+				"Status 200 or 404": {
+					"pass": 1,
+					"fail": 0
+				}
+			},
+			"times": [
+				2
+			],
+			"allTests": [
+				{
+					"Status 200 or 404": true
+				}
+			]
+		},
+		{
+			"id": "15a56777-9cab-4067-bb11-00fd07de5f73",
+			"name": "GET /api/meta/weapons/{weaponId}/skins - TC_META_WEAP_SKIN_03 validate patternStyle values",
+			"url": "http://localhost:8087/api/meta/weapons/16/skins",
+			"time": 3,
+			"responseCode": {
+				"code": 200,
+				"name": "OK"
+			},
+			"tests": {
+				"patternStyle values allowed": true
+			},
+			"testPassFailCounts": {
+				"patternStyle values allowed": {
+					"pass": 1,
+					"fail": 0
+				}
+			},
+			"times": [
+				3
+			],
+			"allTests": [
+				{
+					"patternStyle values allowed": true
+				}
+			]
+		},
+		{
+			"id": "1d2b919d-72aa-4378-af0d-547ff5caafc7",
+			"name": "GET /api/meta/skins/{skinId}/wear-tiers - TC_META_WEAR_01 valid skinId",
+			"url": "http://localhost:8087/api/meta/skins/13/wear-tiers",
+			"time": 3,
+			"responseCode": {
+				"code": 200,
+				"name": "OK"
+			},
+			"tests": {
+				"Status 200 and array": true,
+				"Has common tiers": true
+			},
+			"testPassFailCounts": {
+				"Status 200 and array": {
+					"pass": 1,
+					"fail": 0
+				},
+				"Has common tiers": {
+					"pass": 1,
+					"fail": 0
+				}
+			},
+			"times": [
+				3
+			],
+			"allTests": [
+				{
+					"Status 200 and array": true,
+					"Has common tiers": true
+				}
+			]
+		},
+		{
+			"id": "a39a2259-41e7-4a38-9451-485d399adee1",
+			"name": "GET /api/meta/skins/{skinId}/wear-tiers - TC_META_WEAR_02 invalid skinId format",
+			"url": "http://localhost:8087/api/meta/skins/abc/wear-tiers",
+			"time": 2,
+			"responseCode": {
+				"code": 404,
+				"name": "Not Found"
+			},
+			"tests": {
+				"Expect 4xx": true
+			},
+			"testPassFailCounts": {
+				"Expect 4xx": {
+					"pass": 1,
+					"fail": 0
+				}
+			},
+			"times": [
+				2
+			],
+			"allTests": [
+				{
+					"Expect 4xx": true
+				}
+			]
+		},
+		{
+			"id": "1af84485-0423-4152-8e47-fd1265fa6b40",
+			"name": "GET /api/meta/skins/{skinId}/wear-tiers - TC_META_WEAR_03 boundary skinId min",
+			"url": "http://localhost:8087/api/meta/skins/1/wear-tiers",
+			"time": 4,
+			"responseCode": {
+				"code": 200,
+				"name": "OK"
+			},
+			"tests": {
+				"Status 200 or documented behavior": true
+			},
+			"testPassFailCounts": {
+				"Status 200 or documented behavior": {
+					"pass": 1,
+					"fail": 0
+				}
+			},
+			"times": [
+				4
+			],
+			"allTests": [
+				{
+					"Status 200 or documented behavior": true
+				}
+			]
+		},
+		{
+			"id": "c01c3161-dcf5-42af-9c2f-719d13db6133",
+			"name": "GET /api/meta/skins/{skinId}/patterns - TC_META_PATTERNS_01 valid skinId",
+			"url": "http://localhost:8087/api/meta/skins/13/patterns",
+			"time": 4,
+			"responseCode": {
+				"code": 200,
+				"name": "OK"
+			},
+			"tests": {
+				"Status 200 and is array": true,
+				"Contains known pattern 332": true
+			},
+			"testPassFailCounts": {
+				"Status 200 and is array": {
+					"pass": 1,
+					"fail": 0
+				},
+				"Contains known pattern 332": {
+					"pass": 1,
+					"fail": 0
+				}
+			},
+			"times": [
+				4
+			],
+			"allTests": [
+				{
+					"Status 200 and is array": true,
+					"Contains known pattern 332": true
+				}
+			]
+		},
+		{
+			"id": "b2c3ad44-2ecc-4a55-aac7-4f4e6102fa10",
+			"name": "GET /api/meta/skins/{skinId}/patterns - TC_META_PATTERNS_03 uniqueness",
+			"url": "http://localhost:8087/api/meta/skins/13/patterns",
+			"time": 4,
+			"responseCode": {
+				"code": 200,
+				"name": "OK"
+			},
+			"tests": {
+				"No duplicate pattern ids": true
+			},
+			"testPassFailCounts": {
+				"No duplicate pattern ids": {
+					"pass": 1,
+					"fail": 0
+				}
+			},
+			"times": [
+				4
+			],
+			"allTests": [
+				{
+					"No duplicate pattern ids": true
+				}
+			]
+		},
+		{
+			"id": "35f2a94b-5f10-4989-a94a-7e9b8f920811",
+			"name": "GET /api/meta/stickers - TC_META_STICK_01 search by q",
+			"url": "http://localhost:8087/api/meta/stickers?q=titan&limit=50",
+			"time": 5,
+			"responseCode": {
+				"code": 200,
+				"name": "OK"
+			},
+			"tests": {
+				"Status 200": true,
+				"Array length <= limit and names contain query": true
+			},
+			"testPassFailCounts": {
+				"Status 200": {
+					"pass": 1,
+					"fail": 0
+				},
+				"Array length <= limit and names contain query": {
+					"pass": 1,
+					"fail": 0
+				}
+			},
+			"times": [
+				5
+			],
+			"allTests": [
+				{
+					"Status 200": true,
+					"Array length <= limit and names contain query": true
+				}
+			]
+		},
+		{
+			"id": "0db3abb3-bbf4-4dc0-b0b0-1d1706dd341e",
+			"name": "GET /api/meta/stickers - TC_META_STICK_02 default (no params)",
+			"url": "http://localhost:8087/api/meta/stickers",
+			"time": 3,
+			"responseCode": {
+				"code": 200,
+				"name": "OK"
+			},
+			"tests": {
+				"Status 200": true,
+				"Returns array": true
+			},
+			"testPassFailCounts": {
+				"Status 200": {
+					"pass": 1,
+					"fail": 0
+				},
+				"Returns array": {
+					"pass": 1,
+					"fail": 0
+				}
+			},
+			"times": [
+				3
+			],
+			"allTests": [
+				{
+					"Status 200": true,
+					"Returns array": true
+				}
+			]
+		},
+		{
+			"id": "3b3e41bd-31cc-40d1-8e5b-ed89c5a84f64",
+			"name": "GET /api/meta/stickers - TC_META_STICK_03 limit edge cases",
+			"url": "http://localhost:8087/api/meta/stickers?limit=0",
+			"time": 3,
+			"responseCode": {
+				"code": 200,
+				"name": "OK"
+			},
+			"tests": {
+				"Status 200 or 4xx": true
+			},
+			"testPassFailCounts": {
+				"Status 200 or 4xx": {
+					"pass": 1,
+					"fail": 0
+				}
+			},
+			"times": [
+				3
+			],
+			"allTests": [
+				{
+					"Status 200 or 4xx": true
+				}
+			]
+		},
+		{
+			"id": "af6d266c-5bba-4eae-a64d-a9b6b2357f58",
+			"name": "GET /api/meta/stickers - TC_META_STICK_04 special chars in q",
+			"url": "http://localhost:8087/api/meta/stickers?q=%3Cscript%3E",
+			"time": 4,
+			"responseCode": {
+				"code": 200,
+				"name": "OK"
+			},
+			"tests": {
+				"Status 200 or 4xx": true
+			},
+			"testPassFailCounts": {
+				"Status 200 or 4xx": {
+					"pass": 1,
+					"fail": 0
+				}
+			},
+			"times": [
+				4
+			],
+			"allTests": [
+				{
+					"Status 200 or 4xx": true
+				}
+			]
+		},
+		{
+			"id": "7851245c-3015-458c-9b4f-f57bdfa51dc8",
+			"name": "GET /api/meta/stickers - TC_META_STICK_05 SQL injection attempt in q",
+			"url": "http://localhost:8087/api/meta/stickers?q=\"'; DROP TABLE stickers;--\"",
+			"time": 5,
+			"responseCode": {
+				"code": 200,
+				"name": "OK"
+			},
+			"tests": {
+				"Status 200 or 4xx": true
+			},
+			"testPassFailCounts": {
+				"Status 200 or 4xx": {
+					"pass": 1,
+					"fail": 0
+				}
+			},
+			"times": [
+				5
+			],
+			"allTests": [
+				{
+					"Status 200 or 4xx": true
+				}
+			]
+		},
+		{
+			"id": "9aeeefd0-8d41-4d19-a98c-4c40413843e7",
+			"name": "GET /api/meta/stickers - TC_META_STICK_06 case-insensitive search",
+			"url": "http://localhost:8087/api/meta/stickers?q=TiTaN&limit=10",
+			"time": 5,
+			"responseCode": {
+				"code": 200,
+				"name": "OK"
+			},
+			"tests": {
+				"Status 200": true,
+				"Case-insensitive results": true
+			},
+			"testPassFailCounts": {
+				"Status 200": {
+					"pass": 1,
+					"fail": 0
+				},
+				"Case-insensitive results": {
+					"pass": 1,
+					"fail": 0
+				}
+			},
+			"times": [
+				5
+			],
+			"allTests": [
+				{
+					"Status 200": true,
+					"Case-insensitive results": true
+				}
+			]
+		}
+	],
+	"count": 1,
+	"totalTime": 78,
+	"collection": {
+		"requests": [
+			{
+				"id": "d7c1e175-368c-4330-824b-43174668db59",
+				"method": "GET"
+			},
+			{
+				"id": "6b79bf55-a092-442e-b0f6-d03c2047913f",
+				"method": "GET"
+			},
+			{
+				"id": "8f1a334d-e84b-42e7-a035-cb3595ac5da7",
+				"method": "GET"
+			},
+			{
+				"id": "aa7fcc51-04fa-4b7a-88cd-10593c9bcb5c",
+				"method": "GET"
+			},
+			{
+				"id": "10bf1a5a-7271-4591-b548-ed5fcb0e2cbe",
+				"method": "GET"
+			},
+			{
+				"id": "2d0048d0-a46b-40a2-953e-cb6bf2ccb1ff",
+				"method": "GET"
+			},
+			{
+				"id": "faf77b8c-614a-4faf-81fd-20850c374cea",
+				"method": "GET"
+			},
+			{
+				"id": "1f66f09e-6bb8-4a2b-a428-b234d56f42c0",
+				"method": "GET"
+			},
+			{
+				"id": "75783961-2e48-4195-8daa-7fea2a0c2c43",
+				"method": "GET"
+			},
+			{
+				"id": "e3e0d18d-9641-4c46-b530-bfdc8bfd1927",
+				"method": "GET"
+			},
+			{
+				"id": "15a56777-9cab-4067-bb11-00fd07de5f73",
+				"method": "GET"
+			},
+			{
+				"id": "1d2b919d-72aa-4378-af0d-547ff5caafc7",
+				"method": "GET"
+			},
+			{
+				"id": "a39a2259-41e7-4a38-9451-485d399adee1",
+				"method": "GET"
+			},
+			{
+				"id": "1af84485-0423-4152-8e47-fd1265fa6b40",
+				"method": "GET"
+			},
+			{
+				"id": "c01c3161-dcf5-42af-9c2f-719d13db6133",
+				"method": "GET"
+			},
+			{
+				"id": "b2c3ad44-2ecc-4a55-aac7-4f4e6102fa10",
+				"method": "GET"
+			},
+			{
+				"id": "35f2a94b-5f10-4989-a94a-7e9b8f920811",
+				"method": "GET"
+			},
+			{
+				"id": "0db3abb3-bbf4-4dc0-b0b0-1d1706dd341e",
+				"method": "GET"
+			},
+			{
+				"id": "3b3e41bd-31cc-40d1-8e5b-ed89c5a84f64",
+				"method": "GET"
+			},
+			{
+				"id": "af6d266c-5bba-4eae-a64d-a9b6b2357f58",
+				"method": "GET"
+			},
+			{
+				"id": "7851245c-3015-458c-9b4f-f57bdfa51dc8",
+				"method": "GET"
+			},
+			{
+				"id": "9aeeefd0-8d41-4d19-a98c-4c40413843e7",
+				"method": "GET"
+			}
+		]
+	}
+}

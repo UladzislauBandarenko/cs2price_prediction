@@ -1,0 +1,838 @@
+{
+  "info": {
+    "name": "cs2price_prediction - Meta Endpoints Tests",
+    "_postman_id": "cs2price_meta_001",
+    "description": "Postman collection for Meta API endpoints: weapon-types, weapons, skins, wear-tiers, patterns, stickers. Includes positive, negative and edge-case tests according to provided test cases.",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+  },
+  "item": [
+    {
+      "name": "GET /api/meta/weapon-types - TC_META_WT_01",
+      "request": {
+        "method": "GET",
+        "header": [
+          {
+            "key": "Accept",
+            "value": "application/json"
+          }
+        ],
+        "url": {
+          "raw": "{{base_url}}/api/meta/weapon-types",
+          "host": [
+            "{{base_url}}"
+          ],
+          "path": [
+            "api",
+            "meta",
+            "weapon-types"
+          ]
+        }
+      },
+      "event": [
+        {
+          "listen": "test",
+          "script": {
+            "type": "text/javascript",
+            "exec": [
+              "pm.test('Status is 200', () => pm.response.to.have.status(200));",
+              "pm.test('Response is JSON array', () => { pm.response.to.be.json; const b = pm.response.json(); pm.expect(Array.isArray(b)).to.be.true; pm.expect(b.length).to.be.above(0); });"
+            ]
+          }
+        }
+      ]
+    },
+    {
+      "name": "GET /api/meta/weapon-types - TC_META_WT_02 (schema types)",
+      "request": {
+        "method": "GET",
+        "header": [
+          {
+            "key": "Accept",
+            "value": "application/json"
+          }
+        ],
+        "url": {
+          "raw": "{{base_url}}/api/meta/weapon-types",
+          "host": [
+            "{{base_url}}"
+          ],
+          "path": [
+            "api",
+            "meta",
+            "weapon-types"
+          ]
+        }
+      },
+      "event": [
+        {
+          "listen": "test",
+          "script": {
+            "type": "text/javascript",
+            "exec": [
+              "pm.test('Status is 200', () => pm.response.to.have.status(200));",
+              "pm.test('Each item has id:int, code:string, name:string', () => { const arr = pm.response.json(); arr.forEach(item => { pm.expect(item).to.have.property('id'); pm.expect(item.id).to.be.a('number'); pm.expect(item).to.have.property('code'); pm.expect(item.code).to.be.a('string'); pm.expect(item).to.have.property('name'); pm.expect(item.name).to.be.a('string'); }); });"
+            ]
+          }
+        }
+      ]
+    },
+    {
+      "name": "GET /api/meta/weapon-types - TC_META_WT_03 Unsupported Accept header",
+      "request": {
+        "method": "GET",
+        "header": [
+          {
+            "key": "Accept",
+            "value": "application/xml"
+          }
+        ],
+        "url": {
+          "raw": "{{base_url}}/api/meta/weapon-types",
+          "host": [
+            "{{base_url}}"
+          ],
+          "path": [
+            "api",
+            "meta",
+            "weapon-types"
+          ]
+        }
+      },
+      "event": [
+        {
+          "listen": "test",
+          "script": {
+            "type": "text/javascript",
+            "exec": [
+              "pm.test('Status is 200 or 406', () => pm.expect([200,406]).to.include(pm.response.code));"
+            ]
+          }
+        }
+      ]
+    },
+    {
+      "name": "GET /api/meta/weapon-types/{weaponTypeId}/weapons - TC_META_WT_WEAP_01 valid id",
+      "request": {
+        "method": "GET",
+        "header": [
+          {
+            "key": "Accept",
+            "value": "application/json"
+          }
+        ],
+        "url": {
+          "raw": "{{base_url}}/api/meta/weapon-types/2/weapons",
+          "host": [
+            "{{base_url}}"
+          ],
+          "path": [
+            "api",
+            "meta",
+            "weapon-types",
+            "2",
+            "weapons"
+          ]
+        }
+      },
+      "event": [
+        {
+          "listen": "test",
+          "script": {
+            "type": "text/javascript",
+            "exec": [
+              "pm.test('Status 200', ()=> pm.response.to.have.status(200));",
+              "pm.test('Response is array of objects with id and name', ()=> { const b = pm.response.json(); pm.expect(Array.isArray(b)).to.be.true; if (b.length>0){ pm.expect(b[0]).to.have.property('id'); pm.expect(b[0]).to.have.property('name'); }});"
+            ]
+          }
+        }
+      ]
+    },
+    {
+      "name": "GET /api/meta/weapon-types/{weaponTypeId}/weapons - TC_META_WT_WEAP_02 non-integer param",
+      "request": {
+        "method": "GET",
+        "header": [
+          {
+            "key": "Accept",
+            "value": "application/json"
+          }
+        ],
+        "url": {
+          "raw": "{{base_url}}/api/meta/weapon-types/abc/weapons",
+          "host": [
+            "{{base_url}}"
+          ],
+          "path": [
+            "api",
+            "meta",
+            "weapon-types",
+            "abc",
+            "weapons"
+          ]
+        }
+      },
+      "event": [
+        {
+          "listen": "test",
+          "script": {
+            "type": "text/javascript",
+            "exec": [
+              "pm.test('Expect 4xx', ()=> pm.expect(pm.response.code).to.be.within(400,499));"
+            ]
+          }
+        }
+      ]
+    },
+    {
+      "name": "GET /api/meta/weapon-types/{weaponTypeId}/weapons - TC_META_WT_WEAP_03 non-existent id",
+      "request": {
+        "method": "GET",
+        "header": [
+          {
+            "key": "Accept",
+            "value": "application/json"
+          }
+        ],
+        "url": {
+          "raw": "{{base_url}}/api/meta/weapon-types/9999/weapons",
+          "host": [
+            "{{base_url}}"
+          ],
+          "path": [
+            "api",
+            "meta",
+            "weapon-types",
+            "9999",
+            "weapons"
+          ]
+        }
+      },
+      "event": [
+        {
+          "listen": "test",
+          "script": {
+            "type": "text/javascript",
+            "exec": [
+              "pm.test('Status 200 or 404 or empty array', ()=> pm.expect([200,404]).to.include(pm.response.code));"
+            ]
+          }
+        }
+      ]
+    },
+    {
+      "name": "GET /api/meta/weapon-types/{weaponTypeId}/weapons - TC_META_WT_WEAP_04 boundary values",
+      "request": {
+        "method": "GET",
+        "header": [
+          {
+            "key": "Accept",
+            "value": "application/json"
+          }
+        ],
+        "url": {
+          "raw": "{{base_url}}/api/meta/weapon-types/0/weapons",
+          "host": [
+            "{{base_url}}"
+          ],
+          "path": [
+            "api",
+            "meta",
+            "weapon-types",
+            "0",
+            "weapons"
+          ]
+        }
+      },
+      "event": [
+        {
+          "listen": "test",
+          "script": {
+            "type": "text/javascript",
+            "exec": [
+              "pm.test('Status 200 or 4xx or 404', ()=> pm.expect(pm.response.code).to.be.within(200,499));"
+            ]
+          }
+        }
+      ]
+    },
+    {
+      "name": "GET /api/meta/weapon-types/{weaponTypeId}/weapons - TC_META_WT_WEAP_05 parallel stress note",
+      "request": {
+        "method": "GET",
+        "header": [
+          {
+            "key": "Accept",
+            "value": "application/json"
+          }
+        ],
+        "url": {
+          "raw": "{{base_url}}/api/meta/weapon-types/2/weapons",
+          "host": [
+            "{{base_url}}"
+          ],
+          "path": [
+            "api",
+            "meta",
+            "weapon-types",
+            "2",
+            "weapons"
+          ]
+        }
+      },
+      "event": [
+        {
+          "listen": "test",
+          "script": {
+            "type": "text/javascript",
+            "exec": [
+              "pm.test('Status 200', ()=> pm.response.to.have.status(200));",
+              "// Parallel stress should be executed via external tool (k6/jMeter) - note only here"
+            ]
+          }
+        }
+      ]
+    },
+    {
+      "name": "GET /api/meta/weapons/{weaponId}/skins - TC_META_WEAP_SKIN_01 valid weaponId",
+      "request": {
+        "method": "GET",
+        "header": [
+          {
+            "key": "Accept",
+            "value": "application/json"
+          }
+        ],
+        "url": {
+          "raw": "{{base_url}}/api/meta/weapons/16/skins",
+          "host": [
+            "{{base_url}}"
+          ],
+          "path": [
+            "api",
+            "meta",
+            "weapons",
+            "16",
+            "skins"
+          ]
+        }
+      },
+      "event": [
+        {
+          "listen": "test",
+          "script": {
+            "type": "text/javascript",
+            "exec": [
+              "pm.test('Status 200', ()=> pm.response.to.have.status(200));",
+              "pm.test('Array of skins with id,name,patternStyle', ()=> { const b = pm.response.json(); pm.expect(Array.isArray(b)).to.be.true; if (b.length>0){ pm.expect(b[0]).to.have.property('id'); pm.expect(b[0]).to.have.property('name'); pm.expect(b[0]).to.have.property('patternStyle'); } });"
+            ]
+          }
+        }
+      ]
+    },
+    {
+      "name": "GET /api/meta/weapons/{weaponId}/skins - TC_META_WEAP_SKIN_02 non-existent weaponId",
+      "request": {
+        "method": "GET",
+        "header": [
+          {
+            "key": "Accept",
+            "value": "application/json"
+          }
+        ],
+        "url": {
+          "raw": "{{base_url}}/api/meta/weapons/9999/skins",
+          "host": [
+            "{{base_url}}"
+          ],
+          "path": [
+            "api",
+            "meta",
+            "weapons",
+            "9999",
+            "skins"
+          ]
+        }
+      },
+      "event": [
+        {
+          "listen": "test",
+          "script": {
+            "type": "text/javascript",
+            "exec": [
+              "pm.test('Status 200 or 404', ()=> pm.expect([200,404]).to.include(pm.response.code));"
+            ]
+          }
+        }
+      ]
+    },
+    {
+      "name": "GET /api/meta/weapons/{weaponId}/skins - TC_META_WEAP_SKIN_03 validate patternStyle values",
+      "request": {
+        "method": "GET",
+        "header": [
+          {
+            "key": "Accept",
+            "value": "application/json"
+          }
+        ],
+        "url": {
+          "raw": "{{base_url}}/api/meta/weapons/16/skins",
+          "host": [
+            "{{base_url}}"
+          ],
+          "path": [
+            "api",
+            "meta",
+            "weapons",
+            "16",
+            "skins"
+          ]
+        }
+      },
+      "event": [
+        {
+          "listen": "test",
+          "script": {
+            "type": "text/javascript",
+            "exec": [
+              "pm.test('patternStyle values allowed', ()=> { const b = pm.response.json(); const allowed = ['fade_gun','float_gun','pattern_list','default']; b.forEach(item => { if (item.patternStyle) pm.expect(allowed).to.include(item.patternStyle); }); });"
+            ]
+          }
+        }
+      ]
+    },
+    {
+      "name": "GET /api/meta/skins/{skinId}/wear-tiers - TC_META_WEAR_01 valid skinId",
+      "request": {
+        "method": "GET",
+        "header": [
+          {
+            "key": "Accept",
+            "value": "application/json"
+          }
+        ],
+        "url": {
+          "raw": "{{base_url}}/api/meta/skins/13/wear-tiers",
+          "host": [
+            "{{base_url}}"
+          ],
+          "path": [
+            "api",
+            "meta",
+            "skins",
+            "13",
+            "wear-tiers"
+          ]
+        }
+      },
+      "event": [
+        {
+          "listen": "test",
+          "script": {
+            "type": "text/javascript",
+            "exec": [
+              "pm.test('Status 200 and array', ()=> pm.response.to.have.status(200));",
+              "pm.test('Has common tiers', ()=> { const b = pm.response.json(); pm.expect(Array.isArray(b)).to.be.true; const names = b.map(x=>x.name.toLowerCase()); pm.expect(names.some(n=>n.includes('factory'))).to.be.true; });"
+            ]
+          }
+        }
+      ]
+    },
+    {
+      "name": "GET /api/meta/skins/{skinId}/wear-tiers - TC_META_WEAR_02 invalid skinId format",
+      "request": {
+        "method": "GET",
+        "header": [
+          {
+            "key": "Accept",
+            "value": "application/json"
+          }
+        ],
+        "url": {
+          "raw": "{{base_url}}/api/meta/skins/abc/wear-tiers",
+          "host": [
+            "{{base_url}}"
+          ],
+          "path": [
+            "api",
+            "meta",
+            "skins",
+            "abc",
+            "wear-tiers"
+          ]
+        }
+      },
+      "event": [
+        {
+          "listen": "test",
+          "script": {
+            "type": "text/javascript",
+            "exec": [
+              "pm.test('Expect 4xx', ()=> pm.expect(pm.response.code).to.be.within(400,499));"
+            ]
+          }
+        }
+      ]
+    },
+    {
+      "name": "GET /api/meta/skins/{skinId}/wear-tiers - TC_META_WEAR_03 boundary skinId min",
+      "request": {
+        "method": "GET",
+        "header": [
+          {
+            "key": "Accept",
+            "value": "application/json"
+          }
+        ],
+        "url": {
+          "raw": "{{base_url}}/api/meta/skins/1/wear-tiers",
+          "host": [
+            "{{base_url}}"
+          ],
+          "path": [
+            "api",
+            "meta",
+            "skins",
+            "1",
+            "wear-tiers"
+          ]
+        }
+      },
+      "event": [
+        {
+          "listen": "test",
+          "script": {
+            "type": "text/javascript",
+            "exec": [
+              "pm.test('Status 200 or documented behavior', ()=> pm.expect(pm.response.code).to.be.within(200,499));"
+            ]
+          }
+        }
+      ]
+    },
+    {
+      "name": "GET /api/meta/skins/{skinId}/patterns - TC_META_PATTERNS_01 valid skinId",
+      "request": {
+        "method": "GET",
+        "header": [
+          {
+            "key": "Accept",
+            "value": "application/json"
+          }
+        ],
+        "url": {
+          "raw": "{{base_url}}/api/meta/skins/13/patterns",
+          "host": [
+            "{{base_url}}"
+          ],
+          "path": [
+            "api",
+            "meta",
+            "skins",
+            "13",
+            "patterns"
+          ]
+        }
+      },
+      "event": [
+        {
+          "listen": "test",
+          "script": {
+            "type": "text/javascript",
+            "exec": [
+              "pm.test('Status 200 and is array', ()=> pm.response.to.have.status(200));",
+              "pm.test('Contains known pattern 332', ()=> { const b = pm.response.json(); const ids = b.map(x=> x.id || x); pm.expect(ids).to.include(332); });"
+            ]
+          }
+        }
+      ]
+    },
+    {
+      "name": "GET /api/meta/skins/{skinId}/patterns - TC_META_PATTERNS_03 uniqueness",
+      "request": {
+        "method": "GET",
+        "header": [
+          {
+            "key": "Accept",
+            "value": "application/json"
+          }
+        ],
+        "url": {
+          "raw": "{{base_url}}/api/meta/skins/13/patterns",
+          "host": [
+            "{{base_url}}"
+          ],
+          "path": [
+            "api",
+            "meta",
+            "skins",
+            "13",
+            "patterns"
+          ]
+        }
+      },
+      "event": [
+        {
+          "listen": "test",
+          "script": {
+            "type": "text/javascript",
+            "exec": [
+              "pm.test('No duplicate pattern ids', ()=> { const b = pm.response.json(); const ids = b.map(x=> x.id || x); const uniq = Array.from(new Set(ids)); pm.expect(uniq.length).to.eql(ids.length); });"
+            ]
+          }
+        }
+      ]
+    },
+    {
+      "name": "GET /api/meta/stickers - TC_META_STICK_01 search by q",
+      "request": {
+        "method": "GET",
+        "header": [
+          {
+            "key": "Accept",
+            "value": "application/json"
+          }
+        ],
+        "url": {
+          "raw": "{{base_url}}/api/meta/stickers?q=titan&limit=50",
+          "host": [
+            "{{base_url}}"
+          ],
+          "path": [
+            "api",
+            "meta",
+            "stickers"
+          ],
+          "query": [
+            {
+              "key": "q",
+              "value": "titan"
+            },
+            {
+              "key": "limit",
+              "value": "50"
+            }
+          ]
+        }
+      },
+      "event": [
+        {
+          "listen": "test",
+          "script": {
+            "type": "text/javascript",
+            "exec": [
+              "pm.test('Status 200', ()=> pm.response.to.have.status(200));",
+              "pm.test('Array length <= limit and names contain query', ()=> { const b = pm.response.json(); pm.expect(Array.isArray(b)).to.be.true; pm.expect(b.length).to.be.at.most(50); b.forEach(item => { pm.expect(item.name.toLowerCase()).to.include('titan'); }); });"
+            ]
+          }
+        }
+      ]
+    },
+    {
+      "name": "GET /api/meta/stickers - TC_META_STICK_02 default (no params)",
+      "request": {
+        "method": "GET",
+        "header": [
+          {
+            "key": "Accept",
+            "value": "application/json"
+          }
+        ],
+        "url": {
+          "raw": "{{base_url}}/api/meta/stickers",
+          "host": [
+            "{{base_url}}"
+          ],
+          "path": [
+            "api",
+            "meta",
+            "stickers"
+          ]
+        }
+      },
+      "event": [
+        {
+          "listen": "test",
+          "script": {
+            "type": "text/javascript",
+            "exec": [
+              "pm.test('Status 200', ()=> pm.response.to.have.status(200));",
+              "pm.test('Returns array', ()=> { pm.response.to.be.json; const b = pm.response.json(); pm.expect(Array.isArray(b)).to.be.true; });"
+            ]
+          }
+        }
+      ]
+    },
+    {
+      "name": "GET /api/meta/stickers - TC_META_STICK_03 limit edge cases",
+      "request": {
+        "method": "GET",
+        "header": [
+          {
+            "key": "Accept",
+            "value": "application/json"
+          }
+        ],
+        "url": {
+          "raw": "{{base_url}}/api/meta/stickers?limit=0",
+          "host": [
+            "{{base_url}}"
+          ],
+          "path": [
+            "api",
+            "meta",
+            "stickers"
+          ],
+          "query": [
+            {
+              "key": "limit",
+              "value": "0"
+            }
+          ]
+        }
+      },
+      "event": [
+        {
+          "listen": "test",
+          "script": {
+            "type": "text/javascript",
+            "exec": [
+              "pm.test('Status 200 or 4xx', ()=> pm.expect(pm.response.code).to.be.within(200,499));"
+            ]
+          }
+        }
+      ]
+    },
+    {
+      "name": "GET /api/meta/stickers - TC_META_STICK_04 special chars in q",
+      "request": {
+        "method": "GET",
+        "header": [
+          {
+            "key": "Accept",
+            "value": "application/json"
+          }
+        ],
+        "url": {
+          "raw": "{{base_url}}/api/meta/stickers?q=%3Cscript%3E",
+          "host": [
+            "{{base_url}}"
+          ],
+          "path": [
+            "api",
+            "meta",
+            "stickers"
+          ],
+          "query": [
+            {
+              "key": "q",
+              "value": "%3Cscript%3E"
+            }
+          ]
+        }
+      },
+      "event": [
+        {
+          "listen": "test",
+          "script": {
+            "type": "text/javascript",
+            "exec": [
+              "pm.test('Status 200 or 4xx', ()=> pm.expect(pm.response.code).to.be.within(200,499));"
+            ]
+          }
+        }
+      ]
+    },
+    {
+      "name": "GET /api/meta/stickers - TC_META_STICK_05 SQL injection attempt in q",
+      "request": {
+        "method": "GET",
+        "header": [
+          {
+            "key": "Accept",
+            "value": "application/json"
+          }
+        ],
+        "url": {
+          "raw": "{{base_url}}/api/meta/stickers?q=\"'; DROP TABLE stickers;--\"",
+          "host": [
+            "{{base_url}}"
+          ],
+          "path": [
+            "api",
+            "meta",
+            "stickers"
+          ],
+          "query": [
+            {
+              "key": "q",
+              "value": "\"'; DROP TABLE stickers;--\""
+            }
+          ]
+        }
+      },
+      "event": [
+        {
+          "listen": "test",
+          "script": {
+            "type": "text/javascript",
+            "exec": [
+              "pm.test('Status 200 or 4xx', ()=> pm.expect(pm.response.code).to.be.within(200,499));"
+            ]
+          }
+        }
+      ]
+    },
+    {
+      "name": "GET /api/meta/stickers - TC_META_STICK_06 case-insensitive search",
+      "request": {
+        "method": "GET",
+        "header": [
+          {
+            "key": "Accept",
+            "value": "application/json"
+          }
+        ],
+        "url": {
+          "raw": "{{base_url}}/api/meta/stickers?q=TiTaN&limit=10",
+          "host": [
+            "{{base_url}}"
+          ],
+          "path": [
+            "api",
+            "meta",
+            "stickers"
+          ],
+          "query": [
+            {
+              "key": "q",
+              "value": "TiTaN"
+            },
+            {
+              "key": "limit",
+              "value": "10"
+            }
+          ]
+        }
+      },
+      "event": [
+        {
+          "listen": "test",
+          "script": {
+            "type": "text/javascript",
+            "exec": [
+              "pm.test('Status 200', ()=> pm.response.to.have.status(200));",
+              "pm.test('Case-insensitive results', ()=> { const b = pm.response.json(); pm.expect(Array.isArray(b)).to.be.true; b.forEach(i=> pm.expect(i.name.toLowerCase()).to.include('titan')); });"
+            ]
+          }
+        }
+      ]
+    }
+  ],
+  "variable": [
+    {
+      "key": "base_url",
+      "value": "http://localhost:8087"
+    }
+  ]
+}

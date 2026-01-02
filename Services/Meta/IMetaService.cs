@@ -12,7 +12,7 @@ namespace cs2price_prediction.Services.Meta
         Task<IEnumerable<WearTierDto>> GetWearForSkinAsync(int skinId);
 
         /// <summary>
-        /// SkinExists = false, если скина нет → контроллер вернёт 404.
+        /// SkinExists = false, if there is no skin → the controller will return 404.
         /// </summary>
         Task<(bool SkinExists, IEnumerable<PatternOptionDto> Patterns)> GetPatternsForSkinAsync(int skinId);
 

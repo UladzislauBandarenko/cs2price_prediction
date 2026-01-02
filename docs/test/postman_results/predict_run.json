@@ -1,0 +1,697 @@
+{
+	"id": "b83bb710-188e-4717-a427-c0facc269ffe",
+	"name": "cs2price_prediction - Predict Endpoint Tests",
+	"timestamp": "2025-12-11T21:55:03.201Z",
+	"collection_id": "41171600-dceff9e7-4685-4af7-8f87-25fa22ea5809",
+	"folder_id": 0,
+	"environment_id": "0",
+	"totalPass": 25,
+	"delay": 0,
+	"persist": true,
+	"status": "finished",
+	"startedAt": "2025-12-11T21:55:01.108Z",
+	"totalFail": 0,
+	"results": [
+		{
+			"id": "36248661-c4ee-497a-917a-070ea31f28b4",
+			"name": "TC_PRED_HAPPY_01 - Happy Path",
+			"url": "http://localhost:8087/api/predict",
+			"time": 20,
+			"responseCode": {
+				"code": 200,
+				"name": "OK"
+			},
+			"tests": {
+				"Status 200": true,
+				"Has predicted_price and stickers_features": true
+			},
+			"testPassFailCounts": {
+				"Status 200": {
+					"pass": 1,
+					"fail": 0
+				},
+				"Has predicted_price and stickers_features": {
+					"pass": 1,
+					"fail": 0
+				}
+			},
+			"times": [
+				20
+			],
+			"allTests": [
+				{
+					"Status 200": true,
+					"Has predicted_price and stickers_features": true
+				}
+			]
+		},
+		{
+			"id": "473a1099-7c2b-434f-881f-59975aa333c9",
+			"name": "TC_PRED_HAPPY_02 - isStattrak true",
+			"url": "http://localhost:8087/api/predict",
+			"time": 7,
+			"responseCode": {
+				"code": 200,
+				"name": "OK"
+			},
+			"tests": {
+				"Status 200": true,
+				"Predicted_price numeric": true
+			},
+			"testPassFailCounts": {
+				"Status 200": {
+					"pass": 1,
+					"fail": 0
+				},
+				"Predicted_price numeric": {
+					"pass": 1,
+					"fail": 0
+				}
+			},
+			"times": [
+				7
+			],
+			"allTests": [
+				{
+					"Status 200": true,
+					"Predicted_price numeric": true
+				}
+			]
+		},
+		{
+			"id": "9318d1b5-3324-42b0-9c44-ff5383acb223",
+			"name": "TC_PRED_01 - Missing skinId (Negative)",
+			"url": "http://localhost:8087/api/predict",
+			"time": 3,
+			"responseCode": {
+				"code": 404,
+				"name": "Not Found"
+			},
+			"tests": {
+				"Expect 4xx": true
+			},
+			"testPassFailCounts": {
+				"Expect 4xx": {
+					"pass": 1,
+					"fail": 0
+				}
+			},
+			"times": [
+				3
+			],
+			"allTests": [
+				{
+					"Expect 4xx": true
+				}
+			]
+		},
+		{
+			"id": "f382fdca-f7fe-4a91-91b4-12a8808b6a08",
+			"name": "TC_PRED_02 - Invalid floatValue type (Negative)",
+			"url": "http://localhost:8087/api/predict",
+			"time": 2,
+			"responseCode": {
+				"code": 400,
+				"name": "Bad Request"
+			},
+			"tests": {
+				"Status 4xx": true
+			},
+			"testPassFailCounts": {
+				"Status 4xx": {
+					"pass": 1,
+					"fail": 0
+				}
+			},
+			"times": [
+				2
+			],
+			"allTests": [
+				{
+					"Status 4xx": true
+				}
+			]
+		},
+		{
+			"id": "36e12071-86b2-460f-88fc-c1330b44bfd0",
+			"name": "TC_PRED_03 - Non-existent skinId",
+			"url": "http://localhost:8087/api/predict",
+			"time": 3,
+			"responseCode": {
+				"code": 404,
+				"name": "Not Found"
+			},
+			"tests": {
+				"Status 200 or 404": true
+			},
+			"testPassFailCounts": {
+				"Status 200 or 404": {
+					"pass": 1,
+					"fail": 0
+				}
+			},
+			"times": [
+				3
+			],
+			"allTests": [
+				{
+					"Status 200 or 404": true
+				}
+			]
+		},
+		{
+			"id": "75b26572-1da9-493f-ad86-c88b082d1e8a",
+			"name": "TC_PRED_04 - Pattern not in skin patterns",
+			"url": "http://localhost:8087/api/predict",
+			"time": 5,
+			"responseCode": {
+				"code": 400,
+				"name": "Bad Request"
+			},
+			"tests": {
+				"Status 200 or 4xx": true,
+				"Document behavior in report": true
+			},
+			"testPassFailCounts": {
+				"Status 200 or 4xx": {
+					"pass": 1,
+					"fail": 0
+				},
+				"Document behavior in report": {
+					"pass": 1,
+					"fail": 0
+				}
+			},
+			"times": [
+				5
+			],
+			"allTests": [
+				{
+					"Status 200 or 4xx": true,
+					"Document behavior in report": true
+				}
+			]
+		},
+		{
+			"id": "14e7ca67-c8d4-42b2-b139-469ac75bd224",
+			"name": "TC_PRED_05 - Negative floatValue",
+			"url": "http://localhost:8087/api/predict",
+			"time": 4,
+			"responseCode": {
+				"code": 400,
+				"name": "Bad Request"
+			},
+			"tests": {
+				"Status 4xx or handled": true
+			},
+			"testPassFailCounts": {
+				"Status 4xx or handled": {
+					"pass": 1,
+					"fail": 0
+				}
+			},
+			"times": [
+				4
+			],
+			"allTests": [
+				{
+					"Status 4xx or handled": true
+				}
+			]
+		},
+		{
+			"id": "5570ab05-cc5b-4011-a470-bf1deb725340",
+			"name": "TC_PRED_06 - Very small floatValue precision",
+			"url": "http://localhost:8087/api/predict",
+			"time": 7,
+			"responseCode": {
+				"code": 200,
+				"name": "OK"
+			},
+			"tests": {
+				"Status 200 and numeric response": true
+			},
+			"testPassFailCounts": {
+				"Status 200 and numeric response": {
+					"pass": 1,
+					"fail": 0
+				}
+			},
+			"times": [
+				7
+			],
+			"allTests": [
+				{
+					"Status 200 and numeric response": true
+				}
+			]
+		},
+		{
+			"id": "1af13290-7f62-4c35-bb65-0000212238ad",
+			"name": "TC_PRED_07 - Duplicate stickers IDs",
+			"url": "http://localhost:8087/api/predict",
+			"time": 7,
+			"responseCode": {
+				"code": 200,
+				"name": "OK"
+			},
+			"tests": {
+				"Status 200 and stickers_features present": true
+			},
+			"testPassFailCounts": {
+				"Status 200 and stickers_features present": {
+					"pass": 1,
+					"fail": 0
+				}
+			},
+			"times": [
+				7
+			],
+			"allTests": [
+				{
+					"Status 200 and stickers_features present": true
+				}
+			]
+		},
+		{
+			"id": "bfb4a384-2559-4f95-a261-0dff954069b9",
+			"name": "TC_PRED_08 - Invalid sticker IDs",
+			"url": "http://localhost:8087/api/predict",
+			"time": 2,
+			"responseCode": {
+				"code": 400,
+				"name": "Bad Request"
+			},
+			"tests": {
+				"Status 200 or 4xx": true
+			},
+			"testPassFailCounts": {
+				"Status 200 or 4xx": {
+					"pass": 1,
+					"fail": 0
+				}
+			},
+			"times": [
+				2
+			],
+			"allTests": [
+				{
+					"Status 200 or 4xx": true
+				}
+			]
+		},
+		{
+			"id": "35c9c356-fecf-43f1-80b5-d5a10fe3e30c",
+			"name": "TC_PRED_09 - Empty body (Negative)",
+			"url": "http://localhost:8087/api/predict",
+			"time": 2,
+			"responseCode": {
+				"code": 400,
+				"name": "Bad Request"
+			},
+			"tests": {
+				"Expect 4xx": true
+			},
+			"testPassFailCounts": {
+				"Expect 4xx": {
+					"pass": 1,
+					"fail": 0
+				}
+			},
+			"times": [
+				2
+			],
+			"allTests": [
+				{
+					"Expect 4xx": true
+				}
+			]
+		},
+		{
+			"id": "5e73a623-0e92-4143-86f2-bdefeaf70788",
+			"name": "TC_PRED_11 - Response schema validation",
+			"url": "http://localhost:8087/api/predict",
+			"time": 7,
+			"responseCode": {
+				"code": 200,
+				"name": "OK"
+			},
+			"tests": {
+				"Status 200": true,
+				"Response contains expected keys and types": true
+			},
+			"testPassFailCounts": {
+				"Status 200": {
+					"pass": 1,
+					"fail": 0
+				},
+				"Response contains expected keys and types": {
+					"pass": 1,
+					"fail": 0
+				}
+			},
+			"times": [
+				7
+			],
+			"allTests": [
+				{
+					"Status 200": true,
+					"Response contains expected keys and types": true
+				}
+			]
+		},
+		{
+			"id": "a6f5a946-eb03-47b4-9fe3-812414d30ee0",
+			"name": "TC_PRED_12 - Float monotonicity sanity check (partial)",
+			"url": "http://localhost:8087/api/predict",
+			"time": 6,
+			"responseCode": {
+				"code": 200,
+				"name": "OK"
+			},
+			"tests": {
+				"Status 200": true
+			},
+			"testPassFailCounts": {
+				"Status 200": {
+					"pass": 1,
+					"fail": 0
+				}
+			},
+			"times": [
+				6
+			],
+			"allTests": [
+				{
+					"Status 200": true
+				}
+			]
+		},
+		{
+			"id": "b61af3c3-c789-423d-8268-4b81726d24ef",
+			"name": "TC_PRED_13 - Effect of isStattrak comparison (manual)",
+			"url": "http://localhost:8087/api/predict",
+			"time": 7,
+			"responseCode": {
+				"code": 200,
+				"name": "OK"
+			},
+			"tests": {
+				"Status 200": true
+			},
+			"testPassFailCounts": {
+				"Status 200": {
+					"pass": 1,
+					"fail": 0
+				}
+			},
+			"times": [
+				7
+			],
+			"allTests": [
+				{
+					"Status 200": true
+				}
+			]
+		},
+		{
+			"id": "3806327a-6106-44b1-8750-6b2621f4cb51",
+			"name": "TC_PRED_14 - High precision floatValue",
+			"url": "http://localhost:8087/api/predict",
+			"time": 7,
+			"responseCode": {
+				"code": 200,
+				"name": "OK"
+			},
+			"tests": {
+				"Status 200": true
+			},
+			"testPassFailCounts": {
+				"Status 200": {
+					"pass": 1,
+					"fail": 0
+				}
+			},
+			"times": [
+				7
+			],
+			"allTests": [
+				{
+					"Status 200": true
+				}
+			]
+		},
+		{
+			"id": "2fd1c362-f61d-4ee0-b63b-feb37a91fc23",
+			"name": "TC_PRED_15 - Sticker values arithmetic correctness (manual)",
+			"url": "http://localhost:8087/api/predict",
+			"time": 6,
+			"responseCode": {
+				"code": 200,
+				"name": "OK"
+			},
+			"tests": {
+				"Status 200": true
+			},
+			"testPassFailCounts": {
+				"Status 200": {
+					"pass": 1,
+					"fail": 0
+				}
+			},
+			"times": [
+				6
+			],
+			"allTests": [
+				{
+					"Status 200": true
+				}
+			]
+		},
+		{
+			"id": "3945982b-6907-4fd0-848e-3d66de79421b",
+			"name": "TC_PRED_16 - Malformed JSON",
+			"url": "http://localhost:8087/api/predict",
+			"time": 2,
+			"responseCode": {
+				"code": 400,
+				"name": "Bad Request"
+			},
+			"tests": {
+				"Expect 4xx": true
+			},
+			"testPassFailCounts": {
+				"Expect 4xx": {
+					"pass": 1,
+					"fail": 0
+				}
+			},
+			"times": [
+				2
+			],
+			"allTests": [
+				{
+					"Expect 4xx": true
+				}
+			]
+		},
+		{
+			"id": "1e68973c-370d-4115-9aaa-ca545de2aac6",
+			"name": "TC_PRED_17 - Missing Content-Type header",
+			"url": "http://localhost:8087/api/predict",
+			"time": 2,
+			"responseCode": {
+				"code": 415,
+				"name": "Unsupported Media Type"
+			},
+			"tests": {
+				"Status 4xx or 415": true
+			},
+			"testPassFailCounts": {
+				"Status 4xx or 415": {
+					"pass": 1,
+					"fail": 0
+				}
+			},
+			"times": [
+				2
+			],
+			"allTests": [
+				{
+					"Status 4xx or 415": true
+				}
+			]
+		},
+		{
+			"id": "d59eb8e4-58d9-4358-859a-fee42624db86",
+			"name": "TC_PRED_18 - Very large payload (many stickers + extra fields)",
+			"url": "http://localhost:8087/api/predict",
+			"time": 4,
+			"responseCode": {
+				"code": 400,
+				"name": "Bad Request"
+			},
+			"tests": {
+				"Status 200 or 413 or 4xx": true
+			},
+			"testPassFailCounts": {
+				"Status 200 or 413 or 4xx": {
+					"pass": 1,
+					"fail": 0
+				}
+			},
+			"times": [
+				4
+			],
+			"allTests": [
+				{
+					"Status 200 or 413 or 4xx": true
+				}
+			]
+		},
+		{
+			"id": "8c74e8ab-c2f8-4f7e-a5bd-25bd4aa9439b",
+			"name": "TC_PRED_19 - Authorization check (if applicable)",
+			"url": "http://localhost:8087/api/predict",
+			"time": 6,
+			"responseCode": {
+				"code": 200,
+				"name": "OK"
+			},
+			"tests": {
+				"Status 200 or 401/403 if auth required": true
+			},
+			"testPassFailCounts": {
+				"Status 200 or 401/403 if auth required": {
+					"pass": 1,
+					"fail": 0
+				}
+			},
+			"times": [
+				6
+			],
+			"allTests": [
+				{
+					"Status 200 or 401/403 if auth required": true
+				}
+			]
+		},
+		{
+			"id": "dc151d37-ceda-4cad-9324-5310d117136d",
+			"name": "TC_PRED_20 - Retry/timeout behavior note",
+			"url": "http://localhost:8087/api/predict",
+			"time": 7,
+			"responseCode": {
+				"code": 200,
+				"name": "OK"
+			},
+			"tests": {
+				"Status 200 or expected error": true
+			},
+			"testPassFailCounts": {
+				"Status 200 or expected error": {
+					"pass": 1,
+					"fail": 0
+				}
+			},
+			"times": [
+				7
+			],
+			"allTests": [
+				{
+					"Status 200 or expected error": true
+				}
+			]
+		}
+	],
+	"count": 1,
+	"totalTime": 116,
+	"collection": {
+		"requests": [
+			{
+				"id": "36248661-c4ee-497a-917a-070ea31f28b4",
+				"method": "POST"
+			},
+			{
+				"id": "473a1099-7c2b-434f-881f-59975aa333c9",
+				"method": "POST"
+			},
+			{
+				"id": "9318d1b5-3324-42b0-9c44-ff5383acb223",
+				"method": "POST"
+			},
+			{
+				"id": "f382fdca-f7fe-4a91-91b4-12a8808b6a08",
+				"method": "POST"
+			},
+			{
+				"id": "36e12071-86b2-460f-88fc-c1330b44bfd0",
+				"method": "POST"
+			},
+			{
+				"id": "75b26572-1da9-493f-ad86-c88b082d1e8a",
+				"method": "POST"
+			},
+			{
+				"id": "14e7ca67-c8d4-42b2-b139-469ac75bd224",
+				"method": "POST"
+			},
+			{
+				"id": "5570ab05-cc5b-4011-a470-bf1deb725340",
+				"method": "POST"
+			},
+			{
+				"id": "1af13290-7f62-4c35-bb65-0000212238ad",
+				"method": "POST"
+			},
+			{
+				"id": "bfb4a384-2559-4f95-a261-0dff954069b9",
+				"method": "POST"
+			},
+			{
+				"id": "35c9c356-fecf-43f1-80b5-d5a10fe3e30c",
+				"method": "POST"
+			},
+			{
+				"id": "5e73a623-0e92-4143-86f2-bdefeaf70788",
+				"method": "POST"
+			},
+			{
+				"id": "a6f5a946-eb03-47b4-9fe3-812414d30ee0",
+				"method": "POST"
+			},
+			{
+				"id": "b61af3c3-c789-423d-8268-4b81726d24ef",
+				"method": "POST"
+			},
+			{
+				"id": "3806327a-6106-44b1-8750-6b2621f4cb51",
+				"method": "POST"
+			},
+			{
+				"id": "2fd1c362-f61d-4ee0-b63b-feb37a91fc23",
+				"method": "POST"
+			},
+			{
+				"id": "3945982b-6907-4fd0-848e-3d66de79421b",
+				"method": "POST"
+			},
+			{
+				"id": "1e68973c-370d-4115-9aaa-ca545de2aac6",
+				"method": "POST"
+			},
+			{
+				"id": "d59eb8e4-58d9-4358-859a-fee42624db86",
+				"method": "POST"
+			},
+			{
+				"id": "8c74e8ab-c2f8-4f7e-a5bd-25bd4aa9439b",
+				"method": "POST"
+			},
+			{
+				"id": "dc151d37-ceda-4cad-9324-5310d117136d",
+				"method": "POST"
+			}
+		]
+	}
+}

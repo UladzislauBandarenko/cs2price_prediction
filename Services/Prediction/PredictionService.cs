@@ -1,4 +1,6 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
+using System.Linq;
 using System.Net.Http;
 using System.Net.Http.Json;
 using System.Threading.Tasks;
@@ -27,9 +29,15 @@ namespace cs2price_prediction.Services.Prediction
             _stickerService = stickerService;
         }
 
+        /// <summary>
+        /// Main entry: builds required features and routes to specific ML endpoint
+        /// depending on skin pattern style.
+        /// - Enforces strict validation for stickers: maximum allowed is 4.
+        /// - Preserves order and duplicates for sticker prices (handled in StickerService).
+        /// - Validates that floatValue fits the wear tier float ranges.
+        /// </summary>
         public async Task<IActionResult> PredictAsync(PredictionRequestDto dto)
         {
-            // 1. Load Skin with Weapon and get PatternStyle
             var skin = await _db.Skins
                 .Include(s => s.Weapon)
                 .FirstOrDefaultAsync(s => s.Id == dto.SkinId);
@@ -54,14 +62,56 @@ namespace cs2price_prediction.Services.Prediction
             var skinName = skin.Name;
             var wearName = wear.Name;
 
-            // 2. HttpClient (single instance per request)
+            // ---------- FLOAT vs WEAR validation ----------
+            // Define allowed ranges per wear tier and validate incoming float value.
+            // Ranges (inclusive):
+            // Factory New:    0.00  - 0.07
+            // Minimal Wear:   0.07  - 0.15
+            // Field-Tested:   0.15  - 0.38
+            // Well-Worn:      0.38  - 0.45
+            // Battle-Scarred: 0.45  - 1.00
+
+            (double Min, double Max, bool Found) GetWearRange(string wName) =>
+                wName switch
+                {
+                    "Factory New" => (0.00, 0.07, true),
+                    "Minimal Wear" => (0.07, 0.15, true),
+                    "Field-Tested" => (0.15, 0.38, true),
+                    "Well-Worn" => (0.38, 0.45, true),
+                    "Battle-Scarred" => (0.45, 1.00, true),
+                    _ => (0.0, 0.0, false)
+                };
+
+            var (minAllowed, maxAllowed, foundRange) = GetWearRange(wearName);
+
+            if (!foundRange)
+            {
+                // If wear name is unexpected — treat as bad request.
+                return new BadRequestObjectResult($"Unknown wear tier name: '{wearName}'.");
+            }
+
+            // Float value should be within the allowed inclusive range.
+            // If not — return 400 with informative message including allowed range.
+            if (dto.FloatValue < minAllowed || dto.FloatValue > maxAllowed)
+            {
+                return new BadRequestObjectResult(
+                    $"Float value {dto.FloatValue} is invalid for wear tier '{wearName}'. Allowed range: [{minAllowed:F2} - {maxAllowed:F2}]."
+                );
+            }
+
+            // HttpClient
             var client = _httpClientFactory.CreateClient("MlService");
 
-            // 3. Stickers (calculate features once)
+            // Sticker validation
             var stickerIds = dto.Stickers ?? new List<int>();
+            if (stickerIds.Count > 4)
+            {
+                return new BadRequestObjectResult("Maximum 4 stickers are allowed. Provide 4 or fewer sticker IDs.");
+            }
+
             var stickerFeatures = await _stickerService.CalculateFeaturesAsync(stickerIds);
 
-            // 4. Routing by pattern_style → specific ML endpoint
+            // Routing ML logic
             return patternStyle switch
             {
                 "ch_knife"      => await PredictCaseHardenedKnife(dto, weaponName, skinName, wearName, client),
@@ -179,22 +229,19 @@ namespace cs2price_prediction.Services.Prediction
             string wear,
             HttpClient client)
         {
-            // dto.Pattern = PhaseId
             var dopplerLink = await _db.DopplerSkinPhases
                 .Include(d => d.Phase)
                 .FirstOrDefaultAsync(d => d.SkinId == skinId && d.PhaseId == dto.Pattern);
 
             if (dopplerLink is null)
-                return new BadRequestObjectResult("Doppler phase not found for this skin (Pattern as PhaseId).");
-
-            var phaseName = dopplerLink.Phase.Name;
+                return new BadRequestObjectResult("Doppler phase not found.");
 
             var mlRequest = new MlDopplerRequest
             {
                 Weapon = weapon,
                 Skin = skin,
                 Wear = wear,
-                Phase = phaseName,
+                Phase = dopplerLink.Phase.Name,
                 Float = dto.FloatValue,
                 Stattrak = dto.IsStattrak ? 1 : 0
             };
@@ -316,7 +363,7 @@ namespace cs2price_prediction.Services.Prediction
         }
 
         // ---------------------------
-        // Common mapping of ML service response
+        // Common mapping of ML service response + rounding
         // ---------------------------
         private async Task<IActionResult> MapMlResponse(HttpResponseMessage response)
         {
@@ -334,6 +381,9 @@ namespace cs2price_prediction.Services.Prediction
                 {
                     StatusCode = 500
                 };
+
+            // -------- ROUND predicted price to 2 decimal places --------
+            result.PredictedPrice = Math.Round(result.PredictedPrice, 2);
 
             return new OkObjectResult(result);
         }

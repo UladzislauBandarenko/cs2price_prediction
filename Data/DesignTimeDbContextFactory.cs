@@ -9,7 +9,7 @@ namespace cs2price_prediction.Data
     {
         public AppDbContext CreateDbContext(string[] args)
         {
-            // Строим конфигурацию так же, как делает ASP.NET при запуске
+            // We build the configuration the same way ASP.NET does at startup
             var basePath = Directory.GetCurrentDirectory();
 
             var config = new ConfigurationBuilder()
@@ -19,7 +19,7 @@ namespace cs2price_prediction.Data
                 .AddEnvironmentVariables()
                 .Build();
 
-            // Берём строку подключения для админа
+            // Get the connection string for the admin
             var connectionString =
                 config.GetConnectionString("AdminConnection") ??
                 config["ConnectionStrings:AdminConnection"] ??

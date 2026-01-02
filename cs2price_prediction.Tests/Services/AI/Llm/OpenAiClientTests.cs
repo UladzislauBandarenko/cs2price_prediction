@@ -14,7 +14,7 @@ namespace cs2price_prediction.Tests.Services.AI.Llm
 {
     public class OpenAiClientTests
     {
-        // Простой фейковый HttpMessageHandler, чтобы перехватывать запросы и возвращать кастомный ответ
+        // Simple fake HttpMessageHandler to intercept requests and return a custom response
         private sealed class FakeHttpMessageHandler : HttpMessageHandler
         {
             private readonly Func<HttpRequestMessage, HttpResponseMessage> _handler;
@@ -104,17 +104,17 @@ namespace cs2price_prediction.Tests.Services.AI.Llm
             // Act
             var result = await client.QueryAsync(prompt, modelOverride: "override-model");
 
-            // Assert результат
+            // Assert result
             result.Should().Be("ok");
 
             capturedRequest.Should().NotBeNull();
             handler.LastRequest.Should().BeSameAs(capturedRequest);
 
-            // Проверяем URL
+            // Verify URL
             capturedRequest!.RequestUri!.ToString()
                 .Should().Be("https://my-endpoint/v1/responses");
 
-            // Проверяем тело запроса
+            // Verify request body
             var body = await capturedRequest.Content!.ReadAsStringAsync();
             using var doc = JsonDocument.Parse(body);
             var root = doc.RootElement;
@@ -140,14 +140,14 @@ namespace cs2price_prediction.Tests.Services.AI.Llm
             // Act
             var result = await client.QueryAsync("prompt");
 
-            // Assert: убраны переносы строк и лишние пробелы
+            // Assert: newlines and extra spaces are removed
             result.Should().Be("Hello world test");
         }
 
         [Fact]
         public async Task QueryAsync_Parses_Output_Array_Text_String()
         {
-            // Arrange: output[0].content[0].text как строка
+            // Arrange: output[0].content[0].text as a string
             var json = @"
             {
               ""output"": [
@@ -205,7 +205,7 @@ namespace cs2price_prediction.Tests.Services.AI.Llm
         [Fact]
         public async Task QueryAsync_Returns_FailedParse_Message_When_No_Text_Found()
         {
-            // Arrange: нет ни output_text, ни output[].content[].text
+            // Arrange: neither output_text nor output[].content[].text is present
             var json = @"{ ""some_other_field"": ""xxx"" }";
 
             var (client, _) = CreateClient(_ =>
