@@ -140,7 +140,7 @@ cs2price_prediction/
 │   ├── case_hardened_gun_unique_patterns.csv        # CH gun patterns
 │   └── case_hardened_knives_unique_patterns.csv	 # CH knife patterns
 │
-├── data_for_db/						# SQL initialization scripts
+├── db/						# SQL initialization scripts
 │	└── init.sql
 │
 ├── Domain/                              # Domain models (business entities)
