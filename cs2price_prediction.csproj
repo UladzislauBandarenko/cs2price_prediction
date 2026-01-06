@@ -29,22 +29,21 @@
 	</ItemGroup>
 
 	<ItemGroup>
-		<!-- Exclude documentation and research folders from build -->
+		<!-- Exclude documentation folders from build, but keep visible in Solution Explorer -->
+
 		<Compile Remove="docs\**" />
 		<Content Remove="docs\**" />
 		<EmbeddedResource Remove="docs\**" />
-		<None Remove="docs\**" />
 
 		<Compile Remove="full_docs\**" />
 		<Content Remove="full_docs\**" />
 		<EmbeddedResource Remove="full_docs\**" />
-		<None Remove="full_docs\**" />
 
 		<Compile Remove="final_docs\**" />
 		<Content Remove="final_docs\**" />
 		<EmbeddedResource Remove="final_docs\**" />
-		<None Remove="final_docs\**" />
 	</ItemGroup>
+
 
 
 	<ItemGroup>
