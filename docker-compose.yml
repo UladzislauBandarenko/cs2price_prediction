@@ -1,8 +1,9 @@
 version: "3.9"
 
 services:
-  # --------- PROD API ---------
+  # --------- PRODUCTION API ---------
   api:
+    profiles: ["prod"]
     build:
       context: .
       dockerfile: Dockerfile
@@ -11,17 +12,17 @@ services:
     env_file:
       - .env
     environment:
-      # ASP.NET Core
+      # ASP.NET Core settings
       ASPNETCORE_ENVIRONMENT: ${ASPNETCORE_ENVIRONMENT:-Production}
       ASPNETCORE_URLS: "http://0.0.0.0:${API_PORT_CONTAINER}"
 
       # Admin panel API key
       ADMIN_AUTH_APIKEY: ${ADMIN_AUTH_APIKEY}
 
-      # URL of the ML service
+      # ML service internal URL
       ML_SERVICE_URL: ${ML_SERVICE_URL}
 
-      # Connection strings (используем прикладных юзеров)
+      # Database connection strings (application users)
       ConnectionStrings__DefaultConnection: "Host=db;Port=${POSTGRES_PORT_CONTAINER};Database=${POSTGRES_DB};Username=${APP_DB_USER};Password=${APP_DB_PASS}"
       ConnectionStrings__AdminConnection:   "Host=db;Port=${POSTGRES_PORT_CONTAINER};Database=${POSTGRES_DB};Username=${APP_DB_ADMIN_USER};Password=${APP_DB_ADMIN_PASS}"
 
@@ -35,10 +36,10 @@ services:
         condition: service_healthy
 
     ports:
-      - "${API_PORT_HOST}:${API_PORT_CONTAINER}"  # 8087:8080
+      - "${API_PORT_HOST}:${API_PORT_CONTAINER}" # e.g. 8087:8080
 
     volumes:
-      # CSV for seeder (read-only)
+      # CSV files for database seeding (read-only)
       - ./data_for_db:/app/data_for_db:ro
 
     networks:
@@ -47,19 +48,21 @@ services:
     restart: unless-stopped
 
     healthcheck:
-      test: ["CMD-SHELL", "curl -f http://localhost:8080/health || exit 1"]
+      test: ["CMD-SHELL", "curl -f http://localhost:${API_PORT_CONTAINER}/health || exit 1"]
       interval: 30s
       timeout: 5s
       retries: 5
       start_period: 20s
 
-  # --------- DEV API with hot reload ---------
+  # --------- DEVELOPMENT API (HOT RELOAD) ---------
   api-dev:
+    profiles: ["dev"]
     image: mcr.microsoft.com/dotnet/sdk:8.0
     container_name: cs2-api-dev
     working_dir: /src
 
     volumes:
+      # Mount source code for hot reload
       - ./:/src
 
     command: >
@@ -73,7 +76,7 @@ services:
       ADMIN_AUTH_APIKEY: ${ADMIN_AUTH_APIKEY}
       ML_SERVICE_URL: ${ML_SERVICE_URL}
 
-      # те же коннекты, что и у prod API
+      # Same database connections as production API
       ConnectionStrings__DefaultConnection: "Host=db;Port=${POSTGRES_PORT_CONTAINER};Database=${POSTGRES_DB};Username=${APP_DB_USER};Password=${APP_DB_PASS}"
       ConnectionStrings__AdminConnection:   "Host=db;Port=${POSTGRES_PORT_CONTAINER};Database=${POSTGRES_DB};Username=${APP_DB_ADMIN_USER};Password=${APP_DB_ADMIN_PASS}"
 
@@ -86,7 +89,7 @@ services:
         condition: service_healthy
 
     ports:
-      - "${API_PORT_HOST}:${API_PORT_CONTAINER}"
+      - "${API_PORT_HOST}:${API_PORT_CONTAINER}" # Same port, but never runs together with prod
 
     networks:
       - cs2-net
@@ -94,13 +97,13 @@ services:
     restart: unless-stopped
 
     healthcheck:
-      test: ["CMD-SHELL", "curl -f http://localhost:8080/health || exit 1"]
+      test: ["CMD-SHELL", "curl -f http://localhost:${API_PORT_CONTAINER}/health || exit 1"]
       interval: 30s
       timeout: 5s
       retries: 5
       start_period: 20s
 
-  # --------- ML service ---------
+  # --------- ML SERVICE ---------
   ml-service:
     build:
       context: .
@@ -116,9 +119,10 @@ services:
       - "${ML_PORT_CONTAINER}"
 
     ports:
-      - "${ML_PORT_HOST}:${ML_PORT_CONTAINER}"  # 8000:8000
+      - "${ML_PORT_HOST}:${ML_PORT_CONTAINER}" # e.g. 8000:8000
 
     volumes:
+      # Pretrained ML models (read-only)
       - ./cs2_ml_service/models:/app/models:ro
 
     networks:
@@ -127,13 +131,13 @@ services:
     restart: unless-stopped
 
     healthcheck:
-      test: ["CMD-SHELL", "curl -f http://localhost:8000/health || exit 1"]
+      test: ["CMD-SHELL", "curl -f http://localhost:${ML_PORT_CONTAINER}/health || exit 1"]
       interval: 30s
       timeout: 5s
       retries: 5
       start_period: 20s
 
-  # --------- Postgres ---------
+  # --------- POSTGRES DATABASE ---------
   db:
     image: postgres:16-alpine
     container_name: cs2-postgres
@@ -147,7 +151,7 @@ services:
       POSTGRES_PASSWORD: ${POSTGRES_PASSWORD}
 
     ports:
-      - "${POSTGRES_PORT_HOST}:${POSTGRES_PORT_CONTAINER}"  # 5435:5432
+      - "${POSTGRES_PORT_HOST}:${POSTGRES_PORT_CONTAINER}" # e.g. 5435:5432
 
     volumes:
       - db-data:/var/lib/postgresql/data
