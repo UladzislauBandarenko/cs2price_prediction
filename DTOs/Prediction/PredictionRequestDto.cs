@@ -10,7 +10,7 @@
         public bool IsStattrak { get; set; }
 
         // Номер паттерна (1..1000), не Id строки
-        public int Pattern { get; set; }
+        public int? Pattern { get; set; }
 
         // До 4-х id стикеров (может быть null или пустой)
         public List<int>? Stickers { get; set; }

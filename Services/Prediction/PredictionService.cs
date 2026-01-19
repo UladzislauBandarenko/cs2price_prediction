@@ -62,6 +62,18 @@ namespace cs2price_prediction.Services.Prediction
             var skinName = skin.Name;
             var wearName = wear.Name;
 
+            // ---------------- PATTERN VALIDATION ----------------
+            if (patternStyle != "float_gun")
+            {
+                if (dto.Pattern is null)
+                {
+                    return new BadRequestObjectResult(
+                        $"Pattern is required for pattern style '{patternStyle}'."
+                    );
+                }
+            }
+
+
             // ---------- FLOAT vs WEAR validation ----------
             // Define allowed ranges per wear tier and validate incoming float value.
             // Ranges (inclusive):
