@@ -53,6 +53,14 @@ everything is set up automatically inside containers.
 
 ---
 
+# Create .env file like .env.example 
+
+```sh
+.env
+```
+
+# Instal Docker Desktop 
+
 # Running the Project via Docker (Recommended)
 
 Using Docker allows you to run the project without installing .NET, PostgreSQL, or Python — everything is set up automatically inside containers.
