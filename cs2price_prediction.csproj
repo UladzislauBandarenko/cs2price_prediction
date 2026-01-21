@@ -29,12 +29,22 @@
 	</ItemGroup>
 
 	<ItemGroup>
-	  <Compile Include="full_docs\docs\02-technical\criteria\Ml\data_collection.md" />
+		<!-- Exclude documentation folders from build, but keep visible in Solution Explorer -->
+
+		<Compile Remove="docs\**" />
+		<Content Remove="docs\**" />
+		<EmbeddedResource Remove="docs\**" />
+
+		<Compile Remove="full_docs\**" />
+		<Content Remove="full_docs\**" />
+		<EmbeddedResource Remove="full_docs\**" />
+
+		<Compile Remove="final_docs\**" />
+		<Content Remove="final_docs\**" />
+		<EmbeddedResource Remove="final_docs\**" />
 	</ItemGroup>
 
-	<ItemGroup>
-		<ContainerPort Include="8081" />
-	</ItemGroup>
+
 
 	<ItemGroup>
 		<PackageReference Include="Microsoft.EntityFrameworkCore" Version="8.0.0" />

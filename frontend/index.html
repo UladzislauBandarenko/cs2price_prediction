@@ -1,0 +1,106 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>CS2 Price Prediction</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <div class="container">
+        <h1>CS2 Skin Price Prediction</h1>
+        
+        <!-- Step 1: Weapon Type -->
+        <div id="step1" class="step">
+            <h2>Step 1: Select Weapon Type</h2>
+            <select id="weaponType" class="select-input">
+                <option value="">Loading...</option>
+            </select>
+        </div>
+
+        <!-- Step 2: Weapon -->
+        <div id="step2" class="step hidden">
+            <h2>Step 2: Select Weapon</h2>
+            <select id="weapon" class="select-input">
+                <option value="">Select a weapon...</option>
+            </select>
+        </div>
+
+        <!-- Step 3: Skin -->
+        <div id="step3" class="step hidden">
+            <h2>Step 3: Select Skin</h2>
+            <select id="skin" class="select-input">
+                <option value="">Select a skin...</option>
+            </select>
+        </div>
+
+        <!-- Step 4: Wear Tier -->
+        <div id="step4" class="step hidden">
+            <h2>Step 4: Select Wear Tier (Condition)</h2>
+            <select id="wearTier" class="select-input">
+                <option value="">Select wear tier...</option>
+            </select>
+        </div>
+
+        <!-- Step 5: Pattern -->
+        <div id="step5" class="step hidden">
+            <h2>Step 5: Select Pattern (Optional)</h2>
+            <select id="pattern" class="select-input">
+                <option value="">No specific pattern</option>
+            </select>
+            <p class="hint">Leave empty if the skin doesn't have special patterns</p>
+        </div>
+
+        <!-- Step 6: Stickers -->
+        <div id="step6" class="step hidden">
+            <h2>Step 6: Add Stickers (Optional, max 4)</h2>
+            <div class="sticker-search">
+                <input type="text" id="stickerSearch" placeholder="Search for stickers..." class="search-input">
+                <div id="stickerResults" class="sticker-results"></div>
+            </div>
+            <div id="selectedStickers" class="selected-stickers">
+                <p class="hint">Selected stickers (0/4):</p>
+                <div id="stickerList" class="sticker-list"></div>
+            </div>
+        </div>
+
+        <!-- Step 7: Float Value -->
+        <div id="step7" class="step hidden">
+            <h2>Step 7: Enter Float Value</h2>
+            <div class="form-group">
+                <label for="floatValue">Float Value (0.0 - 1.0):</label>
+                <input type="number" id="floatValue" step="0.0001" min="0" max="1" placeholder="e.g., 0.001" required>
+                <p class="hint">Lower float = better condition</p>
+            </div>
+        </div>
+
+        <!-- Step 8: StatTrak -->
+        <div id="step8" class="step hidden">
+            <h2>Step 8: StatTrak™</h2>
+            <div class="form-group">
+                <label class="checkbox-label">
+                    <input type="checkbox" id="statTrak">
+                    <span>This item has StatTrak™</span>
+                </label>
+            </div>
+            <button id="predictBtn" class="btn">Get Price Prediction</button>
+        </div>
+
+        <!-- Result -->
+        <div id="result" class="result hidden">
+            <h2>🎯 Prediction Result</h2>
+            <div id="predictionInfo" class="prediction-info"></div>
+            <div id="stickerFeatures" class="sticker-features"></div>
+            <button id="explainBtn" class="btn btn-secondary hidden">Get AI Explanation</button>
+            <div id="aiExplanation" class="ai-explanation hidden"></div>
+            <button id="explainV2Btn" class="btn btn-secondary hidden">Get Detailed AI Explanation</button>
+            <div id="aiExplanationV2" class="ai-explanation hidden"></div>
+        </div>
+
+        <!-- Error -->
+        <div id="error" class="error hidden"></div>
+    </div>
+
+    <script src="script.js"></script>
+</body>
+</html>

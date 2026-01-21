@@ -33,16 +33,16 @@ docker-compose build
 
 ###  Start the Project
 
-Run:
+Development (hot reload):
 
 ```sh
-docker compose up
+docker compose --profile dev up
 ```
 
-Or run in the background:
+Production-like run:
 
 ```sh
-docker compose up -d
+docker compose --profile prod up
 ```
 
 ###  Verify That Everything Works

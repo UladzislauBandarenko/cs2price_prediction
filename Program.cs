@@ -23,6 +23,17 @@ using cs2price_prediction.Services.AI.Llm;
 
 var builder = WebApplication.CreateBuilder(args);
 
+// Add CORS
+builder.Services.AddCors(options =>
+{
+    options.AddPolicy("AllowFrontend", policy =>
+    {
+        policy.WithOrigins("http://localhost:8080", "http://127.0.0.1:8080")
+              .AllowAnyMethod()
+              .AllowAnyHeader();
+    });
+});
+
 // ============ 1. DbContext FOR APPLICATION (READ ONLY, cs2_user) ============
 
 builder.Services.AddDbContext<AppDbContext>(options =>
@@ -135,6 +146,9 @@ builder.Services.AddScoped<IAdminSkinWearTierService, AdminSkinWearTierService>(
 builder.Services.AddScoped<DbSeeder>();
 
 var app = builder.Build();
+
+// Use CORS before MapControllers
+app.UseCors("AllowFrontend");
 
 // ============ 3. MIGRATIONS + SEED UNDER ADMIN (cs2_admin) ON STARTUP ============
 

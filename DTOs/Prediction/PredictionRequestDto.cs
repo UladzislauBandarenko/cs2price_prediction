@@ -6,13 +6,13 @@
         public int WearTierId { get; set; }
         public double FloatValue { get; set; }//0.00333333333333334444444
 
-        // true/false c фронта, в ML уйдёт 1/0
+        // true/false 
         public bool IsStattrak { get; set; }
 
-        // Номер паттерна (1..1000), не Id строки
-        public int Pattern { get; set; }
+        // Patten ID
+        public int? Pattern { get; set; }
 
-        // До 4-х id стикеров (может быть null или пустой)
+        // 4s id stikers
         public List<int>? Stickers { get; set; }
     }
 }
