@@ -156,7 +156,7 @@ namespace cs2price_prediction.Services.Prediction
             var mlRequest = new MlCaseHardenedKnifeRequest
             {
                 Float = dto.FloatValue,
-                Pattern = dto.Pattern,
+                Pattern = dto.Pattern ?? 0,
                 Stattrak = dto.IsStattrak ? 1 : 0,
 
                 BacksideBlue = row.BacksideBlue,
@@ -207,7 +207,7 @@ namespace cs2price_prediction.Services.Prediction
                 PatternStyle = "ch_gun",
 
                 Float = dto.FloatValue,
-                Pattern = dto.Pattern,
+                Pattern = dto.Pattern ?? 0,
                 Stattrak = dto.IsStattrak ? 1 : 0,
 
                 BacksideBlue = row.BacksideBlue,
@@ -282,7 +282,7 @@ namespace cs2price_prediction.Services.Prediction
             var mlRequest = new MlFadeGunsRequest
             {
                 Float = dto.FloatValue,
-                Pattern = dto.Pattern,
+                Pattern = dto.Pattern ?? 0,
                 Stattrak = dto.IsStattrak ? 1 : 0,
 
                 FadePercentage = row.FadePercentage,
@@ -325,7 +325,7 @@ namespace cs2price_prediction.Services.Prediction
             var mlRequest = new MlFadeKnivesRequest
             {
                 Float = dto.FloatValue,
-                Pattern = dto.Pattern,
+                Pattern = dto.Pattern ?? 0,
                 Stattrak = dto.IsStattrak ? 1 : 0,
 
                 FadePercentage = row.FadePercentage,
